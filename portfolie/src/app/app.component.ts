@@ -4,11 +4,23 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
 
-    <app-header></app-header>
-    <app-footer></app-footer>
-    <router-outlet></router-outlet>
+   <!--  <app-header></app-header>
+    <app-home></app-home>
+    <app-footer></app-footer> -->
+    <div class="imageContainer">
+      <app-header></app-header>
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
+    </div>
   `,
-  styles: []
+  styles: [`
+    .imageContainer { 
+      background-image: url(/assets/images/background.jpg) !important;
+      background-size:cover;
+      background-position: center center;
+    }
+    
+  `]
 })
 export class AppComponent {
   title = 'portfolie';
