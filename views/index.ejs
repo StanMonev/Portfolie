@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/assets/style.css">
+  <link rel="stylesheet" type="text/css" href="/assets/typewriter.css">
+  <script src="/assets/typewriter.js"></script>
+  <script src="/assets/index.js"></script>
   <title>Home</title>
 </head>
+
 <body>
-  <div class="header">
-    <a href="/">Home</a>
-    <a href="/contacts">Contact</a>
-    <a href="/about">About</a>
-  </div>
   <div class="container">
-    <div class="section lam"> 
-      <div class="title">
-        <span>
-          <b>Hello</b>, my name is <b>Stanimir Monev</b>
-        </span>
-        <span>
-          and I'm a <b>software developer</b>.
-        </span>
+    <header>
+      <%- include('partials/header'); %>
+    </header>
+    <main>
+      <div class="section">
+        <div class="container">
+          <%- include('partials/welcome'); %>
+        </div>
       </div>
-    </div>
-    <div class="section projects" > Projects </div>
-    <div class="section news" > News </div>
-  </div>
-  <div class="footer">
-    Copyright © 2022 Stanimir Monev
+      <div class="section">
+        <div class="container">
+        </div>
+      </div>
+    </main>
+    <footer class="footer">
+      Copyright © 2022 Stanimir Monev
+    </footer>
   </div>
 </body>
+
 </html>

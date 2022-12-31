@@ -1,11 +1,17 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
 body {
+  width: 100%;
+  height: 100%;
   margin: 0;
 }
 
 .container {
-  background: #8b8b8f;
-  width: 60%;
-  height: 100%;
+  background: #000000;
+  height: inherit;
   margin: 0 auto;
 }
 
@@ -21,41 +27,113 @@ body {
   justify-content: center;
 }
 
-.header > a {
+.header>a {
   color: #ebe3e3;
   text-align: center;
   padding: 10px 20px;
   border-radius: 5%;
 }
 
-.header > a:hover {
+.header>a:hover {
   background: #53544f;
 }
 
-.header > a:link {
-  text-decoration: none;  
+.header>a:link {
+  text-decoration: none;
 }
 
-.footer {
-  padding: 20px;
-  background: #454641;
+footer {
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  margin: auto;
+  padding: 20px 0;
+  background: transparent;
   text-align: center;
-  color: #ebe3e3;
+  color: green;
 }
 
 .section {
   width: auto;
-  height: 100px;
-  padding-top: 200px;
 }
 
-.section.lam .title span {
+.section.index .title span {
   font-size: 50px;
+  font-weight: bold;
 }
 
 .title {
-  margin-left: 150px;
-  margin-right: 150px;
   text-align: center;
-  font-family: roboto;
+  font-family: monospace;
+  color: green;
+}
+
+.typewriter {
+  width: fit-content;
+  margin: auto;
+  color: green;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: monospace;
+  font-size: 200%;
+}
+
+.typewriter>.wrap {
+  border-right: 0.08em solid rgb(26, 90, 5);
+  animation: blink 0.5s;
+  animation-iteration-count: 6;
+}
+
+@keyframes blink {
+  50% {
+    border-color: black;
+  }
+}
+
+nav.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+
+nav.navbar ul.navbar-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav.navbar li.nav-item {
+  margin: 0 10px;
+}
+
+nav.navbar li.nav-item a {
+  font-size: x-large;
+  color: darkgreen;
+  text-decoration: none;
+}
+
+.to-load {
+  transition: all 0.5s ease-in-out;
+}
+
+#welcome.hidden {
+  opacity: 0;
+}
+
+#welcome.visible {
+  opacity: 1;
+}
+
+.section .container {
+  height: fit-content;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
