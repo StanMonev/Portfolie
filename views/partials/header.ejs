@@ -1,7 +1,16 @@
 <nav id="mainNavbar" class="navbar">
 	<ul class="navbar-list">
-		<li class="nav-item"><a href="/home">Home</a></li>
-		<li class="nav-item"><a href="/about">About</a></li>
-		<li class="nav-item"><a href="/contact">Contact</a></li>
+		<li class="nav-item">
+			<a href="/home">Home</a>
+		</li>
+		<li class="nav-item">
+			<a href="/about">About</a>
+		</li>
+		<li class="nav-item">
+			<a href="/contact">Contact</a>
+		</li>
+		<li class="nav-item">
+			<%- include('downloadButton', {id:'downloadButtonMenu', css:'download-button-menu to-load', tooltiptext:'Download Resume'}) %>
+		</li>
 	</ul>
 </nav>

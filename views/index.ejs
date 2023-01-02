@@ -7,24 +7,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/assets/style.css">
   <link rel="stylesheet" type="text/css" href="/assets/typewriter.css">
-  <script src="/assets/typewriter.js"></script>
   <script src="/assets/index.js"></script>
+  <script src="/assets/typewriter.js"></script>
   <title>Home</title>
 </head>
 
 <body>
-  <div class="container">
+  <div class="main-container">
     <header>
       <%- include('partials/header'); %>
     </header>
     <main>
       <div class="section">
-        <div class="container">
+        <div class="section-container">
           <%- include('partials/welcome'); %>
         </div>
       </div>
       <div class="section">
-        <div class="container">
+        <div class="section-container">
+          <%- include('partials/about'); %>
         </div>
       </div>
     </main>

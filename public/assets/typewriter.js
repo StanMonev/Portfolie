@@ -11,7 +11,6 @@ var TxtType = function (el, toRotate, toWriteOut, hasLoading, period = 2000) {
 	this.isDeleting = false;
 	this.container = null;
 	this.prepareLoading(hasLoading);
-	this.write(true);
 };
 
 TxtType.prototype.prepareLoading = function (hasLoading) {
@@ -133,10 +132,16 @@ window.onload = function () {
 		let toRotate = elements[i].getAttribute('data-type') || text;
 		toRotate = isJsonString(toRotate) ? JSON.parse(toRotate) : toRotate;
 		if (toRotate) {
-			new TxtType(elements[i], [], toRotate, true);
+			triggerTxtType(elements[i], [], toRotate, true);
 		}
 	}
 };
+
+async function triggerTxtType(el, toRotate, toWriteOut, hasLoading) {
+	let textType = new TxtType(el, toRotate, toWriteOut, hasLoading);
+	await textType.write(true);
+	toogleDownloadButton();
+}
 
 function isJsonString(str) {
 	try {
