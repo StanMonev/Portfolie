@@ -10,6 +10,7 @@ function ready(fn) {
 
 ready(() => {
   setupSectionHeight();
+  setupNavigationLinks();
 });
 
 const setupSectionHeight = () => {
@@ -25,4 +26,18 @@ const toogleDownloadButton = () => {
   var element = document.getElementById("downloadButton");
   element.classList.toggle("hidden");
   element.classList.toggle("visable");
+}
+
+const setupNavigationLinks = () => {
+  const navLinks = document.querySelectorAll('#mainNavbar .navbar-list .nav-item a');
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(e.target.getAttribute('href'));
+      target.scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
 }

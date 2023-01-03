@@ -107,14 +107,21 @@ nav.navbar ul.navbar-list {
   padding: 0;
 }
 
-nav.navbar li.nav-item {
-  margin: 24px 12px;
+nav.navbar li.nav-item:last-child {
+  padding: 24px 0;
 }
 
 nav.navbar li.nav-item a {
+  display: block;
   font-size: x-large;
   color: darkgreen;
   text-decoration: none;
+  padding: 24px 12px;
+}
+
+nav.navbar li.nav-item:not(:last-child):not(:first-child):hover {
+  background: #000000;
+  color: lightgreen;
 }
 
 .to-load {
@@ -151,13 +158,13 @@ nav.navbar li.nav-item a {
   border: none;
   border-radius: 5px;
   background-color: #136913;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Verdana', Courier, monospace;
   color:white;
   letter-spacing: 5px;
   cursor: pointer;
 }
 
-.download-button:hover {
+.download-button:hover, .download-button-menu:hover {
   background-color: #0d440d;
 }
 
@@ -170,27 +177,26 @@ nav.navbar li.nav-item a {
   border: none;
   border-radius: 5px;
   background-color: #136913;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Verdana', Courier, monospace;
   color:white;
-  letter-spacing: 5px;
   cursor: pointer;
 }
 
 /* Tooltip text */
 .tooltiptext {
   visibility: hidden;
-  width: 120px;
+  width: 130px;
   background-color: #555;
   color: #fff;
   text-align: center;
-  padding: 5px 0;
+  padding: 15px 10px;
   border-radius: 6px;
   opacity: 0;
   /* Position the tooltip text - see examples below! */
-  position: absolute;
+  position: fixed;
   z-index: 1;
-  top: 180px;
-  left: 75px;
+  top: 360px;
+  left: 85px;
 }
 
 .tooltiptext::after {
@@ -208,4 +214,14 @@ nav.navbar li.nav-item a {
 .download-button-menu:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+.main_logo {
+  width: 420px;
+  margin-bottom: 50px;
+}
+
+.header_logo {
+  width: 120px;
+  margin-top: 24px;
 }
