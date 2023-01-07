@@ -11,10 +11,10 @@ function ready(fn) {
 ready(() => {
   setupSectionHeight();
   setupNavigationLinks();
+  sendEmailHandler();
 });
 
 const setupSectionHeight = () => {
-  const navbar = document.getElementById("mainNavbar");
   let height = window.innerHeight;
 
   document.querySelectorAll(".section").forEach( (el) => {
@@ -23,7 +23,8 @@ const setupSectionHeight = () => {
 }
 
 const toogleDownloadButton = () => {
-  var element = document.getElementById("downloadButton");
+  const element = document.getElementById("downloadButton");
+  if(element == null) return;
   element.classList.toggle("hidden");
   element.classList.toggle("visable");
 }
@@ -39,5 +40,31 @@ const setupNavigationLinks = () => {
         behavior: 'smooth'
       });
     });
+  });
+}
+
+const sendEmailHandler = () => {
+  const submitBtn = document.getElementById("sendEmailBtn");
+
+  if(submitBtn == null) return;
+
+  submitBtn.addEventListener( "submit", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/contact");
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        console.log(xhr.status);
+        console.log(xhr.responseText);
+      }};
+
+    let data = new FormData(event.target);
+
+    xhr.send(data);
   });
 }

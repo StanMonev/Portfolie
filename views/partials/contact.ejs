@@ -1,3 +1,14 @@
-<div>
-  This is going to be the contact section.
+<div class="contact-container">
+  <div class="response-container">
+    <span class="response">If you want to get in contact with me:</span>
+  </div>
+  <form action="/contact" method="post">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" placeholder="Your full name..."><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" placeholder="Your email..."><br>
+    <label for="message">Message:</label><br>
+    <textarea id="message" name="message" placeholder="Your message..."></textarea><br>
+    <input id="sendEmailBtn" type="submit" value="Submit">
+  </form> 
 </div>

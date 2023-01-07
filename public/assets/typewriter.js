@@ -1,4 +1,6 @@
-const text = ["Hi, my name is Stanimir Monev.", "I'm a software developer."];
+const text = ["Hi, my name is Stanimir Monev.", "I'm a software developer.", "And welcome to my website: SMWorks.com"];
+
+const timeoutPromise = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 var TxtType = function (el, toRotate, toWriteOut, hasLoading, period = 2000) {
 	this.toRotate = toRotate;
@@ -21,13 +23,11 @@ TxtType.prototype.prepareLoading = function (hasLoading) {
 	}
 }
 
-const timeoutPromise = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-TxtType.prototype.write = async function (start) {
+TxtType.prototype.write = async function (showLoadingOnce) {
 
 	if (this.loopNum === this.toWriteOut.length) { return; }
 
-	if (start) { await this.showLoadingOnce(); }
+	if (showLoadingOnce) { await this.showLoadingOnce(); }
 
 	var that = this;
 	let fullTxt = this.toWriteOut[this.loopNum];
@@ -67,7 +67,7 @@ TxtType.prototype.writeRecursive = async function (container, fullTxt) {
 
 	this.txt = fullTxt.substring(0, this.txt.length + 1);
 	container.innerHTML = this.txt;
-	let delta = 175 - Math.random() * 100;
+	let delta = 200 - Math.random() * 100;
 	var that = this;
 	return await timeoutPromise(delta).then(async () => {
 		return await that.writeRecursive(container, fullTxt)

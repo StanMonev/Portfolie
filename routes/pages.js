@@ -4,7 +4,8 @@ const router = express.Router();
 const  { 
   getHomePage,
   getContactPage,
-  getAboutPage
+  getAboutPage,
+  sendEmail
 } = require('../controllers/pages.js')
 
 router.get('/', getHomePage)
@@ -12,6 +13,8 @@ router.get('/', getHomePage)
 router.get('/contacts', getContactPage)
 
 router.get('/about', getAboutPage)
+
+router.post('/contact', sendEmail)
 
 //router.post('/', createProduct) 
 
