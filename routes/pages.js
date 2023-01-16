@@ -5,7 +5,8 @@ const  {
   getHomePage,
   getContactPage,
   getAboutPage,
-  sendEmail
+  sendEmail,
+  getTTTPage
 } = require('../controllers/pages.js')
 
 router.get('/', getHomePage)
@@ -13,6 +14,8 @@ router.get('/', getHomePage)
 router.get('/contacts', getContactPage)
 
 router.get('/about', getAboutPage)
+
+router.get('/tictactoe', getTTTPage)
 
 router.post('/contact', sendEmail)
 
