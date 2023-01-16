@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\public\\assets\\ci.js"
+      "program": "${workspaceFolder}\\public\\assets\\trainTTTBot.js"
     }
   ]
 }
