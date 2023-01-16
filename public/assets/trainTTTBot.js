@@ -57,4 +57,4 @@ fs.writeFileSync('public/assets/trainedNet.js', `export default ${ net.toFunctio
 
 console.log('🏁 Training finished - model created\n')
 
-process.exit(1);
+process.exit(0);
