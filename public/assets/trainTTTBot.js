@@ -37,9 +37,11 @@ const net = new brain.NeuralNetwork(config);
 console.log('🏃‍♀️ Start training -  this could take some time...\n');
 
 net.train(preparedTrainingData, { 
-  iterations: 10000, 
+  iterations: 20000, 
   learningRate: 0.001, 
-  errorThrash: 0.0001
+  errorThrash: 0.0001,
+  log: true,
+  logInterval: 10,
 });
 
 let arr = net.run([1,-1,1,0,-1,0,-1,0,1]);
@@ -53,7 +55,7 @@ console.log(arr.indexOf(Math.max(...arr)));
   We can output our trained Neural net as either a function or json and write it to a file.
 */
 
-fs.writeFileSync('public/assets/trainedNet.js', `export default ${ net.toFunction().toString() };`);
+fs.writeFileSync('public/assets/trainedNet2.js', `exports.botBrain = ${ net.toFunction().toString() };`);
 
 console.log('🏁 Training finished - model created\n')
 
