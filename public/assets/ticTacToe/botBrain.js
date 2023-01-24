@@ -4,6 +4,7 @@ class BotBrain {
   constructor(board){
     this.brain = require('../trainedNet2.js');
     this.board = board;
+    this.name = 'AI Opponent';
     this.wins = 0;
     this.loses = 0;
   }
@@ -21,6 +22,7 @@ class BotBrain {
     }
 
     return this.board;
+    /*
     switch(chosenMove){
       case 0:
         return TablePositions.TopLeft
@@ -41,5 +43,6 @@ class BotBrain {
       case 8:
         return TablePositions.BottomRight
     }
+    */
   }
 }
