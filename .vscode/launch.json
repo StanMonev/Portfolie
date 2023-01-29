@@ -19,21 +19,11 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program 1",
+      "name": "Train Bot",
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\public\\assets\\ticTacToe\\test.js"
-    },
-
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Program",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}\\public\\assets\\trainTTTBot.js"
+      "program": "${workspaceFolder}\\utils\\ticTacToe\\training\\trainTTTBot.js"
     }
   ]
 }
