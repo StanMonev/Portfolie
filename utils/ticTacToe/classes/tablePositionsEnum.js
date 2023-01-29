@@ -10,4 +10,4 @@ const TablePositions = {
   BottomRight: 'BR'
 };
 
-export default TablePositions;
+module.exports = TablePositions;

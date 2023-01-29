@@ -1,5 +1,3 @@
-import JSONInterface from "./JSONInterface";
-
   /** 
    * Board of the type:
    * 
@@ -16,18 +14,24 @@ import JSONInterface from "./JSONInterface";
    * -----------------------------------------------------
    * 
    */
-class Board extends JSONInterface {
+class Board {
 
   constructor(values=[0,0,0,0,0,0,0,0,0]){
-    this = values;
+    this.values = values;
   }
 
-  update(newBoard){
-    this = newBoard;
+  update(values){
+    this.values = values;
+  }
+
+  getValueAt(index){
+    return this.values[index];
   }
 
   toJSON(){
-    return {board: this};
+    return {board: this.values};
   }
 
 }
+
+module.exports = Board;

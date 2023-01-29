@@ -1,4 +1,4 @@
-export default class Application {
+class Application {
   constructor() {
     if (new.target === Application) {
       throw new TypeError("Cannot construct Application instances directly.");
@@ -9,3 +9,6 @@ export default class Application {
     throw new TypeError("run() method must be implemented by child classes.");
   }
 }
+
+
+module.exports = Application;

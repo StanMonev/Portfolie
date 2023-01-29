@@ -1,5 +1,8 @@
-class Player {
+const JSONInterface = require("./JSONInterface");
+
+class Player extends JSONInterface {
   constructor(name){
+    super();
     this.name = name;
     this.wins = 0;
     this.loses = 0;
@@ -22,3 +25,5 @@ class Player {
     this.loses = 0;
   }
 }
+
+module.exports = Player;

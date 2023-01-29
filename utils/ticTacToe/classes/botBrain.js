@@ -1,8 +1,6 @@
-import TablePositions from './tablePositionsEnum.js';
-
 class BotBrain {
   constructor(board){
-    this.brain = require('../trainedNet2.js');
+    this.brain = require('../training/trainedNet2.js');
     this.board = board;
     this.name = 'AI Opponent';
     this.wins = 0;
@@ -15,7 +13,7 @@ class BotBrain {
     return applyDecision(decision);
   }
 
-  *applyDecision(decision){
+  applyDecision(decision){
     const chosenMove = decision.indexOf(Math.max(...decision));
     if(this.board[chosenMove] == 0){
       this.board[chosenMove] = 1;
@@ -46,3 +44,5 @@ class BotBrain {
     */
   }
 }
+
+module.exports = BotBrain;
