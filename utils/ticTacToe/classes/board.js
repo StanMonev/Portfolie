@@ -24,6 +24,10 @@ class Board {
     this.values = values;
   }
 
+  getAllValues(){
+    return this.values;
+  }
+
   getValueAt(index){
     return this.values[index];
   }

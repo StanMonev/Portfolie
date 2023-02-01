@@ -1,6 +1,7 @@
 const Application = require("../../application");
 const BotBrain = require("./botBrain");
 const Board = require("./board");
+const GameEnum = require("./gameEnum");
 
 //TODO: Finish this class
 class Game extends Application {
@@ -8,27 +9,48 @@ class Game extends Application {
     super();
     this.board = board;
     this.playerOne = playerOne;
-    this.playerTwo = playerTwo == 'AI' ? this.getBot() : playerTwo;
+    this.playerTwo = playerTwo == 'AI' ? this._getBot() : playerTwo;
     this.draws = 0;
   }
 
   getResults(){
-    return this.run(this.board);
+    return this._checkBoard(this.board);
   }
 
   updateBoard(board){
     this.board = board;
   }
 
-  run(board) {
+  // Private methods
+
+  _checkBoard(board) {
     if (!(board instanceof Board)) return {error: 'Given parameter must be a Board'};
 
-    return this.getWinner(board);
+    return this._getGameOutput(this._getGameResult(board), this.playerTwo);
   }
 
-  getWinner(board) { 
+  _getGameOutput(gameResult, playerTwo){
+    if (gameResult === GameEnum.ContinueGame){
+      return {
+        gameResult: gameResult,
+        board: playerTwo.getDecision().getAllValues()
+      }
+    }else{
+      return {
+        gameResult: gameResult,
+        board: this.board.getAllValues()
+      }
+    }
+  }
+  
+  _getBot(){
+    return new BotBrain(this.board);
+  }
+
+  _getGameResult(board) { 
     const height = 4;
     const width = 4;
+
   
     let table = [];
     let index = 0;
@@ -49,11 +71,38 @@ class Game extends Application {
       }
     }
   
-    return table;
+    return this._getResultDecr(this._getResultEnc(table));
   }
 
-  getBot(){
-    return new BotBrain(this.board);
+  _getResultEnc(table){
+    let continueGame;
+    for (let row = 0; row < table.length; row++) {
+      for (let col = 0; col < table.length; col++) {
+        if(row === 0 || col === 0){
+          let value = table[row][col];
+          if(value == 3 || value == -3){
+            return value;
+          }else if(value == -2 || value == 2 || value == 0){
+            continueGame = 0;
+          }
+        }
+      }
+    }
+
+    return continueGame;
+  }
+
+  _getResultDecr(value){
+    switch (value) {
+      case -3:
+        return GameEnum.PlayerOneWin
+      case 3:
+        return GameEnum.PlayerTwoWin;
+      case 0:
+        return GameEnum.ContinueGame;
+      default:
+        return GameEnum.Draw;
+    }
   }
 }
 
