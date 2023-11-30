@@ -18,10 +18,6 @@ body {
   background-color: var(--background) !important;
 }
 
-main {
-  margin-top: 100px;
-}
-
 .main-container {
   height: inherit;
   margin: 0 auto;
@@ -221,6 +217,7 @@ footer {
 .main_logo {
   width: 420px;
   margin-bottom: 50px;
+  filter: brightness(2);
 }
 
 .header_logo {
@@ -300,8 +297,4 @@ input:-webkit-autofill:active{
   background-color: var(--site-green);
   color: var(--background);
   transition: background-color .3s ease-in-out,color .3s ease-in-out;
-}
-
-#home, #about, #contact {
-  scroll-margin-top: 100px;
 }
