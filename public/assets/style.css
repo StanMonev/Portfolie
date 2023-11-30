@@ -260,6 +260,21 @@ footer {
   color: var(--site-green);
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+  background-color: var(--background);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: var(--site-green);
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px #23232329;
+}
+
+.contact-container form div input:-internal-autofill-selected {
+  background-color: var(--background);
+}
+
 .contact-container form div input:focus,
 .contact-container form div textarea:focus  {
   box-shadow: 0 0 0 0.1rem rgb(35, 70, 35)
