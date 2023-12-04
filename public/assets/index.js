@@ -9,18 +9,9 @@ function ready(fn) {
 } 
 
 ready(() => {
-  setupSectionHeight();
   setupNavigationLinks();
   sendEmailHandler();
 });
-
-const setupSectionHeight = () => {
-  let height = window.innerHeight;
-
-  document.querySelectorAll(".section").forEach( (el) => {
-    el.style.height = height + "px";
-  });
-}
 
 const toogleDownloadButton = () => {
   const element = document.getElementById("downloadButton");

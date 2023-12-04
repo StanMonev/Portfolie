@@ -1,4 +1,4 @@
-const text = ["Hi, my name is Stanimir Monev.", "I'm a software developer.", "And welcome to my website: SMWorks.com"];
+const text = ["Hi, my name is Stanimir Monev.", "I'm a software developer.", "And welcome to my website: SMWorks"];
 
 const timeoutPromise = ms => new Promise(resolve => setTimeout(resolve, ms));
 
