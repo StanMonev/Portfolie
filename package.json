@@ -2,9 +2,10 @@
   "name": "portfolie",
   "version": "1.0.0",
   "description": "This project will run the following tools:",
-  "main": "index.js",
+  "main": "nodemon server.js",
   "scripts": {
-    "devStart": "nodemon initializers/server.js"
+    "devStart": "nodemon server.js",
+    "productionStart": "node ./server.js"
   },
   "repository": {
     "type": "git",
