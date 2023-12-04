@@ -4,7 +4,8 @@
   "description": "This project will run the following tools:",
   "main": "nodemon server.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "devStart": "nodemon server.js",
+    "productionStart": "node ./server.js"
   },
   "repository": {
     "type": "git",
