@@ -147,7 +147,7 @@ footer {
 }
 
 .download-button {
-  margin-top: 100px;
+  text-decoration: none;
   padding: 20px 10px;
   border-style: dashed;
   border-radius: 5px;
@@ -180,6 +180,10 @@ footer {
   color: var(--background);
   cursor: pointer;
   margin-left: 10px;
+}
+
+.section .section-container div.download-button-container {
+  margin-top: 60px;
 }
 
 /* Tooltip text */
@@ -230,6 +234,9 @@ footer {
 
 .contact-container .form-control:not(#sendEmailBtn) {
   background-color: var(--background);
+}
+
+.contact-container .form-control:not(#sendEmailBtn):not(.is-invalid) {
   border-color: var(--site-green);
 }
 
@@ -305,4 +312,45 @@ input:-webkit-autofill:active{
 
 #home, #about, #contact {
   height: 1000px;
+}
+
+.section .section-container div#subjectContainer {
+  width:auto;
+  margin-bottom: 15px;
+}
+
+.section .section-container div.error-message {
+  width:auto;
+  padding-left: 5px;
+  color: var(--bs-form-invalid-border-color);
+}
+
+.contact-container .hidden {
+  display: none;
+}
+
+.contact-container .form-container {
+  position: relative;
+}
+
+.contact-container .form-container label {
+  position: absolute;
+  top: calc(5px + 0.1em);
+  left: 15px;
+  background-color: var(--background);
+  transition: all .1s ease-in;
+}
+
+.contact-container .form-container label[for=message] {
+  top: 4em;
+}
+
+.contact-container .form-container input:focus ~ label,
+.contact-container .form-container input.filled ~ label {
+  top: calc(5px - 1.1em);
+}
+
+.contact-container .form-container textarea:focus ~ label,
+.contact-container .form-container textarea.filled ~ label {
+  top: calc(3em - 10px);
 }
