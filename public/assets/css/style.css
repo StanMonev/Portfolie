@@ -1,0 +1,438 @@
+
+/*
+ * Root
+ */
+
+:root {
+  --background: rgb(30, 30, 30);
+  --font_family: "roboto_monoregular", monospace;
+  --site-green: rgb(10, 160, 10);
+  --stand-out-header: darkorange;
+  --stand-out: antiquewhite;
+}
+
+
+/*
+ * Main Components
+ */
+
+html {
+  width: 100%;
+  height: 100%;
+  background: var(--background);
+  font-family: var(--font_family);
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: var(--background) !important;
+}
+
+.main-container {
+  height: inherit;
+  margin: 0 auto;
+}
+
+.section {
+  width: auto;
+}
+
+.section.index .title span {
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.section .section-container {
+  height: fit-content;
+  margin: 0;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.section .section-container div {
+  width: fit-content;
+  color: var(--site-green);
+}
+
+.title {
+  text-align: center;
+  color: var(--site-green);
+}
+
+#home .section-container,
+#about .section-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#home, #about, #contact {
+  height: 1000px;
+}
+
+footer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  bottom: 0;
+  width: 100%;
+  margin: auto;
+  padding: 20px 15px;
+  background: transparent;
+  text-align: center;
+  color: var(--site-green);
+  z-index: 1;
+}
+
+/*
+ * This is the HOME section CSS
+ */
+
+
+#home.section .section-container div.typewriter {
+  margin: 0;
+  margin-left: 10px;
+}
+
+#home.section .section-container div.typewriter-container {
+  width: 725px;
+  display: flex;
+  font-size: 30px;
+}
+
+#home.section .section-container div.text-container {
+  width: 730px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 200%;
+  font-family: var(--font_family);
+}
+
+#home.section .section-container div.text-container .title-text{
+  font-weight: bolder;
+  font-size: xxx-large;
+  text-align: left;
+}
+
+#home.section .section-container div.text-container .title-text span {
+  color: var(--stand-out-header);
+}  
+
+.typewriter>.wrap {
+  border-right: 0.08em solid var(--stand-out);
+  color: var(--stand-out);
+  animation: blink 0.5s;
+  animation-iteration-count: 6;
+}
+
+#home.section .section-container .content-container {
+  margin-right:0;
+}
+
+@keyframes blink {
+  50% {
+    border-color: var(--font_family);
+  }
+}
+
+
+/*
+ * This is the ABOUT section CSS
+ */
+
+#about.section {
+  position: relative;
+  z-index: 1;
+  background: var(--background);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+#about.section .content p {
+  width: 500px;
+  margin: 50px 0;
+}
+
+#about.section .content div {
+  margin: 0;
+  text-align: left;
+}
+
+#about.section .content div span {
+  color:cadetblue;
+  font-weight: bold;
+}
+
+#about.section .content div.download-button-container span {
+  color:inherit;
+}
+
+#about.section .content div.download-button-container {
+  margin: 50px 0;
+}
+
+#about.section .content {
+  margin-left: 25px;
+}
+
+#about.section .image-container {
+  margin-right: 25px;
+}
+
+
+/*
+ * This is the CONTACT section CSS
+ */
+
+ #contact.section .section-container {
+  display: flex;
+  justify-content: center;
+ }
+
+.contact-container .form-control:not(#sendEmailBtn) {
+  background-color: var(--background);
+}
+
+.contact-container .form-control:not(#sendEmailBtn):not(.is-invalid) {
+  border-color: var(--site-green);
+}
+
+.contact-container #message {
+  height: 200px;
+  width: 100%;
+  max-height: 700px;
+}
+
+.contact-container form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.section .contact-container .response-container {
+  margin: 15px 0;
+  font-size: 75px;
+  font-weight: bolder;
+}
+
+ .contact-container div input::placeholder, 
+ .contact-container div textarea::placeholder,
+ .contact-container form div input,
+ .contact-container form div textarea,
+ .contact-container form div input:focus,
+ .contact-container form div textarea:focus  {
+   color: var(--site-green);
+ }
+ 
+ input:-webkit-autofill,
+ input:-webkit-autofill:hover, 
+ input:-webkit-autofill:focus, 
+ input:-webkit-autofill:active{
+   background-color: var(--background);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: var(--site-green);
+   transition: background-color 5000s ease-in-out 0s;
+   box-shadow: inset 0 0 20px 20px #23232329;
+ }
+ 
+ .contact-container form div input:focus,
+ .contact-container form div textarea:focus  {
+   box-shadow: 0 0 0 0.1rem rgb(35, 70, 35)
+ }
+ 
+ #nameContainer, #emailContainer {
+   flex: 1 1 0;
+ }
+ 
+ #messageContainer {
+   flex: 100%
+ }
+ 
+ #sendEmailBtn {
+   width: 200px;
+   margin-top: 15px;
+   border-color: var(--site-green);
+   background-color: var(--background);
+   transition: background-color .3s ease-in-out,color .3s ease-in-out;
+ }
+ 
+ #sendEmailBtn:hover {
+   width: 200px;
+   margin-top: 15px;
+   border-color: var(--site-green);
+   background-color: var(--site-green);
+   color: var(--background);
+   transition: background-color .3s ease-in-out,color .3s ease-in-out;
+ }
+
+.section .section-container div#subjectContainer {
+  width:auto;
+  flex: 1 0 100%;
+}
+
+.section .section-container div.error-message {
+  width:auto;
+  padding-left: 5px;
+  color: var(--bs-form-invalid-border-color);
+}
+
+.contact-container .hidden {
+  display: none;
+}
+
+.contact-container .form-container {
+  position: relative;
+}
+
+.contact-container .form-container label {
+  position: absolute;
+  top: calc(5px + 0.1em);
+  left: 15px;
+  background-color: var(--background);
+  transition: all .1s ease-in;
+}
+
+.contact-container .form-container input:focus ~ label,
+.contact-container .form-container input.filled ~ label,
+.contact-container .form-container textarea:focus ~ label,
+.contact-container .form-container textarea.filled ~ label {
+  top: calc(5px - 1.1em);
+}
+
+
+/*
+ * Navigation Bar
+ */ 
+
+.main-container .navbar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: transparent;
+  z-index: 100000;
+  position: fixed;
+  top: 0;
+  padding: 10px 2em;
+}
+
+.navbar a {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  font-size: x-large;
+  color: var(--site-green);
+  text-decoration: none;
+  padding: 15px 0;
+}
+
+.navbar .links {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+}
+
+.navbar a:hover {
+  background: transparent;
+  color: lightgreen;
+}
+
+.navbar .logo {
+  height: 100%;
+  width: 80px;
+  filter: brightness(3);
+}
+
+
+ /*
+ * Buttons and other widgets
+ */
+
+.download-button {
+  text-decoration: none;
+  padding: 20px 10px;
+  border-style: dashed;
+  border-radius: 5px;
+  background-color: var(--background);
+  border-color: var(--site-green);
+  font-family: 'Verdana', Courier, monospace;
+  color:var(--site-green);
+  letter-spacing: 5px;
+  cursor: pointer;
+  transition: background-color .3s ease-in-out,color .3s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+
+.download-button:hover, .download-button-menu:hover {
+  background-color: var(--site-green);
+  color: var(--background);
+  transition: background-color .3s ease-in-out,color .3s ease-in-out;
+}
+
+.download-button .icon {
+  vertical-align: bottom;
+  stroke: var(--site-green);
+  stroke-width: 3;
+  fill: none;
+  width: 30px;
+  height: 30px;
+}
+
+.download-button-menu {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #136913;
+  font-family: 'Verdana', Courier, monospace;
+  color: var(--background);
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.download-button:hover .icon {
+  stroke: var(--background);
+  transition: stroke .3s ease-in-out,color .3s ease-in-out;
+}
+
+.to-load {
+  transition: opacity 0.75s ease-in-out;
+}
+
+.download-button.hidden {
+  opacity: 0;
+}
+
+.download-button.visible {
+  opacity: 1;
+}
+
+.section .section-container div.download-button-container {
+  margin-top: 60px;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.download-button-menu:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.about-me-photo, .greetings-avatar {
+  max-width: 400px;
+  width: auto;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.matrix {
+  position: absolute;
+}

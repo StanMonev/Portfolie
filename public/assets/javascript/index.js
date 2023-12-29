@@ -1,17 +1,22 @@
 function ready(fn) {
   // see if DOM is already available
   if (document.readyState === "complete" || document.readyState === "interactive") {
-      // call on next available tick
-      setTimeout(fn, 1);
+    // call on next available tick
+    setTimeout(fn, 1);
   } else {
-      document.addEventListener("DOMContentLoaded", fn);
+    document.addEventListener("DOMContentLoaded", fn);
   }
+} 
+
+function resize(fn) {
+  window.addEventListener("resize", fn);
 } 
 
 ready(() => {
   setupNavigationLinks();
   sendEmailHandler();
   checkInputFilled();
+  setupMatrixBackground();
 });
 
 const toogleDownloadButton = () => {
@@ -152,3 +157,65 @@ const checkFilled = (e, formContainer, inputFields, textareaField) => {
     e.target.classList.remove('filled');
   }
 };
+
+const setupMatrixBackground = () => {
+  let initID = runMatrixBackground();
+  localStorage.setItem("matrixBackgroundID", initID);
+  
+  resize(() => {
+    let id = localStorage.getItem("matrixBackgroundID");
+    if (id !== undefined) { clearInterval(id); }
+    id = runMatrixBackground();
+    localStorage.setItem("matrixBackgroundID", id);
+  })
+}
+
+const runMatrixBackground = () => {
+  // Initialising the canvas
+  let canvas = document.querySelector('.matrix'),
+      ctx = canvas.getContext('2d');
+
+  var body = document.body,
+  html = document.documentElement;
+
+  let height = Math.max( body.scrollHeight, body.offsetHeight, 
+                       html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+  // Setting the width and height of the canvas
+  canvas.width = window.innerWidth;
+  canvas.height = height;
+
+  // Setting up the letters
+  let letters = 'ABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZ';
+  letters = letters.split('');
+
+  // Setting up the columns
+  let fontSize = 10,
+      columns = canvas.width / fontSize;
+
+  // Setting up the drops
+  let drops = [];
+  for (let i = 0; i < columns; i++) {
+    drops[i] = 1;
+  }
+
+  // Loop the animation
+  return loopMatrixBackground(ctx, canvas, drops, letters, fontSize);
+}
+
+const loopMatrixBackground = (ctx, canvas, drops, letters, fontSize) => {
+  return setInterval(() => {
+
+    ctx.fillStyle = 'rgba(30, 30, 30, .1)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < drops.length; i++) {
+      let text = letters[Math.floor(Math.random() * letters.length)];
+      ctx.fillStyle = '#044804';
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      drops[i]++;
+      if (drops[i] * fontSize > canvas.height && Math.random() > .99) {
+        drops[i] = 0;
+      }
+    }
+  }, 25);
+}

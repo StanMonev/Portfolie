@@ -1,4 +1,4 @@
-const { check, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
 const nodemailer = require('nodemailer');
 
 const getHomePage = ((req, res) => {
@@ -17,6 +17,7 @@ const sendEmailFunction = ( (req, res) => {
   const errors = validationResult(req);
   console.log(req);
   console.log(errors);
+  console.log(req.params);
   if(!errors.isEmpty()){
     res.status(400).send({ errors : errors.mapped() });
   }else{
@@ -48,17 +49,10 @@ const sendEmailFunction = ( (req, res) => {
   }
 })
 
-const sendEmailErrors = [
-  check('name').notEmpty().withMessage('Name is required'),
-  check('email').isEmail().withMessage('Invalid Email Address'),
-  check('subject').notEmpty().withMessage('Subject is required'),
-  check('message').notEmpty().withMessage('Message is required')
-];
-
 module.exports = {
     getHomePage,
     getContactPage,
     getAboutPage,
-    sendEmailFunction,
-    sendEmailErrors
+    sendEmailFunction
 }
+ 
