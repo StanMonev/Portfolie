@@ -1,4 +1,4 @@
-const text = ["Backend Development", "Frontend Development", "App Development", "Game Development", "Computational Intellegence", "Reinforcement Learning"];
+const text = ["Backend Development", "Frontend Development", "App Development", "Game Development", "Computational Intelligence", "Reinforcement Learning"];
 
 var TxtType = function (el, toRotate, period) {
   this.toRotate = toRotate;

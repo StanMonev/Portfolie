@@ -80,12 +80,11 @@ body {
 footer {
   position: relative;
   display: flex;
-  justify-content: space-between;
-  bottom: 0;
-  width: 100%;
+  justify-content: space-evenly;
+  border-top: 1px solid;
+  width: 50%;
   margin: auto;
   padding: 20px 15px;
-  background: transparent;
   text-align: center;
   color: var(--site-green);
   z-index: 1;
@@ -167,8 +166,12 @@ footer {
 }
 
 #about.section .content div span {
-  color:cadetblue;
+  color:#00dd00;
   font-weight: bold;
+}
+
+#about.section .content div a:not(#downloadButton) {
+  color:var(--site-green);
 }
 
 #about.section .content div.download-button-container span {
@@ -352,6 +355,9 @@ footer {
   filter: brightness(3);
 }
 
+@media screen and (max-width: 1500px) {
+  
+}
 
  /*
  * Buttons and other widgets
@@ -390,7 +396,7 @@ footer {
 .download-button-menu {
   padding: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--bs-border-radius);
   background-color: #136913;
   font-family: 'Verdana', Courier, monospace;
   color: var(--background);
@@ -435,4 +441,44 @@ footer {
 
 .matrix {
   position: absolute;
+}
+
+.about-button-container {
+  margin-top: 30px;
+  margin-left: 5px;
+  margin-bottom: 30px;
+}
+
+.about-button {
+  font-size: x-large;
+  padding: 15px;
+  border: 1px solid var(--site-green);
+  border-radius: var(--bs-border-radius);
+  text-decoration: none;
+  color: var(--site-green);
+  transition: background-color .3s ease-in-out,color .3s ease-in-out;
+}
+
+.about-button .bi.bi-arrow-down-circle {
+  margin-bottom: 2px;
+}
+
+.about-button:hover {
+  background-color: var(--site-green);
+  color: var(--background);
+}
+
+.social-media-icons a {
+  text-decoration: none;
+  fill: var(--site-green);
+  transition: fill .3s ease-in-out,color .3s ease-in-out;
+}
+
+.social-media-icons a:hover { 
+  fill: rgb(17, 127, 131);
+}
+
+.social-media-icons-footer a {
+  text-decoration: none;
+  fill: #0a700a;
 }

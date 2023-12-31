@@ -25,6 +25,7 @@
         </div>
       </div>
       <div id="about" class="section">
+        <div>About Me</div>
         <div class="section-container">
           <%- include('partials/about'); %>
         </div>
@@ -38,7 +39,9 @@
     <footer class="footer">
       <span>Copyright © 2022</span>
       <span>Made with &#10084;&#65039; by Stanimir Monev</span>
-      <span>Contacts</span>
+      <span>
+        <%- include('partials/socialMedia', {id:'contacts', css:'social-media-icons-footer', section:'footer'}); %>
+      </span>
     </footer>
   </div>
 </body>
