@@ -5,6 +5,7 @@
 
 :root {
   --background: rgb(30, 30, 30);
+  --nav-background: rgb(45, 45, 45);
   --font_family: "roboto_monoregular", monospace;
   --site-green: rgb(10, 160, 10);
   --stand-out-header: darkorange;
@@ -90,6 +91,12 @@ footer {
   z-index: 1;
 }
 
+@media screen and (max-width: 1045px) {
+  footer.footer {
+    width: 90%;
+  }
+}
+
 /*
  * This is the HOME section CSS
  */
@@ -143,6 +150,43 @@ footer {
   }
 }
 
+@media screen and (max-width: 503px) {
+  main #home.section .section-container div.text-container div.title-text {
+    font-size: xx-large;
+    width: 350px;
+  }
+
+  main #about.section .content p {
+    width: 400px;
+    margin: 30px 0;
+  }
+}
+
+@media screen and (max-width: 1147px) {
+  main #home.section .section-container div.text-container .title-text {
+    width: 480px;
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  main #home.section .section-container div.typewriter-container {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-button-container .about-button {
+    display: none;
+  }
+
+  .section .section-container div.social-media-icons-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 20px;
+  }
+}
 
 /*
  * This is the ABOUT section CSS
@@ -190,6 +234,23 @@ footer {
   margin-right: 25px;
 }
 
+@media screen and (max-width: 966px) {
+  img.about-me-photo {
+    width: 300px;
+  }
+
+  main #about.section .section-container {
+    flex-direction: column;
+  }
+  
+  main #about.section .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    text-align: center;
+  }
+}
 
 /*
  * This is the CONTACT section CSS
@@ -311,6 +372,13 @@ footer {
   top: calc(5px - 1.1em);
 }
 
+@media screen and (max-width: 1045px) {
+  #messageContainer.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
 
 /*
  * Navigation Bar
@@ -318,13 +386,14 @@ footer {
 
 .main-container .navbar {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  background: transparent;
+  justify-content: space-between;
+  width: 100%;
+  background: var(--nav-background);
   z-index: 100000;
   position: fixed;
   top: 0;
   padding: 10px 2em;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
 .navbar a {
@@ -335,12 +404,11 @@ footer {
   font-size: x-large;
   color: var(--site-green);
   text-decoration: none;
-  padding: 15px 0;
+  padding: 0 15px;
 }
 
 .navbar .links {
   display: flex;
-  flex-direction: column;
   padding-left: 10px;
 }
 
@@ -355,8 +423,11 @@ footer {
   filter: brightness(3);
 }
 
-@media screen and (max-width: 1500px) {
-  
+/* When below 503px width*/
+@media screen and (max-width: 503px) {
+  body .main-container .navbar {
+    justify-content: center;
+  }
 }
 
  /*
@@ -436,7 +507,32 @@ footer {
   width: auto;
   height: auto;
   border-radius: 50%;
+  cursor: pointer;
+  -webkit-mask: 
+    linear-gradient(135deg,#000c 40%,#000,#000c 60%)
+    100% 100%/250% 250%;
+  transition: .5s;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.about-me-photo:hover, .greetings-avatar:hover {
+  -webkit-mask-position: 0 0;
+}
+
+.about-me-photo {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
+.about-me-photo:hover {
+  -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(0%);
+}
+
+@media screen and (max-width: 503px) {
+  img.about-me-photo {
+    width: 200px;
+  }
 }
 
 .matrix {
