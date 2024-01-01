@@ -7,7 +7,7 @@
   --background: rgb(30, 30, 30);
   --nav-background: rgb(45, 45, 45);
   --font_family: "roboto_monoregular", monospace;
-  --site-green: rgb(10, 160, 10);
+  --site-green: #0aa00a;
   --stand-out-header: darkorange;
   --stand-out: antiquewhite;
 }
@@ -123,7 +123,7 @@ footer {
   font-family: var(--font_family);
 }
 
-#home.section .section-container div.text-container .title-text{
+#home.section .section-container div.text-container .title-text {
   font-weight: bolder;
   font-size: xxx-large;
   text-align: left;
@@ -150,19 +150,50 @@ footer {
   }
 }
 
+@media screen and (max-width: 320px) {
+
+  .main-container main #home.section .section-container div.text-container div.title-text {
+    font-size: x-large;
+    width: 250px;
+  }
+
+  .main-container main #about.section .content p {
+    width: 200px;
+    margin: 20px 0;
+  }
+
+  .main-container img.greetings-avatar {
+    width: 200px;
+  }
+}
+
 @media screen and (max-width: 503px) {
+
   main #home.section .section-container div.text-container div.title-text {
     font-size: xx-large;
     width: 350px;
   }
 
   main #about.section .content p {
-    width: 400px;
+    width: 300px;
     margin: 30px 0;
+  }
+
+  img.greetings-avatar {
+    width: 300px;
+  }
+
+  main #home.section .section-container div.typewriter-container {
+    text-align: center;
   }
 }
 
 @media screen and (max-width: 1147px) {
+
+  main #home.section .section-container div.text-container {
+    width: auto;
+  }
+
   main #home.section .section-container div.text-container .title-text {
     width: 480px;
     text-align: center;
@@ -234,7 +265,36 @@ footer {
   margin-right: 25px;
 }
 
-@media screen and (max-width: 966px) {
+#about.section .header {
+  font-size: 75px;
+  font-weight: bolder;
+  text-align: center;
+  color: var(--site-green);
+  width: 100%;
+  margin-bottom: 100px;
+}
+
+@media screen and (max-width: 353px) {
+  .main-container main #about.section .header {
+    font-size: 35px;
+  }
+
+  .main-container main #about.section .content div.download-button-container {
+    font-size: 10px;
+  }
+
+  div.download-button-container .download-button .icon {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media screen and (max-width: 966px) {  
+  main #about.section .header {
+    margin-bottom: 25px;
+    margin-top: 25px;
+  }
+
   img.about-me-photo {
     width: 300px;
   }
@@ -247,8 +307,13 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
     text-align: center;
+    margin: 0;
+    margin-top: 25px;
+  }
+
+  main #about.section .content p {
+    margin: 30px 0;
   }
 }
 
@@ -378,6 +443,17 @@ footer {
     flex-direction: column;
     align-items: center;
   }
+
+  #contact.section .contact-container .response-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  #contact.section .contact-container form {
+    padding: 10px;
+  }
+
 }
 
 /*
@@ -421,6 +497,12 @@ footer {
   height: 100%;
   width: 80px;
   filter: brightness(3);
+}
+
+@media screen and (max-width: 300px) {
+  #mainNavbar.navbar .links {
+    padding-left: 0;
+  }
 }
 
 /* When below 503px width*/

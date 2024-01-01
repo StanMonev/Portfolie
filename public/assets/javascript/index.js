@@ -182,7 +182,7 @@ const runMatrixBackground = () => {
                        html.clientHeight, html.scrollHeight, html.offsetHeight );
 
   // Setting the width and height of the canvas
-  canvas.width = window.innerWidth;
+  canvas.width = html.clientWidth;
   canvas.height = height;
 
   // Setting up the letters
