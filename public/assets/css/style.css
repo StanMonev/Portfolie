@@ -512,6 +512,34 @@ footer {
   }
 }
 
+
+/*
+ * Scrollbar Design
+ */
+
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: #2f3b33;
+  border: 1px solid #232020;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: green;
+  border-radius: 10px
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: darkgreen; 
+}
+
  /*
  * Buttons and other widgets
  */
