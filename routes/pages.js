@@ -11,16 +11,13 @@ const sendEmailErrors = [
 
 const  { 
   getHomePage,
-  getContactPage,
-  getAboutPage,
+  getDebugMode,
   sendEmailFunction
 } = require('../controllers/pages.js')
 
 router.get('/', getHomePage)
 
-router.get('/contacts', getContactPage)
-
-router.get('/about', getAboutPage)
+router.get('/debug', getDebugMode)
 
 router.post('/contact', sendEmailErrors, sendEmailFunction)
 

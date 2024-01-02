@@ -1,17 +1,14 @@
 const { validationResult } = require('express-validator');
 const nodemailer = require('nodemailer');
 
-const getHomePage = ((req, res) => {
-    res.render('index');
-})
+const getHomePage = (req, res) => {
+  res.render('index');
+}
 
-const getContactPage = ((req, res) => {
-  res.render('contactPage');
-})
-
-const getAboutPage = ((req, res) => {
-  res.render('aboutPage');
-})
+const getDebugMode = (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify({ 'debug': process.env.NODE_ENV !== 'production' }));
+}
 
 const sendEmailFunction = ( (req, res) => {
   const errors = validationResult(req);
@@ -51,8 +48,7 @@ const sendEmailFunction = ( (req, res) => {
 
 module.exports = {
     getHomePage,
-    getContactPage,
-    getAboutPage,
+    getDebugMode,
     sendEmailFunction
 }
  

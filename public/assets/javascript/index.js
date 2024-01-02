@@ -158,7 +158,11 @@ const checkFilled = (e, formContainer, inputFields, textareaField) => {
   }
 };
 
-const setupMatrixBackground = () => {
+const setupMatrixBackground = async () => {
+  var mode = await fetchAsync('/debug');
+
+  if (!mode.debug) { runMatrixBackground(); return; }
+
   let initID = runMatrixBackground();
   localStorage.setItem("matrixBackgroundID", initID);
   
@@ -218,4 +222,10 @@ const loopMatrixBackground = (ctx, canvas, drops, letters, fontSize) => {
       }
     }
   }, 25);
+}
+
+const fetchAsync = async (url) => {
+  let response = await fetch(url);
+  let data = await response.json();
+  return data;
 }
