@@ -46,7 +46,6 @@ const sendEmailHandler = () => {
   if(form == null) return;
 
   form.addEventListener( "submit", (event) => {
-    console.log("Triggered");
     event.preventDefault();
 
     const xhr = new XMLHttpRequest();
@@ -55,13 +54,24 @@ const sendEmailHandler = () => {
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.onreadystatechange = function () {
-      console.log(xhr.readyState);
-      if (xhr.readyState === 4) {
-        if(xhr.status === 400){
-          handleValidationErrors(JSON.parse(xhr.responseText).errors);
+      if (xhr.readyState === 4) { 
+
+        switch(xhr.status) {
+          case 200:
+            showMessage('success', JSON.parse(xhr.responseText).msg);
+            form.reset();
+            return;
+          case 400:
+            handleValidationErrors(JSON.parse(xhr.responseText).data);
+            return;
+          case 500:
+            showMessage('error', 'An error has occurred!');
+            console.error(JSON.parse(xhr.responseText).msg);
+            return;
+          default:
+            console.log(xhr.status);
+            console.log(JSON.parse(xhr.responseText));
         }
-        console.log(xhr.status);
-        console.log(JSON.parse(xhr.responseText));
       }
     };
 
@@ -82,6 +92,19 @@ const sendEmailHandler = () => {
     });
   });
 };
+
+const showMessage = (alert, message) => {
+  const messageEl = $('.alert-box.' + alert);
+  const container = messageEl.parent();
+  const ratio = 4.7575;
+  const width = $(window).width() / ratio;
+  const marginToSet = width / 2;
+  container.css('width', width + 'px');
+  container.css('margin-left', "-" + marginToSet + 'px');
+  messageEl.find('span').html(message);
+  container.fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+}
+
 
 const handleValidationErrors = (errors) => {
   // Clear previous error messages and styles
@@ -138,7 +161,6 @@ const checkInputFilled = () => {
 }
 
 const checkFilled = (e, formContainer, inputFields, textareaField) => {
-  console.log(e);
   let anyFieldFilled = false;
 
   inputFields.forEach((input) => {

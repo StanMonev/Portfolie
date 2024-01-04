@@ -12,13 +12,22 @@ const sendEmailErrors = [
 const  { 
   getHomePage,
   getDebugMode,
+  getEmailForm,
   sendEmailFunction
 } = require('../controllers/pages.js')
 
+///////////////////// MAIN //////////////////////////
+
 router.get('/', getHomePage)
+
+router.post('/contact', sendEmailErrors, sendEmailFunction)
+
+
+///////////////////// TESTING //////////////////////////
 
 router.get('/debug', getDebugMode)
 
-router.post('/contact', sendEmailErrors, sendEmailFunction)
+router.get('/emailform', getEmailForm)
+
 
 module.exports = router;
