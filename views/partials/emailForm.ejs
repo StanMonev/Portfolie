@@ -1,0 +1,21 @@
+<div style="display: flex; justify-content: center;">
+  <div style="width: fit-content; border: 1px dashed; border-radius: 5px; padding-left: 20px; padding-right: 20px; padding-bottom: 20px;">
+    <h1>New E-Mail from SMWorks:</h1>
+    <div>
+      <h3>Name:</h3>
+      <span><%= name %></span>
+    </div>
+    <div>
+      <h3>Email:</h3>
+      <a href="mailto:<%= email %>"><%= email %></a>
+    </div>
+    <div>
+      <h3>Subject:</h3>
+      <span><%= subject %></span>
+    </div>
+    <div>
+      <h3>Text:</h3>
+      <span><%= text %></span>
+    </div>
+  </div>
+</div>

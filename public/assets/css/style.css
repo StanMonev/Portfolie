@@ -688,3 +688,43 @@ footer {
   text-decoration: none;
   fill: #0a700a;
 }
+
+.alert-box-container {
+  position: fixed;
+  z-index: 100000;
+  max-width: 400px;
+  height: 100px;
+  border-radius: 10px;
+  left: 50%;
+  top: 100px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.alert-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  gap: 15px;
+  font-size: x-large;
+  font-weight: bold;
+  color: white;
+}
+
+.alert-box img {
+  filter: brightness(5);
+}
+
+.hidden {
+  display: none;
+}
+
+.alert-box.success {
+  background-color: darkgreen;
+}
+
+.alert-box.error {
+  background-color: darkred;
+}
