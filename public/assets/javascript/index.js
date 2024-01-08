@@ -181,19 +181,15 @@ const checkFilled = (e, formContainer, inputFields, textareaField) => {
 };
 
 const setupMatrixBackground = async () => {
-  var mode = await fetchAsync('/debug');
-
-  if (!mode.debug) { runMatrixBackground(); return; }
-
   let initID = runMatrixBackground();
   localStorage.setItem("matrixBackgroundID", initID);
-  
-  resize(() => {
+
+  screen.orientation.addEventListener("change", function(e) {
     let id = localStorage.getItem("matrixBackgroundID");
     if (id !== undefined) { clearInterval(id); }
     id = runMatrixBackground();
     localStorage.setItem("matrixBackgroundID", id);
-  })
+  });
 }
 
 const runMatrixBackground = () => {
@@ -208,7 +204,7 @@ const runMatrixBackground = () => {
                        html.clientHeight, html.scrollHeight, html.offsetHeight );
 
   // Setting the width and height of the canvas
-  canvas.width = html.clientWidth;
+  canvas.width = $('html').width();
   canvas.height = height;
 
   // Setting up the letters
