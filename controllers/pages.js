@@ -19,6 +19,10 @@ const sendEmailFunction = async (req, res) => {
 
 ////////////////////////////////////////// <--MAIN> //////////////////////////////////////////
 
+const getTTTPage = (req, res) => {
+  res.render('tic-tac-toe');
+}
+
 ////////////////////////////////////////// <TESTING--> //////////////////////////////////////////
 
 const getDebugMode = (req, res) => {
@@ -92,6 +96,7 @@ function _getJSON(message='', data=null){
 
 module.exports = {
     getHomePage,
+    getTTTPage,
     getDebugMode,
     getEmailForm,
     sendEmailFunction

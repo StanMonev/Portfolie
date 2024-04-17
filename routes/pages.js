@@ -11,6 +11,7 @@ const sendEmailErrors = [
 
 const  { 
   getHomePage,
+  getTTTPage,
   getDebugMode,
   getEmailForm,
   sendEmailFunction
@@ -19,6 +20,8 @@ const  {
 ///////////////////// MAIN //////////////////////////
 
 router.get('/', getHomePage)
+
+router.get('/tic_tac_toe', getTTTPage)
 
 router.post('/contact', sendEmailErrors, sendEmailFunction)
 
