@@ -7,6 +7,14 @@ const getHomePage = (req, res) => {
   res.render('index');
 }
 
+const getAdminPage = (req, res) => {
+  res.render('admin');
+}
+
+const getResumeEditorPage = (req, res) => {
+  res.render('resume_editor');
+}
+
 const sendEmailFunction = async (req, res) => {
   const errors = validationResult(req);
 
@@ -92,6 +100,8 @@ function _getJSON(message='', data=null){
 
 module.exports = {
     getHomePage,
+    getAdminPage,
+    getResumeEditorPage,
     getDebugMode,
     getEmailForm,
     sendEmailFunction

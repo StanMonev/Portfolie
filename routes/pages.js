@@ -11,6 +11,8 @@ const sendEmailErrors = [
 
 const  { 
   getHomePage,
+  getAdminPage,
+  getResumeEditorPage,
   getDebugMode,
   getEmailForm,
   sendEmailFunction
@@ -19,6 +21,10 @@ const  {
 ///////////////////// MAIN //////////////////////////
 
 router.get('/', getHomePage)
+
+router.get('/admin', getAdminPage)
+
+router.get('/admin/resume_editor', getResumeEditorPage)
 
 router.post('/contact', sendEmailErrors, sendEmailFunction)
 

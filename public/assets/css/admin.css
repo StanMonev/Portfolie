@@ -1,0 +1,19 @@
+/* Admin Page Styles */
+.admin-container {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.admin-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.admin-container button:hover {
+    background-color: #45a049;
+}

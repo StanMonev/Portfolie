@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Editor</title>
+    <link rel="stylesheet" href="/assets/css/resume.css">
+</head>
+<body>
+    <div class="container">
+        <div id="inputSection" class="input-section">
+            <h2>Resume Editor</h2>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Your Name">
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" placeholder="Your Email">
+
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" placeholder="Your Phone Number">
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" placeholder="Your Address">
+
+            <label for="summary">Summary:</label>
+            <textarea id="summary" name="summary" rows="4" placeholder="Write a summary about yourself"></textarea>
+        </div>
+        <div id="previewSection" class="preview-section">
+            <h2>Preview</h2>
+            <div id="preview">
+                <!-- Preview content will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="/assets/javascript/resume.js"></script>
+</body>
+</html>
