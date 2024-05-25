@@ -1,5 +1,13 @@
-This project will be run with the following tools:
+# Portfolio Website
 
-NodeJS
-Express
-PostgreSQL
+This project contains my CV Website and it's made with the following tools:
+- NodeJS
+- Express
+- PostgreSQL
+
+Dependencies:
+- dotenv: 16.0.3
+- ejs: 3.1.8
+- express: 4.18.2
+- express-validator: 7.0.1
+- nodemailer: 6.9.7
