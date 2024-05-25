@@ -1,0 +1,24 @@
+<label for="educationName">Name:</label>
+<input type="text" id="educationName" name="educationName" placeholder="Institution Name">
+
+<label for="educationDescription">Description:</label>
+<textarea id="educationDescription" name="educationDescription" rows="4" placeholder="Describe your education" maxlength="100"></textarea>
+
+<div class="row">
+  <label for="educationFrom">From:</label>
+  <input type="date" id="educationFrom" name="educationFrom">
+
+  <div class="tooltip">
+      <input type="checkbox" id="stillStudying" name="stillStudying">
+      <span class="tooltiptext">Still Studying</span>
+  </div>
+
+  <label for="educationUntil">Until:</label>
+  <input type="date" id="educationUntil" name="educationUntil">
+</div>
+
+<button type="button" id="addEducationButton">Add Education</button>
+
+<div id="educationList">
+    <!-- Education entries will be displayed here -->
+</div>

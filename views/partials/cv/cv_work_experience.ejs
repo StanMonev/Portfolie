@@ -1,0 +1,24 @@
+<label for="jobTitle">Job Title:</label>
+<input type="text" id="jobTitle" name="jobTitle" placeholder="Job Title">
+
+<label for="jobDescription">Job Description:</label>
+<textarea id="jobDescription" name="jobDescription" rows="4" placeholder="Describe your job" maxlength="100"></textarea>
+
+<div class="row">
+  <label for="jobBeginDate">Job Begin Date:</label>
+  <input type="date" id="jobBeginDate" name="jobBeginDate">
+
+  <div class="tooltip">
+      <input type="checkbox" id="stillWorking" name="stillWorking">
+      <span class="tooltiptext">Still Working</span>
+  </div>
+
+  <label for="jobEndDate">Job End Date:</label>
+  <input type="date" id="jobEndDate" name="jobEndDate">
+</div>
+
+<button type="button" id="addWorkExperienceButton">Add Work Experience</button>
+
+<div id="workExperienceList">
+    <!-- Work experiences will be displayed here -->
+</div>
