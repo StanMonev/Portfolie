@@ -5,7 +5,7 @@ This project contains my CV Website and it's made with the following tools:
 - Express
 - PostgreSQL
 
-Dependencies:
+Dependencies (install with `npm install`):
 - dotenv: 16.0.3
 - ejs: 3.1.8
 - express: 4.18.2
