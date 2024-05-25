@@ -11,3 +11,5 @@ Dependencies (install with `npm install`):
 - express: 4.18.2
 - express-validator: 7.0.1
 - nodemailer: 6.9.7
+
+Start development server with `npm run devStart`.
