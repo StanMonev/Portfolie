@@ -50,8 +50,8 @@ body {
 .input-section input[type="text"],
 .input-section input[type="date"],
 .input-section textarea {
-    width: 100%;
-    padding: 10px;
+    width: 98%;
+    padding: 10px 0 10px 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -140,6 +140,19 @@ body {
 .input-section .row .tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
+}
+
+.row label {
+    margin: 0;
+    margin-right: 5px;
+}
+
+.row input {
+    flex: 2;
+}
+
+textarea {
+    resize: none;
 }
 
 /* Responsive Styles */
