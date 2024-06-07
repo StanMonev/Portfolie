@@ -34,6 +34,10 @@ body {
     background-color: #e0e0e0; 
 }
 
+.input-section.panel.left {
+    overflow-x: hidden;
+}
+
 .divider {
     width: 8px;
     background-color: #ccc;
