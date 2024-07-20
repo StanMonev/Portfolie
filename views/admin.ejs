@@ -11,11 +11,16 @@
         <h1>Welcome to the Admin Page</h1>
         <p>Click the button below to access the resume editor:</p>
         <button onclick="redirectToResumeEditor()">Resume Editor</button>
+        <button onclick="logout()">Logout</button>
     </div>
 
     <script>
         function redirectToResumeEditor() {
             window.location.href = "/admin/resume_editor";
+        }
+
+        function logout() {
+            window.location.href = "/logout";
         }
     </script>
 </body>
