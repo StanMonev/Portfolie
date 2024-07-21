@@ -2,14 +2,14 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 20px; /* Add padding to the page */
     background-color: #f2f2f2;
 }
 
 .container {
     display: flex;
-    height: calc(100vh - 20px);
-    margin: 10px; 
+    height: calc(100vh - 40px); /* Adjust height to account for the body padding */
+    margin: 10px;
 }
 
 .input-section, .preview-section {
@@ -26,12 +26,12 @@ body {
     padding: 20px;
 }
 
-.left { 
+.left {
     background-color: #f0f0f0;
 }
 
-.right { 
-    background-color: #e0e0e0; 
+.right {
+    background-color: #e0e0e0;
 }
 
 .input-section.panel.left {
@@ -159,6 +159,56 @@ textarea {
     resize: none;
 }
 
+/* List item styles for work experience, education, and projects */
+.work-experience-item,
+.education-item,
+.project-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.work-experience-item div,
+.education-item div,
+.project-item div {
+    flex: 1;
+}
+
+.work-experience-item .buttons,
+.education-item .buttons,
+.project-item .buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.work-experience-item button,
+.education-item button,
+.project-item button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.work-experience-item button:hover,
+.education-item button:hover,
+.project-item button:hover {
+    background-color: #0056b3;
+}
+
+.work-experience-item .no-work-experience,
+.education-item .no-education,
+.project-item .no-projects {
+    text-align: center;
+    width: 100%;
+}
+
 /* Responsive Styles */
 @media screen and (max-width: 768px) {
     .container {
@@ -175,4 +225,64 @@ textarea {
         flex: none;
         height: 50%;
     }
+}
+
+.cv-preview {
+    padding: 100px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 170mm;
+    height: 297mm;
+    margin: 0 auto;
+    font-size: 11px; /* Set the font size to 11px */
+}
+
+.cv-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cv-header h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.cv-header p {
+    font-size: 14px;
+    margin: 5px 0 0;
+}
+
+.cv-section {
+    margin-bottom: 20px;
+}
+
+.cv-section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.cv-section .education-item,
+.cv-section .experience-item,
+.cv-section .project-item {
+    margin-bottom: 10px;
+}
+
+.cv-section .education-item strong,
+.cv-section .experience-item strong,
+.cv-section .project-item strong {
+    font-size: 16px;
+}
+
+.dates {
+    float: right;
+    margin-left: 10px;
+}
+
+.bullet-points {
+    list-style-type: disc;
+    padding-left: 20px;
 }

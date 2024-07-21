@@ -2,7 +2,7 @@
 <input type="text" id="educationName" name="educationName" placeholder="Institution Name" required>
 
 <label for="educationDescription">Description:</label>
-<textarea id="educationDescription" name="educationDescription" rows="4" placeholder="Describe your education" maxlength="100" required></textarea>
+<textarea id="educationDescription" name="educationDescription" rows="4" placeholder="Describe your education" required></textarea>
 
 <div class="row">
   <label for="educationFrom">From:</label>
@@ -17,7 +17,12 @@
   <input type="date" id="educationUntil" name="educationUntil">
 </div>
 
+<input type="hidden" id="educationId">
+
 <button type="button" id="addEducationButton">Add Education</button>
+<button type="button" id="updateEducationButton" style="display: none;">Save</button>
+<button type="button" id="resetEducationButton" style="display: none;">Reset</button>
+<button type="button" id="cancelEducationButton" style="display: none;">Cancel</button>
 
 <div id="educationList">
     <!-- Education entries will be displayed here -->

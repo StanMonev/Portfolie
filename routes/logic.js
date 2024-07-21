@@ -55,7 +55,7 @@ router.get('/api/resume/work-experience/:id', ensureAuthenticated, getWorkExperi
 router.post('/api/resume/education', ensureAuthenticated, addOrUpdateEducation);
 router.delete('/api/resume/education', ensureAuthenticated, deleteEducation);
 router.get('/api/resume/education/:id', ensureAuthenticated, getEducation);
-router.post('/resume/project', ensureAuthenticated, addOrUpdateProject);
+router.post('/api/resume/project', ensureAuthenticated, addOrUpdateProject);
 router.delete('/api/resume/project', ensureAuthenticated, deleteProject);
 router.get('/api/resume/project/:id', ensureAuthenticated, getProject);
 router.get('/api/resume/projects', ensureAuthenticated, getProjects);
