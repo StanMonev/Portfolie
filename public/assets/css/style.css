@@ -728,3 +728,7 @@ footer {
 .alert-box.error {
   background-color: darkred;
 }
+
+#resumeContainer {
+  visibility: hidden;
+}

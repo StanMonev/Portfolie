@@ -1,7 +1,168 @@
-<div id="cvPreview" class="cv-preview">
+<style>
+    .cv-preview {
+        padding-top: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 0 auto;
+        font-size: 11px; /* Set the font size to 11px */
+        overflow: hidden;
+        position: relative;
+    }
+
+    .cv-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .cv-header h1 {
+        font-size: 24px;
+        margin: 0;
+    }
+
+    .cv-header p {
+        font-size: 14px;
+        margin: 10px 0 0;
+    }
+
+    .cv-section {
+        margin-bottom: 20px;
+    }
+
+    .cv-section h2 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+    }
+
+    .cv-section .education-item,
+    .cv-section .experience-item,
+    .cv-section .project-item {
+        margin-bottom: 10px;
+    }
+
+    .cv-section .education-item strong,
+    .cv-section .experience-item strong,
+    .cv-section .project-item strong {
+        font-size: 16px;
+    }
+
+    .dates {
+        float: right;
+        margin-left: 10px;
+    }
+
+    .bullet-points {
+        list-style-type: disc;
+        padding-left: 20px;
+    }
+
+    #previewSkills {
+        padding-left: 25px;
+    }
+
+    .icon {
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+        margin: 0 5px;
+    }
+
+    .cv-header a {
+        color: #000;
+        text-decoration: none;
+    }
+
+    .cv-header a:hover {
+        text-decoration: underline;
+    }
+
+    #previewName{
+        color: cornflowerblue;
+    }
+
+    .title-main {
+        font-weight: bold;
+        color: #000;
+    }
+
+    .title-sub {
+        font-weight: bold;
+        color: darkgray;
+        font-size: 16px;
+    }
+
+    /* List item styles for work experience, education, and projects */
+    .work-experience-item,
+    .education-item,
+    .project-item {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .work-experience-item div,
+    .education-item div,
+    .project-item div {
+        flex: 1;
+    }
+
+    .work-experience-item .buttons,
+    .education-item .buttons,
+    .project-item .buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .work-experience-item button,
+    .education-item button,
+    .project-item button {
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .work-experience-item button:hover,
+    .education-item button:hover,
+    .project-item button:hover {
+        background-color: #0056b3;
+    }
+
+    .work-experience-item .no-work-experience,
+    .education-item .no-education,
+    .project-item .no-projects {
+        text-align: center;
+        width: 100%;
+    }
+
+    #cvPreview {
+        line-height: normal;
+    }
+
+    #cvPreview ul {
+        margin-bottom: 0;
+    }
+</style>
+
+<div id="cvPreview" class="cv-preview watermark">
     <div class="cv-header">
         <h1 id="previewName">Your Name</h1>
         <p id="previewContact">Your Address | Your Phone Number | Your Email</p>
+    </div>
+    <div class="cv-section">
+        <h2>Skills/Interests</h2>
+        <ul id="previewSkills">Your skills and interests will be shown here.</ul>
     </div>
     <div class="cv-section">
         <h2>Education</h2>
@@ -16,13 +177,9 @@
         </div>
     </div>
     <div class="cv-section">
-        <h2>Projects</h2>
+        <h2>Recent Projects</h2>
         <div id="previewProjects">
             <!-- Projects entries will be dynamically updated here -->
         </div>
-    </div>
-    <div class="cv-section">
-        <h2>Skills/Interests</h2>
-        <p id="previewSkills">Your skills and interests will be shown here.</p>
     </div>
 </div>

@@ -33,7 +33,11 @@ const {
   getProject,
   getWorkExperiences,
   getEducations,
-  getProjects
+  getProjects,
+  getAdminWorkExperiences,
+  getAdminEducations,
+  getAdminProjects,
+  getAdminResume
 } = require('../controllers/resumeController');
 
 ///////////////////// MAIN //////////////////////////
@@ -46,21 +50,24 @@ router.get('/admin/resume_editor', ensureAuthenticated, getResumeEditorPage);
 
 router.post('/contact', sendEmailErrors, sendEmailFunction);
 
-// Authenticated Resume Routes
-router.post('/api/resume/save', ensureAuthenticated, saveOrUpdateResume);
-router.get('/api/resume', ensureAuthenticated, getResumeInfo);
-router.post('/api/resume/work-experience', ensureAuthenticated, addOrUpdateWorkExperience);
-router.delete('/api/resume/work-experience', ensureAuthenticated, deleteWorkExperience);
-router.get('/api/resume/work-experience/:id', ensureAuthenticated, getWorkExperience);
-router.post('/api/resume/education', ensureAuthenticated, addOrUpdateEducation);
-router.delete('/api/resume/education', ensureAuthenticated, deleteEducation);
-router.get('/api/resume/education/:id', ensureAuthenticated, getEducation);
-router.post('/api/resume/project', ensureAuthenticated, addOrUpdateProject);
-router.delete('/api/resume/project', ensureAuthenticated, deleteProject);
-router.get('/api/resume/project/:id', ensureAuthenticated, getProject);
-router.get('/api/resume/projects', ensureAuthenticated, getProjects);
-router.get('/api/resume/educations', ensureAuthenticated, getEducations);
-router.get('/api/resume/work-experiences', ensureAuthenticated, getWorkExperiences);
+router.post('/api/resume/save', saveOrUpdateResume);
+router.get('/api/resume', getResumeInfo);
+router.post('/api/resume/work-experience', addOrUpdateWorkExperience);
+router.delete('/api/resume/work-experience', deleteWorkExperience);
+router.get('/api/resume/work-experience/:id', getWorkExperience);
+router.post('/api/resume/education', addOrUpdateEducation);
+router.delete('/api/resume/education', deleteEducation);
+router.get('/api/resume/education/:id', getEducation);
+router.post('/api/resume/project', addOrUpdateProject);
+router.delete('/api/resume/project', deleteProject);
+router.get('/api/resume/project/:id', getProject);
+router.get('/api/resume/projects', getProjects);
+router.get('/api/resume/educations', getEducations);
+router.get('/api/resume/work-experiences', getWorkExperiences);
+router.get('/api/resume/projects-admin', getAdminProjects);
+router.get('/api/resume/educations-admin', getAdminEducations);
+router.get('/api/resume/work-experiences-admin', getAdminWorkExperiences);
+router.get('/api/resume/admin', getAdminResume);
 
 // Authentication Routes
 router.get('/login', (req, res) => {

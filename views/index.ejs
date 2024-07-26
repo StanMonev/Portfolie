@@ -16,6 +16,9 @@
   </script>
   <script src="/assets/javascript/index.js"></script>
   <script src="/assets/javascript/typewriter.js"></script>
+  <script src="/assets/javascript/api.js"></script>
+  <script src="/assets/javascript/utils.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
   <title>Home</title>
 
   <!-- Google Tag Manager -->
@@ -51,6 +54,9 @@
         <div class="section-container">
           <%- include('partials/about'); %>
         </div>
+        <div id="resumeContainer">
+          <%- include('partials/cv/cv_preview') %>
+        </div>
       </div>
       <div id="contact" class="section">
         <div class="section-container">
@@ -66,6 +72,8 @@
       </span>
     </footer>
   </div>
+    
+  <script src="/assets/javascript/resumeDownload.js"></script>
 </body>
 
 </html>
