@@ -44,6 +44,11 @@ TxtType.prototype.tick = function () {
 };
 
 window.onload = function () {
+  startTypewriter();
+};
+
+
+function startTypewriter() {
   var elements = document.getElementsByClassName("typewriter");
   for (var i = 0; i < elements.length; i++) {
 		let toRotate = elements[i].getAttribute('data-type') || text;
@@ -53,8 +58,7 @@ window.onload = function () {
       new TxtType(elements[i], toRotate, period);
     }
   }
-};
-
+}
 
 
 function isJsonString(str) {

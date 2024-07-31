@@ -15,6 +15,10 @@ const getResumeEditorPage = (req, res) => {
   res.render('resume_editor');
 }
 
+const getPrivacyPolicyPage = (req, res) => {
+  res.render('partials/privacyPolicy');
+}
+
 const sendEmailFunction = async (req, res) => {
   const errors = validationResult(req);
 
@@ -104,6 +108,7 @@ module.exports = {
     getResumeEditorPage,
     getDebugMode,
     getEmailForm,
-    sendEmailFunction
+    sendEmailFunction,
+    getPrivacyPolicyPage
 }
  

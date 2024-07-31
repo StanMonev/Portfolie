@@ -16,7 +16,8 @@ const {
   getResumeEditorPage,
   getDebugMode,
   getEmailForm,
-  sendEmailFunction
+  sendEmailFunction,
+  getPrivacyPolicyPage
 } = require('../controllers/pagesController');
 
 const {
@@ -40,16 +41,23 @@ const {
   getAdminResume
 } = require('../controllers/resumeController');
 
+const {
+  trackAnalytics,
+  setCookiePreference, 
+  getAnalyticsData
+} = require('../controllers/cookieController');
+
 ///////////////////// MAIN //////////////////////////
 
 router.get('/', getHomePage);
+router.get('/privacy-policy-content', getPrivacyPolicyPage);
 
 router.get('/admin', ensureAuthenticated, getAdminPage);
-
 router.get('/admin/resume_editor', ensureAuthenticated, getResumeEditorPage);
 
 router.post('/contact', sendEmailErrors, sendEmailFunction);
 
+// Resume Routes
 router.post('/api/resume/save', saveOrUpdateResume);
 router.get('/api/resume', getResumeInfo);
 router.post('/api/resume/work-experience', addOrUpdateWorkExperience);
@@ -69,6 +77,11 @@ router.get('/api/resume/educations-admin', getAdminEducations);
 router.get('/api/resume/work-experiences-admin', getAdminWorkExperiences);
 router.get('/api/resume/admin', getAdminResume);
 
+// Cookie and Analytics Routes
+router.post('/api/track', trackAnalytics);
+router.post('/api/set-preference', setCookiePreference);
+router.get('/api/analytics', getAnalyticsData);
+
 // Authentication Routes
 router.get('/login', (req, res) => {
   res.render('login', { message: req.flash('error') });
@@ -80,11 +93,10 @@ router.post('/login', async (req, res) => {
   if (user) {
       req.session.userId = user.id;
       if (rememberMe) {
-          req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
+          req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000;
       } else {
-          req.session.cookie.expires = false; // Session cookie
+          req.session.cookie.expires = false;
       }
-      console.log('User authenticated, session set:', req.session);
       res.redirect('/admin');
   } else {
       console.log('Authentication failed');
