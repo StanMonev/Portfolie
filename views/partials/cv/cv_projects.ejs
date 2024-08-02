@@ -1,0 +1,16 @@
+<label for="projectName">Name:</label>
+<input type="text" id="projectName" name="projectName" placeholder="Project Name" required>
+
+<label for="projectDescription">Description:</label>
+<textarea id="projectDescription" name="projectDescription" rows="4" maxlength="300" placeholder="Describe your project" required></textarea>
+
+<input type="hidden" id="projectId">
+
+<button type="button" id="addProjectButton">Add Project</button>
+<button type="button" id="updateProjectButton" style="display: none;">Save</button>
+<button type="button" id="resetProjectButton" style="display: none;">Reset</button>
+<button type="button" id="cancelProjectButton" style="display: none;">Cancel</button>
+
+<div id="projectList">
+    <!-- Projects will be displayed here -->
+</div>

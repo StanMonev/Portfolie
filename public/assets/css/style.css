@@ -91,12 +91,6 @@ footer {
   z-index: 1;
 }
 
-@media screen and (max-width: 1045px) {
-  footer.footer {
-    width: 90%;
-  }
-}
-
 /*
  * This is the HOME section CSS
  */
@@ -149,76 +143,6 @@ footer {
     border-color: var(--font_family);
   }
 }
-
-@media screen and (max-width: 320px) {
-
-  .main-container main #home.section .section-container div.text-container div.title-text {
-    font-size: x-large;
-    width: 250px;
-  }
-
-  .main-container main #about.section .content p {
-    width: 200px;
-    margin: 20px 0;
-  }
-
-  .main-container img.greetings-avatar {
-    width: 200px;
-  }
-}
-
-@media screen and (max-width: 503px) {
-
-  main #home.section .section-container div.text-container div.title-text {
-    font-size: xx-large;
-    width: 350px;
-  }
-
-  main #about.section .content p {
-    width: 300px;
-    margin: 30px 0;
-  }
-
-  img.greetings-avatar {
-    width: 300px;
-  }
-
-  main #home.section .section-container div.typewriter-container {
-    text-align: center;
-  }
-}
-
-@media screen and (max-width: 1147px) {
-
-  main #home.section .section-container div.text-container {
-    width: auto;
-  }
-
-  main #home.section .section-container div.text-container .title-text {
-    width: 480px;
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  main #home.section .section-container div.typewriter-container {
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .about-button-container .about-button {
-    display: none;
-  }
-
-  .section .section-container div.social-media-icons-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    padding-bottom: 20px;
-  }
-}
-
 /*
  * This is the ABOUT section CSS
  */
@@ -274,6 +198,60 @@ footer {
   margin-bottom: 100px;
 }
 
+
+@media screen and (max-width: 320px) {
+
+  .main-container main #home.section .section-container div.text-container div.title-text {
+    font-size: x-large;
+    width: 250px;
+  }
+
+  .main-container main #about.section .content p {
+    width: 200px;
+    margin: 20px 0;
+  }
+
+  .main-container img.greetings-avatar {
+    width: 200px;
+  }
+}
+
+@media screen and (max-width: 1147px) {
+
+  main #home.section .section-container div.text-container {
+    width: auto;
+  }
+
+  main #home.section .section-container div.text-container .title-text {
+    width: 480px;
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  main #home.section .section-container div.typewriter-container {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-button-container .about-button {
+    display: none;
+  }
+
+  .section .section-container div.social-media-icons-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 20px;
+  }
+
+  #content #privacy-policy {
+    padding-bottom: 400px;
+  }
+}
+
+
 @media screen and (max-width: 353px) {
   .main-container main #about.section .header {
     font-size: 35px;
@@ -314,6 +292,69 @@ footer {
 
   main #about.section .content p {
     margin: 30px 0;
+  }
+}
+
+@media screen and (max-width: 1045px) {
+  #messageContainer.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #contact.section .contact-container .response-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  #contact.section .contact-container form {
+    padding: 10px;
+  }
+
+  
+  footer.footer {
+    width: 90%;
+  }
+
+}
+
+@media screen and (max-width: 300px) {
+  #mainNavbar.navbar .links {
+    padding-left: 0;
+  }
+}
+
+/* When below 503px width*/
+@media screen and (max-width: 503px) {
+  body .main-container .navbar {
+    justify-content: center;
+  }
+
+  img.about-me-photo {
+    width: 200px;
+  }
+
+  main #home.section .section-container div.text-container div.title-text {
+    font-size: xx-large;
+    width: 350px;
+  }
+
+  main #about.section .content p {
+    width: 300px;
+    margin: 30px 0;
+  }
+
+  img.greetings-avatar {
+    width: 300px;
+  }
+
+  main #home.section .section-container div.typewriter-container {
+    text-align: center;
+  }
+
+  #content #privacy-policy.section .section-container {
+    transform: translate(0, 1%);
   }
 }
 
@@ -437,25 +478,6 @@ footer {
   top: calc(5px - 1.1em);
 }
 
-@media screen and (max-width: 1045px) {
-  #messageContainer.form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  #contact.section .contact-container .response-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-
-  #contact.section .contact-container form {
-    padding: 10px;
-  }
-
-}
-
 /*
  * Navigation Bar
  */ 
@@ -470,6 +492,10 @@ footer {
   top: 0;
   padding: 10px 2em;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.navbar #logoLink:hover {
+  filter: brightness(2);
 }
 
 .navbar a {
@@ -497,19 +523,6 @@ footer {
   height: 100%;
   width: 80px;
   filter: brightness(3);
-}
-
-@media screen and (max-width: 300px) {
-  #mainNavbar.navbar .links {
-    padding-left: 0;
-  }
-}
-
-/* When below 503px width*/
-@media screen and (max-width: 503px) {
-  body .main-container .navbar {
-    justify-content: center;
-  }
 }
 
 
@@ -639,12 +652,6 @@ footer {
   filter: grayscale(0%);
 }
 
-@media screen and (max-width: 503px) {
-  img.about-me-photo {
-    width: 200px;
-  }
-}
-
 .matrix {
   position: absolute;
 }
@@ -728,3 +735,181 @@ footer {
 .alert-box.error {
   background-color: darkred;
 }
+
+#resumeContainer {
+  visibility: hidden;
+}
+
+#privacy-policy {
+  color: var(--site-green);
+  width: 50%;
+  padding-bottom: 250px;
+}
+
+#privacy-policy a {
+  text-decoration: none;
+}
+
+#privacy-policy.section .section-container {
+  transform: translate(0, 1.5%);
+}
+
+a#copyright {
+  color: currentColor;
+  text-decoration: none;
+}
+
+a#copyright:hover {
+  color: #0b7a0b;
+  text-decoration: none;
+}
+
+#cookieNotice {
+  position: fixed; 
+  bottom: 0; 
+  width: 100%; 
+  background-color: var(--nav-background); 
+  color: var(--site-green); 
+  text-align: center; 
+  padding: 20px; 
+  z-index: 1000; 
+  display: none;
+  font-family: 'Courier New', Courier, monospace;
+  border-top: 1px solid var(--site-green);
+}
+
+#learnMore {
+  color: var(--site-green); 
+  text-decoration: underline;
+}
+
+#acceptCookies, #customizeCookies, #savePreferences {
+  background-color: var(--nav-background); 
+  color: var(--site-green); 
+  border: 1px solid var(--site-green); 
+  padding: 10px 20px; 
+  cursor: pointer;
+  margin: 5px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#cookiePreferences {
+  margin-top: 10px;
+  text-align: left;
+  color: var(--site-green);
+}
+
+#cookiePreferences label {
+  display: block;
+  margin: 5px 0;
+}
+
+#cookiePreferences input {
+  margin-right: 10px;
+}
+
+#termsContainer {
+  margin-top: 15px;
+}
+
+#termsContainer label {
+  position: initial;
+  background: transparent;
+}
+
+#termsContainer label a {
+  color: var(--site-green);
+}
+
+/* Modal CSS begin */
+
+@media screen and (max-width: 2500px) {
+  #modal .modal-content {
+      margin-top: 140px;
+  }
+}
+
+#modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+#modal .modal-content {
+  background-color: var(--background);
+  margin: 5% auto;
+  margin-top: 10%;
+  padding: 20px;
+  border: 2px solid var(--site-green);
+  width: 60%;
+  height: -webkit-fill-available;
+  color: var(--stand-out);
+  font-family: 'Times New Roman', Times, serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  overflow: auto;
+}
+
+#modalBody a {
+  color: #03edcf;
+}
+
+#modalBody {
+  color: var(--site-green);
+}
+
+#modalBody h1 {
+  text-align: center;
+  color: var(--stand-out-header);
+  margin-bottom: 30px;
+}
+
+#modalBody h2 {
+  font-style: italic;
+}
+
+#modalCloseTop {
+  text-align: right;
+}
+
+.modal-close {
+  color: var(--stand-out);
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+  color: var(--stand-out-header);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#modalBody {
+  padding: 10px 0; 
+}
+
+#modalCloseBottom {
+  background-color: var(--site-green);
+  color: var(--background);
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+#modalCloseBottom:hover {
+  background-color: var(--stand-out-header);
+}
+
+/* Modal CSS end */
