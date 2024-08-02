@@ -91,12 +91,6 @@ footer {
   z-index: 1;
 }
 
-@media screen and (max-width: 1045px) {
-  footer.footer {
-    width: 90%;
-  }
-}
-
 /*
  * This is the HOME section CSS
  */
@@ -149,76 +143,6 @@ footer {
     border-color: var(--font_family);
   }
 }
-
-@media screen and (max-width: 320px) {
-
-  .main-container main #home.section .section-container div.text-container div.title-text {
-    font-size: x-large;
-    width: 250px;
-  }
-
-  .main-container main #about.section .content p {
-    width: 200px;
-    margin: 20px 0;
-  }
-
-  .main-container img.greetings-avatar {
-    width: 200px;
-  }
-}
-
-@media screen and (max-width: 503px) {
-
-  main #home.section .section-container div.text-container div.title-text {
-    font-size: xx-large;
-    width: 350px;
-  }
-
-  main #about.section .content p {
-    width: 300px;
-    margin: 30px 0;
-  }
-
-  img.greetings-avatar {
-    width: 300px;
-  }
-
-  main #home.section .section-container div.typewriter-container {
-    text-align: center;
-  }
-}
-
-@media screen and (max-width: 1147px) {
-
-  main #home.section .section-container div.text-container {
-    width: auto;
-  }
-
-  main #home.section .section-container div.text-container .title-text {
-    width: 480px;
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  main #home.section .section-container div.typewriter-container {
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .about-button-container .about-button {
-    display: none;
-  }
-
-  .section .section-container div.social-media-icons-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    padding-bottom: 20px;
-  }
-}
-
 /*
  * This is the ABOUT section CSS
  */
@@ -274,6 +198,60 @@ footer {
   margin-bottom: 100px;
 }
 
+
+@media screen and (max-width: 320px) {
+
+  .main-container main #home.section .section-container div.text-container div.title-text {
+    font-size: x-large;
+    width: 250px;
+  }
+
+  .main-container main #about.section .content p {
+    width: 200px;
+    margin: 20px 0;
+  }
+
+  .main-container img.greetings-avatar {
+    width: 200px;
+  }
+}
+
+@media screen and (max-width: 1147px) {
+
+  main #home.section .section-container div.text-container {
+    width: auto;
+  }
+
+  main #home.section .section-container div.text-container .title-text {
+    width: 480px;
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  main #home.section .section-container div.typewriter-container {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-button-container .about-button {
+    display: none;
+  }
+
+  .section .section-container div.social-media-icons-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 20px;
+  }
+
+  #content #privacy-policy {
+    padding-bottom: 400px;
+  }
+}
+
+
 @media screen and (max-width: 353px) {
   .main-container main #about.section .header {
     font-size: 35px;
@@ -314,6 +292,69 @@ footer {
 
   main #about.section .content p {
     margin: 30px 0;
+  }
+}
+
+@media screen and (max-width: 1045px) {
+  #messageContainer.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #contact.section .contact-container .response-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  #contact.section .contact-container form {
+    padding: 10px;
+  }
+
+  
+  footer.footer {
+    width: 90%;
+  }
+
+}
+
+@media screen and (max-width: 300px) {
+  #mainNavbar.navbar .links {
+    padding-left: 0;
+  }
+}
+
+/* When below 503px width*/
+@media screen and (max-width: 503px) {
+  body .main-container .navbar {
+    justify-content: center;
+  }
+
+  img.about-me-photo {
+    width: 200px;
+  }
+
+  main #home.section .section-container div.text-container div.title-text {
+    font-size: xx-large;
+    width: 350px;
+  }
+
+  main #about.section .content p {
+    width: 300px;
+    margin: 30px 0;
+  }
+
+  img.greetings-avatar {
+    width: 300px;
+  }
+
+  main #home.section .section-container div.typewriter-container {
+    text-align: center;
+  }
+
+  #content #privacy-policy.section .section-container {
+    transform: translate(0, 1%);
   }
 }
 
@@ -437,25 +478,6 @@ footer {
   top: calc(5px - 1.1em);
 }
 
-@media screen and (max-width: 1045px) {
-  #messageContainer.form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  #contact.section .contact-container .response-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-
-  #contact.section .contact-container form {
-    padding: 10px;
-  }
-
-}
-
 /*
  * Navigation Bar
  */ 
@@ -470,6 +492,10 @@ footer {
   top: 0;
   padding: 10px 2em;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.navbar #logoLink:hover {
+  filter: brightness(2);
 }
 
 .navbar a {
@@ -497,19 +523,6 @@ footer {
   height: 100%;
   width: 80px;
   filter: brightness(3);
-}
-
-@media screen and (max-width: 300px) {
-  #mainNavbar.navbar .links {
-    padding-left: 0;
-  }
-}
-
-/* When below 503px width*/
-@media screen and (max-width: 503px) {
-  body .main-container .navbar {
-    justify-content: center;
-  }
 }
 
 
@@ -639,12 +652,6 @@ footer {
   filter: grayscale(0%);
 }
 
-@media screen and (max-width: 503px) {
-  img.about-me-photo {
-    width: 200px;
-  }
-}
-
 .matrix {
   position: absolute;
 }
@@ -728,8 +735,11 @@ footer {
 .alert-box.error {
   background-color: darkred;
 }
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> 00c722afdffb834e1a2dfe2c0938f2f96c782359
 
 #resumeContainer {
   visibility: hidden;
@@ -778,7 +788,11 @@ a#copyright:hover {
   text-decoration: underline;
 }
 
+<<<<<<< HEAD
 #acceptCookies, #rejectCookies, #customizeCookies, #savePreferences {
+=======
+#acceptCookies, #customizeCookies, #savePreferences {
+>>>>>>> 00c722afdffb834e1a2dfe2c0938f2f96c782359
   background-color: var(--nav-background); 
   color: var(--site-green); 
   border: 1px solid var(--site-green); 
@@ -908,4 +922,7 @@ a#copyright:hover {
 }
 
 /* Modal CSS end */
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> 00c722afdffb834e1a2dfe2c0938f2f96c782359
