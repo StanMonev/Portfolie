@@ -653,30 +653,6 @@ async function updateProjectsPreview() {
 
 document.getElementById('downloadPDF').addEventListener('click', function () {
     const element = document.getElementById('cvPreview');
-    const style = document.createElement('style');
-
-    style.textContent = `
-        .watermark {
-            position: relative;
-        }
-
-        .watermark::before {
-            content: 'Copyright of Stanimir Monev';
-            font-size: 50px;
-            color: rgba(0, 0, 0, 0.1);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transform: rotate(-45deg);
-            display: grid;
-            place-items: center;
-            pointer-events: none;
-        }
-    `;
-
-    document.head.appendChild(style);
     const opt = {
         margin: 5,
         filename: 'StanimirMonevResume.pdf',
@@ -684,8 +660,6 @@ document.getElementById('downloadPDF').addEventListener('click', function () {
         html2canvas: { scale: 2 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
-    html2pdf().set(opt).from(element).save().then(() => {
-        document.head.removeChild(style);
-    });
+    html2pdf().set(opt).from(element).save();
 });
 
