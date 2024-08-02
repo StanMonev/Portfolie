@@ -20,7 +20,7 @@ app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: process.env.NODE_ENV === 'production', maxAge: 24 * 60 * 60 * 1000 }
+  cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }
 }));
 
 app.use(passport.initialize());
