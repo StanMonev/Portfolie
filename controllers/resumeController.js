@@ -1,10 +1,7 @@
-const Resume = require('../models/Resume');
-const WorkExperience = require('../models/WorkExperience');
-const Education = require('../models/Education');
-const Project = require('../models/Project');
+const resumeService = require('../services/resumeService');
+
 const ADMIN_ID = 1;
 
-// Save or Update General Resume Information
 const saveOrUpdateResume = async (req, res) => {
   const userId = req.session.userId;
   const {
@@ -14,26 +11,20 @@ const saveOrUpdateResume = async (req, res) => {
 
   try {
     const fields = {
-      firstName,
-      lastName,
-      town,
-      country,
-      email,
-      linkedin,
-      github,
-      website,
-      skills,
-      interests,
+      first_name: firstName,
+      last_name: lastName,
+      town: town,
+      country: country,
+      email: email,
+      linkedin: linkedin,
+      github: github,
+      website: website,
+      skills: skills,
+      interests: interests,
       user_id: userId
     };
 
-    let resume = await Resume.findByUserId(userId);
-    if (resume) {
-      await Resume.update(resume.id, fields);
-    } else {
-      resume = await Resume.create(fields);
-    }
-
+    const resume = await resumeService.saveOrUpdateResume(userId, fields);
     res.status(200).send({ message: 'Resume saved successfully', resumeId: resume.id });
   } catch (error) {
     console.error(error);
@@ -41,159 +32,131 @@ const saveOrUpdateResume = async (req, res) => {
   }
 };
 
-// Add or Update Work Experience
 const addOrUpdateWorkExperience = async (req, res) => {
   const userId = req.session.userId;
   const { id, jobTitle, jobDescription, jobBeginDate, stillWorking, jobEndDate } = req.body;
 
   try {
-    const resume = await Resume.findByUserId(userId);
+    const resume = await resumeService.getResumeInfo(userId);
     if (!resume) return res.status(400).send({ message: 'Resume not found' });
 
     const fields = {
-      jobTitle, 
-      jobDescription, 
-      jobBeginDate, 
-      stillWorking, 
-      jobEndDate, 
+      job_title: jobTitle,
+      job_description: jobDescription,
+      job_begin_date: jobBeginDate,
+      still_working: stillWorking,
+      job_end_date: jobEndDate,
       resume_id: resume.id
     };
 
-    if (id) {
-      // Update existing work experience
-      await WorkExperience.update(id, fields);
-      res.status(200).send({ message: 'Work experience updated successfully' });
-    } else {
-      // Add new work experience
-      await WorkExperience.create(fields);
-      res.status(201).send({ message: 'Work experience added successfully' });
-    }
+    const response = await resumeService.addOrUpdateWorkExperience(id, fields);
+    res.status(200).send(response);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: 'Failed to add or update work experience' });
   }
 };
 
-// Delete Work Experience
 const deleteWorkExperience = async (req, res) => {
   const userId = req.session.userId;
   const { id } = req.body;
 
   try {
-    const resume = await Resume.findByUserId(userId);
+    const resume = await resumeService.getResumeInfo(userId);
     if (!resume) return res.status(400).send({ message: 'Resume not found' });
 
-    await WorkExperience.delete(id);
-    res.status(200).send({ message: 'Work experience deleted successfully' });
+    const response = await resumeService.deleteWorkExperience(id);
+    res.status(200).send(response);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: 'Failed to delete work experience' });
   }
 };
 
-// Add or Update Education
 const addOrUpdateEducation = async (req, res) => {
   const userId = req.session.userId;
   const { id, name, description, fromDate, stillStudying, untilDate } = req.body;
 
   try {
-    const resume = await Resume.findByUserId(userId);
+    const resume = await resumeService.getResumeInfo(userId);
     if (!resume) return res.status(400).send({ message: 'Resume not found' });
 
     const fields = {
-      name, 
-      description, 
-      fromDate, 
-      stillStudying, 
-      untilDate, 
+      name,
+      description,
+      from_date: fromDate,
+      still_studying: stillStudying,
+      until_date: untilDate,
       resume_id: resume.id
     };
 
-    if (id) {
-      // Update existing education
-      await Education.update(id, fields);
-      res.status(200).send({ message: 'Education updated successfully' });
-    } else {
-      // Add new education
-      await Education.create(fields);
-      res.status(201).send({ message: 'Education added successfully' });
-    }
+    const response = await resumeService.addOrUpdateEducation(id, fields);
+    res.status(200).send(response);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: 'Failed to add or update education' });
   }
 };
 
-// Delete Education
 const deleteEducation = async (req, res) => {
   const userId = req.session.userId;
   const { id } = req.body;
 
   try {
-    const resume = await Resume.findByUserId(userId);
+    const resume = await resumeService.getResumeInfo(userId);
     if (!resume) return res.status(400).send({ message: 'Resume not found' });
 
-    await Education.delete(id);
-    res.status(200).send({ message: 'Education deleted successfully' });
+    const response = await resumeService.deleteEducation(id);
+    res.status(200).send(response);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: 'Failed to delete education' });
   }
 };
 
-// Add or Update Project
 const addOrUpdateProject = async (req, res) => {
   const userId = req.session.userId;
   const { id, name, description } = req.body;
 
   try {
-    const resume = await Resume.findByUserId(userId);
+    const resume = await resumeService.getResumeInfo(userId);
     if (!resume) return res.status(400).send({ message: 'Resume not found' });
 
-    const fields = { 
-      name, 
-      description, 
-      resume_id: resume.id 
+    const fields = {
+      name,
+      description,
+      resume_id: resume.id
     };
 
-    if (id) {
-      // Update existing project
-      await Project.update(id, fields);
-      res.status(200).send({ message: 'Project updated successfully' });
-    } else {
-      // Add new project
-      await Project.create(fields);
-      res.status(201).send({ message: 'Project added successfully' });
-    }
+    const response = await resumeService.addOrUpdateProject(id, fields);
+    res.status(200).send(response);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: 'Failed to add or update project' });
   }
 };
 
-// Delete Project
 const deleteProject = async (req, res) => {
   const userId = req.session.userId;
   const { id } = req.body;
 
   try {
-    const resume = await Resume.findByUserId(userId);
+    const resume = await resumeService.getResumeInfo(userId);
     if (!resume) return res.status(400).send({ message: 'Resume not found' });
 
-    await Project.delete(id);
-    res.status(200).send({ message: 'Project deleted successfully' });
+    const response = await resumeService.deleteProject(id);
+    res.status(200).send(response);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: 'Failed to delete project' });
   }
 };
 
-// Get General Resume Information
 const getResumeInfo = async (req, res) => {
   const userId = req.session.userId;
 
   try {
-    const resume = await Resume.findByUserId(userId);
+    const resume = await resumeService.getResumeInfo(userId);
     if (!resume) {
       return res.status(404).send({ message: 'Resume not found' });
     }
@@ -204,14 +167,13 @@ const getResumeInfo = async (req, res) => {
   }
 };
 
-// Get Specific Work Experience
 const getWorkExperience = async (req, res) => {
   const userId = req.session.userId;
   const { id } = req.params;
 
   try {
-    const resume = await Resume.findByUserId(userId);
-    const workExperience = await WorkExperience.findById(id);
+    const resume = await resumeService.getResumeInfo(userId);
+    const workExperience = await resumeService.getWorkExperience(id);
     if (!resume || !workExperience || workExperience.resume_id !== resume.id) {
       return res.status(404).send({ message: 'Work experience not found' });
     }
@@ -222,14 +184,13 @@ const getWorkExperience = async (req, res) => {
   }
 };
 
-// Get Specific Education
 const getEducation = async (req, res) => {
   const userId = req.session.userId;
   const { id } = req.params;
 
   try {
-    const resume = await Resume.findByUserId(userId);
-    const education = await Education.findById(id);
+    const resume = await resumeService.getResumeInfo(userId);
+    const education = await resumeService.getEducation(id);
     if (!resume || !education || education.resume_id !== resume.id) {
       return res.status(404).send({ message: 'Education not found' });
     }
@@ -240,14 +201,13 @@ const getEducation = async (req, res) => {
   }
 };
 
-// Get Specific Project
 const getProject = async (req, res) => {
   const userId = req.session.userId;
   const { id } = req.params;
 
   try {
-    const resume = await Resume.findByUserId(userId);
-    const project = await Project.findById(id);
+    const resume = await resumeService.getResumeInfo(userId);
+    const project = await resumeService.getProject(id);
     if (!resume || !project || project.resume_id !== resume.id) {
       return res.status(404).send({ message: 'Project not found' });
     }
@@ -258,10 +218,9 @@ const getProject = async (req, res) => {
   }
 };
 
-// Get Admin Work Experiences
 const getAdminWorkExperiences = async (req, res) => {
   try {
-    const experiences = await WorkExperience.findByResumeId(ADMIN_ID);
+    const experiences = await resumeService.getWorkExperiences(ADMIN_ID);
     res.json(experiences);
   } catch (error) {
     console.error('Error fetching admin work experiences:', error);
@@ -269,10 +228,9 @@ const getAdminWorkExperiences = async (req, res) => {
   }
 };
 
-// Get Admin Educations
 const getAdminEducations = async (req, res) => {
   try {
-    const educations = await Education.findByResumeId(ADMIN_ID);
+    const educations = await resumeService.getEducations(ADMIN_ID);
     res.json(educations);
   } catch (error) {
     console.error('Error fetching admin educations:', error);
@@ -280,10 +238,9 @@ const getAdminEducations = async (req, res) => {
   }
 };
 
-// Get Admin Projects
 const getAdminProjects = async (req, res) => {
   try {
-    const projects = await Project.findByResumeId(ADMIN_ID);
+    const projects = await resumeService.getProjects(ADMIN_ID);
     res.json(projects);
   } catch (error) {
     console.error('Error fetching admin projects:', error);
@@ -291,10 +248,9 @@ const getAdminProjects = async (req, res) => {
   }
 };
 
-// Get Admin Resume
 const getAdminResume = async (req, res) => {
   try {
-    const resume = await Resume.findByUserId(ADMIN_ID);
+    const resume = await resumeService.getResumeInfo(ADMIN_ID);
     if (!resume) {
       return res.status(404).json({ error: 'No resume found' });
     }
@@ -305,13 +261,12 @@ const getAdminResume = async (req, res) => {
   }
 };
 
-// Get All Work Experiences
 const getWorkExperiences = async (req, res) => {
   const userId = req.session.userId;
 
   try {
-    const resume = await Resume.findByUserId(userId);
-    const workExperiences = await WorkExperience.findByResumeId(resume.id);
+    const resume = await resumeService.getResumeInfo(userId);
+    const workExperiences = await resumeService.getWorkExperiences(resume.id);
     res.status(200).send(workExperiences);
   } catch (error) {
     console.error(error);
@@ -319,13 +274,12 @@ const getWorkExperiences = async (req, res) => {
   }
 };
 
-// Get All Educations
 const getEducations = async (req, res) => {
   const userId = req.session.userId;
 
   try {
-    const resume = await Resume.findByUserId(userId);
-    const educations = await Education.findByResumeId(resume.id);
+    const resume = await resumeService.getResumeInfo(userId);
+    const educations = await resumeService.getEducations(resume.id);
     res.status(200).send(educations);
   } catch (error) {
     console.error(error);
@@ -333,13 +287,12 @@ const getEducations = async (req, res) => {
   }
 };
 
-// Get All Projects
 const getProjects = async (req, res) => {
   const userId = req.session.userId;
 
   try {
-    const resume = await Resume.findByUserId(userId);
-    const projects = await Project.findByResumeId(resume.id);
+    const resume = await resumeService.getResumeInfo(userId);
+    const projects = await resumeService.getProjects(resume.id);
     res.status(200).send(projects);
   } catch (error) {
     console.error(error);

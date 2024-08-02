@@ -50,7 +50,7 @@
       </div>
     </main>
     <footer class="footer">
-      <a id="copyright" href="javascript:void(0);"><span>Copyright © 2024</span></a>
+      <a id="copyright" class="modal-link" href="/copyright-content"><span>Copyright © 2024</span></a>
       <span>Made with &#10084;&#65039; by Stanimir Monev</span>
       <span>
         <%- include('partials/socialMedia', {id:'contacts', css:'social-media-icons-footer', section:'footer'}); %>
@@ -58,23 +58,8 @@
     </footer>
   </div>
 
-  <div id="cookieNotice">
-    <p>We use cookies to ensure that we give you the best experience on our website. By continuing to use this site, you consent to our use of cookies. 
-      <a id="learnMore" href="javascript:void(0);">Learn more</a>.
-    </p>
-    <button id="acceptCookies">Accept All</button>
-    <button id="customizeCookies">Customize</button>
-    <div id="cookiePreferences" style="display:none;">
-      <p>Select which cookies you want to allow:</p>
-      <label><input type="checkbox" id="essentialCookies" checked disabled> Essential Cookies</label><br>
-      <label><input type="checkbox" id="functionalCookies"> Functional Cookies</label><br>
-      <label><input type="checkbox" id="analyticsCookies"> Analytics Cookies</label><br>
-      <button id="savePreferences">Save Preferences</button>
-    </div>
-  </div>
-  
-  
-  
+  <%- include('partials/cookiesBanner'); %>
+  <%- include('partials/modal'); %>
     
   <script src="/assets/javascript/resumeDownload.js"></script>
 </body>

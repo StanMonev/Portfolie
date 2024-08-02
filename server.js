@@ -8,7 +8,7 @@ const passport = require('passport');
 const flash = require('connect-flash');
 
 const app = express();
-const pagesRouter = require("./routes/logic");
+const pagesRouter = require("./routes/index");
 
 app.set('view engine', 'ejs');
 

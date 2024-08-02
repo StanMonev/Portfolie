@@ -1,46 +1,41 @@
-const bcrypt = require('bcrypt');
-const { Pool } = require('pg');
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
-});
+const authService = require('../services/authService');
 
-// Function to compare passwords
-const comparePassword = async (password, hash) => {
-    return await bcrypt.compare(password, hash);
+const ensureAuthenticated = (req, res, next) => {
+  if (req.session.userId) {
+    return next();
+  }
+  res.redirect('/login');
 };
 
-// Middleware to check if the user is authenticated
-const ensureAuthenticated = (req, res, next) => {
-    if (req.session.userId) {
-        return next();
+const loginUser = async (req, res) => {
+  const { username, password, rememberMe } = req.body;
+  const user = await authService.authenticateUser(username, password);
+  if (user) {
+    req.session.userId = user.id;
+    if (rememberMe) {
+      req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000;
+    } else {
+      req.session.cookie.expires = false;
+    }
+    res.redirect('/admin');
+  } else {
+    console.log('Authentication failed');
+    req.flash('error', 'Invalid username or password');
+    res.redirect('/login');
+  }
+};
+
+const logoutUser = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error(err);
     }
     res.redirect('/login');
-};
-
-// Function to authenticate user login
-const authenticateUser = async (username, password) => {
-    try {
-        const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
-        if (result.rows.length === 0) {
-            return null;
-        }
-
-        const user = result.rows[0];
-        const isPasswordMatch = await comparePassword(password, user.password);
-        if (isPasswordMatch) {
-            return user;
-        } else {
-            return null;
-        }
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
+  });
 };
 
 module.exports = {
-    comparePassword,
-    ensureAuthenticated,
-    authenticateUser
+  ensureAuthenticated,
+  loginUser,
+  logoutUser
 };

@@ -4,7 +4,6 @@
  */
 exports.up = function(knex) {
     return knex.schema
-        // Create users table if it doesn't exist
         .createTable('users', function(table) {
             table.increments('id').primary();
             table.string('username').notNullable().unique();
