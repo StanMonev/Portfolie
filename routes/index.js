@@ -1,3 +1,19 @@
+/**
+ * index.js (Routes)
+ *
+ * This file defines the routes for the application, including handling requests for static pages,
+ * user authentication, resume management, cookie preferences, and analytics tracking.
+ * It acts as a central routing mechanism that delegates requests to the appropriate controllers.
+ *
+ * Routes Overview:
+ * - Main Pages: Serves static pages like the homepage, terms and conditions, privacy policy, etc.
+ * - Admin Pages: Routes that require authentication, such as the admin dashboard and resume editor.
+ * - Resume API: Handles CRUD operations for resumes, work experiences, education, and projects.
+ * - Cookie and Analytics API: Manages user cookie preferences and tracks analytics data.
+ * - Authentication: Manages user login and logout functionality.
+ * - Debugging and Testing: Provides routes for debugging and testing purposes.
+ */
+
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
@@ -7,6 +23,7 @@ const pagesController = require('../controllers/pagesController');
 const resumeController = require('../controllers/resumeController');
 const cookieController = require('../controllers/cookieController');
 
+// Validation middleware for contact form
 const sendEmailErrors = [
   check('name').notEmpty().withMessage('Name is required'),
   check('email').isEmail().withMessage('Invalid Email Address'),
@@ -14,20 +31,33 @@ const sendEmailErrors = [
   check('message').notEmpty().withMessage('Message is required')
 ];
 
-///////////////////// MAIN //////////////////////////
+///////////////////// MAIN ROUTES //////////////////////////
 
+/**
+ * Main routes for serving static pages.
+ */
 router.get('/', pagesController.getHomePage);
 router.get('/tac-policy-content', pagesController.getTACPolicyContent);
 router.get('/privacy-policy-content', pagesController.getPrivacyPolicyContent);
 router.get('/cookie-policy-content', pagesController.getCookiePolicyContent);
 router.get('/copyright-content', pagesController.getCopyrightContent);
 
+/**
+ * Admin routes requiring authentication.
+ */
 router.get('/admin', authController.ensureAuthenticated, pagesController.getAdminPage);
 router.get('/admin/resume_editor', authController.ensureAuthenticated, pagesController.getResumeEditorPage);
 
+/**
+ * Route for handling contact form submissions with validation.
+ */
 router.post('/contact', sendEmailErrors, pagesController.sendEmailFunction);
 
-// Resume Routes
+///////////////////// RESUME ROUTES //////////////////////////
+
+/**
+ * API routes for managing resumes, work experiences, education, and projects.
+ */
 router.post('/api/resume/save', resumeController.saveOrUpdateResume);
 router.get('/api/resume', resumeController.getResumeInfo);
 router.post('/api/resume/work-experience', resumeController.addOrUpdateWorkExperience);
@@ -47,24 +77,35 @@ router.get('/api/resume/educations-admin', resumeController.getAdminEducations);
 router.get('/api/resume/work-experiences-admin', resumeController.getAdminWorkExperiences);
 router.get('/api/resume/admin', resumeController.getAdminResume);
 
-// Cookie and Analytics Routes
+///////////////////// COOKIE AND ANALYTICS ROUTES //////////////////////////
+
+/**
+ * API routes for tracking analytics and managing cookie preferences.
+ */
 router.post('/api/track', cookieController.trackAnalytics);
 router.post('/api/set-preference', cookieController.setCookiePreference);
 router.get('/api/analytics', cookieController.getAnalyticsData);
 
-// Authentication Routes
+///////////////////// AUTHENTICATION ROUTES //////////////////////////
+
+/**
+ * Routes for user login, logout, and rendering the login page.
+ */
 router.get('/login', (req, res) => {
   res.render('login', { message: req.flash('error') });
 });
-
 router.post('/login', authController.loginUser);
-
 router.get('/logout', authController.logoutUser);
 
-///////////////////// TESTING //////////////////////////
+///////////////////// TESTING ROUTES //////////////////////////
 
+/**
+ * Debugging and testing routes.
+ */
 router.get('/debug', pagesController.getDebugMode);
-
 router.get('/emailform', pagesController.getEmailForm);
+
+
+///////////////////// EXPORT //////////////////////////
 
 module.exports = router;

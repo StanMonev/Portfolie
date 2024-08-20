@@ -1,11 +1,37 @@
+/**
+ * admin.js
+ *
+ * This file contains the frontend logic for the admin dashboard. It handles fetching analytics data from the server,
+ * rendering various charts using the Chart.js library, and managing user interactions like redirecting to the resume editor
+ * or logging out.
+ *
+ * Key functionalities:
+ * - Fetch and render analytics data for daily, weekly, monthly, and country-based visitors.
+ * - Provide navigation actions for the resume editor and logout functionalities.
+ *
+ * This script ensures that the admin dashboard displays relevant data in a visually appealing manner and facilitates easy navigation for the admin.
+ */
+
+/**
+ * Fetches the analytics data from the server.
+ * 
+ * @returns {Promise<Object>} - A promise that resolves to the analytics data in JSON format.
+ */
 async function fetchAnalyticsData() {
     const response = await fetch('/api/analytics');
     return response.json();
 }
 
+/**
+ * Renders charts on the admin dashboard using the fetched analytics data.
+ * This function creates charts for daily visitors, weekly visitors, monthly visitors, and visitors by country.
+ * 
+ * @returns {Promise<void>} - A promise that resolves once all charts are rendered.
+ */
 async function renderCharts() {
     const data = await fetchAnalyticsData();
 
+    // Render daily visitors line chart
     const dailyCtx = document.getElementById('dailyChart').getContext('2d');
     new Chart(dailyCtx, {
         type: 'line',
@@ -26,6 +52,7 @@ async function renderCharts() {
         }
     });
 
+    // Render weekly visitors bar chart
     const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
     new Chart(weeklyCtx, {
         type: 'bar',
@@ -47,6 +74,7 @@ async function renderCharts() {
         }
     });
 
+    // Render monthly visitors bar chart
     const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
     new Chart(monthlyCtx, {
         type: 'bar',
@@ -68,6 +96,7 @@ async function renderCharts() {
         }
     });
 
+    // Render visitors by country pie chart
     const countryCtx = document.getElementById('countryChart').getContext('2d');
     new Chart(countryCtx, {
         type: 'pie',
@@ -98,14 +127,29 @@ async function renderCharts() {
     });
 }
 
+/**
+ * Redirects the user to the resume editor page.
+ * 
+ * @returns {void}
+ */
 function redirectToResumeEditor() {
     window.location.href = "/admin/resume_editor";
 }
 
+/**
+ * Logs the user out by redirecting them to the logout endpoint.
+ * 
+ * @returns {void}
+ */
 function logout() {
     window.location.href = "/logout";
 }
 
+/**
+ * Initializes the admin dashboard by rendering the charts when the DOM is fully loaded.
+ * 
+ * @returns {void}
+ */
 document.addEventListener('DOMContentLoaded', () => {
     renderCharts();
 });

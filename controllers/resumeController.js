@@ -1,7 +1,31 @@
-const resumeService = require('../services/resumeService');
+/**
+ * resumeController.js
+ *
+ * This file contains controller functions responsible for managing resume-related data,
+ * including CRUD operations for resumes, work experiences, education entries, and projects.
+ * The controller interacts with the resumeService to perform these operations and handle
+ * both user-specific and admin-specific requests.
+ *
+ * Key functionalities:
+ * - Save or update resume information for a user.
+ * - Add, update, or delete work experiences, education entries, and projects.
+ * - Retrieve resume information, work experiences, education entries, and projects for users and admins.
+ *
+ * This controller ensures that resume data is managed effectively and that requests are handled
+ * securely and efficiently.
+ */
 
+const resumeService = require('../services/resumeService');
 const ADMIN_ID = 1;
 
+
+/**
+ * Saves or updates the resume information for the logged-in user.
+ * 
+ * @param {Object} req - The request object containing resume data in the body.
+ * @param {Object} res - The response object used to send back the result.
+ * @returns {Promise<void>} - Sends a response with the status of the operation.
+ */
 const saveOrUpdateResume = async (req, res) => {
   const userId = req.session.userId;
   const {
@@ -32,6 +56,14 @@ const saveOrUpdateResume = async (req, res) => {
   }
 };
 
+
+/**
+ * Adds or updates a work experience entry for the logged-in user's resume.
+ * 
+ * @param {Object} req - The request object containing work experience data in the body.
+ * @param {Object} res - The response object used to send back the result.
+ * @returns {Promise<void>} - Sends a response with the status of the operation.
+ */
 const addOrUpdateWorkExperience = async (req, res) => {
   const userId = req.session.userId;
   const { id, jobTitle, jobDescription, jobBeginDate, stillWorking, jobEndDate } = req.body;
@@ -57,6 +89,13 @@ const addOrUpdateWorkExperience = async (req, res) => {
   }
 };
 
+/**
+ * Deletes a work experience entry from the logged-in user's resume.
+ * 
+ * @param {Object} req - The request object containing the work experience ID in the body.
+ * @param {Object} res - The response object used to send back the result.
+ * @returns {Promise<void>} - Sends a response with the status of the operation.
+ */
 const deleteWorkExperience = async (req, res) => {
   const userId = req.session.userId;
   const { id } = req.body;
@@ -73,6 +112,13 @@ const deleteWorkExperience = async (req, res) => {
   }
 };
 
+/**
+ * Adds or updates an education entry for the logged-in user's resume.
+ * 
+ * @param {Object} req - The request object containing education data in the body.
+ * @param {Object} res - The response object used to send back the result.
+ * @returns {Promise<void>} - Sends a response with the status of the operation.
+ */
 const addOrUpdateEducation = async (req, res) => {
   const userId = req.session.userId;
   const { id, name, description, fromDate, stillStudying, untilDate } = req.body;
@@ -98,6 +144,14 @@ const addOrUpdateEducation = async (req, res) => {
   }
 };
 
+
+/**
+ * Deletes an education entry from the logged-in user's resume.
+ * 
+ * @param {Object} req - The request object containing the education ID in the body.
+ * @param {Object} res - The response object used to send back the result.
+ * @returns {Promise<void>} - Sends a response with the status of the operation.
+ */
 const deleteEducation = async (req, res) => {
   const userId = req.session.userId;
   const { id } = req.body;
@@ -114,6 +168,13 @@ const deleteEducation = async (req, res) => {
   }
 };
 
+/**
+ * Adds or updates a project entry for the logged-in user's resume.
+ * 
+ * @param {Object} req - The request object containing project data in the body.
+ * @param {Object} res - The response object used to send back the result.
+ * @returns {Promise<void>} - Sends a response with the status of the operation.
+ */
 const addOrUpdateProject = async (req, res) => {
   const userId = req.session.userId;
   const { id, name, description } = req.body;
@@ -136,6 +197,13 @@ const addOrUpdateProject = async (req, res) => {
   }
 };
 
+/**
+ * Deletes a project entry from the logged-in user's resume.
+ * 
+ * @param {Object} req - The request object containing the project ID in the body.
+ * @param {Object} res - The response object used to send back the result.
+ * @returns {Promise<void>} - Sends a response with the status of the operation.
+ */
 const deleteProject = async (req, res) => {
   const userId = req.session.userId;
   const { id } = req.body;
@@ -152,6 +220,13 @@ const deleteProject = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves the resume information for the logged-in user.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object used to send back the resume information.
+ * @returns {Promise<void>} - Sends a response with the resume data if found.
+ */
 const getResumeInfo = async (req, res) => {
   const userId = req.session.userId;
 
@@ -167,6 +242,13 @@ const getResumeInfo = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves a specific work experience entry for the logged-in user's resume.
+ * 
+ * @param {Object} req - The request object containing the work experience ID in the URL parameters.
+ * @param {Object} res - The response object used to send back the work experience data.
+ * @returns {Promise<void>} - Sends a response with the work experience data if found.
+ */
 const getWorkExperience = async (req, res) => {
   const userId = req.session.userId;
   const { id } = req.params;
@@ -184,6 +266,14 @@ const getWorkExperience = async (req, res) => {
   }
 };
 
+
+/**
+ * Retrieves a specific education entry for the logged-in user's resume.
+ * 
+ * @param {Object} req - The request object containing the education ID in the URL parameters.
+ * @param {Object} res - The response object used to send back the education data.
+ * @returns {Promise<void>} - Sends a response with the education data if found.
+ */
 const getEducation = async (req, res) => {
   const userId = req.session.userId;
   const { id } = req.params;
@@ -201,6 +291,14 @@ const getEducation = async (req, res) => {
   }
 };
 
+
+/**
+ * Retrieves a specific project entry for the logged-in user's resume.
+ * 
+ * @param {Object} req - The request object containing the project ID in the URL parameters.
+ * @param {Object} res - The response object used to send back the project data.
+ * @returns {Promise<void>} - Sends a response with the project data if found.
+ */
 const getProject = async (req, res) => {
   const userId = req.session.userId;
   const { id } = req.params;
@@ -218,6 +316,14 @@ const getProject = async (req, res) => {
   }
 };
 
+
+/**
+ * Retrieves all work experiences associated with the admin's resume.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object used to send back the work experience data.
+ * @returns {Promise<void>} - Sends a response with the work experiences data.
+ */
 const getAdminWorkExperiences = async (req, res) => {
   try {
     const experiences = await resumeService.getWorkExperiences(ADMIN_ID);
@@ -228,6 +334,14 @@ const getAdminWorkExperiences = async (req, res) => {
   }
 };
 
+
+/**
+ * Retrieves all education entries associated with the admin's resume.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object used to send back the education data.
+ * @returns {Promise<void>} - Sends a response with the education data.
+ */
 const getAdminEducations = async (req, res) => {
   try {
     const educations = await resumeService.getEducations(ADMIN_ID);
@@ -238,6 +352,14 @@ const getAdminEducations = async (req, res) => {
   }
 };
 
+
+/**
+ * Retrieves all projects associated with the admin's resume.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object used to send back the project data.
+ * @returns {Promise<void>} - Sends a response with the projects data.
+ */
 const getAdminProjects = async (req, res) => {
   try {
     const projects = await resumeService.getProjects(ADMIN_ID);
@@ -248,6 +370,14 @@ const getAdminProjects = async (req, res) => {
   }
 };
 
+
+/**
+ * Retrieves the resume information for the admin user.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object used to send back the resume information.
+ * @returns {Promise<void>} - Sends a response with the resume data if found.
+ */
 const getAdminResume = async (req, res) => {
   try {
     const resume = await resumeService.getResumeInfo(ADMIN_ID);
@@ -261,6 +391,14 @@ const getAdminResume = async (req, res) => {
   }
 };
 
+
+/**
+ * Retrieves all work experiences associated with the logged-in user's resume.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object used to send back the work experience data.
+ * @returns {Promise<void>} - Sends a response with the work experiences data.
+ */
 const getWorkExperiences = async (req, res) => {
   const userId = req.session.userId;
 
@@ -274,6 +412,14 @@ const getWorkExperiences = async (req, res) => {
   }
 };
 
+
+/**
+ * Retrieves all education entries associated with the logged-in user's resume.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object used to send back the education data.
+ * @returns {Promise<void>} - Sends a response with the education data.
+ */
 const getEducations = async (req, res) => {
   const userId = req.session.userId;
 
@@ -287,6 +433,14 @@ const getEducations = async (req, res) => {
   }
 };
 
+
+/**
+ * Retrieves all projects associated with the logged-in user's resume.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object used to send back the project data.
+ * @returns {Promise<void>} - Sends a response with the projects data.
+ */
 const getProjects = async (req, res) => {
   const userId = req.session.userId;
 
@@ -299,6 +453,11 @@ const getProjects = async (req, res) => {
     res.status(500).send({ message: 'Failed to retrieve projects' });
   }
 };
+
+
+// ///////
+// Export
+// ///////
 
 module.exports = {
   saveOrUpdateResume,

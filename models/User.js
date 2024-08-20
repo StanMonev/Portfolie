@@ -1,5 +1,21 @@
 const knex = require('../db/knex');
 
+
+/**
+ * User.js
+ *
+ * This file defines the User model, which provides methods to interact with the 'users' table in the database.
+ * The User model includes methods for finding, creating, updating, and deleting user records.
+ *
+ * Key functionalities:
+ * - Retrieve user records by user ID or by username.
+ * - Insert new user records into the database.
+ * - Update existing user records.
+ * - Delete user records from the database.
+ *
+ * This model serves as an abstraction layer between the database and the application logic,
+ * allowing for easy and consistent interaction with user-related data.
+ */
 class User {
     static async findById(id) {
         return knex('users').where({ id }).first();
