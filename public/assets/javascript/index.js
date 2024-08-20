@@ -407,7 +407,7 @@ const handleCookieConsent = (essential, analytics) => {
   setCookie('functionalCookies', essential, 365);
   setCookie('analyticsCookies', analytics, 365);
   saveCookiePreference('essentialCookies', essential);
-  saveCookiePreference('functionalCookies', functional);
+  saveCookiePreference('functionalCookies', essential);
   saveCookiePreference('analyticsCookies', analytics);
   document.getElementById('cookieNotice').style.display = 'none';
   loadCookies();
