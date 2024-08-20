@@ -1,14 +1,47 @@
+/**
+ * server.js
+ *
+ * This file serves as the entry point for the Resume Website Application.
+ * It is responsible for setting up the server, configuring middleware,
+ * managing sessions, handling authentication, and routing requests to
+ * the appropriate route handlers.
+ *
+ * Key functionalities:
+ * - Load environment variables from a .env file in non-production environments.
+ * - Initialize the Express application and configure it with middleware such as
+ *   body-parser, session management, Passport.js for authentication, and flash messages.
+ * - Set up the EJS view engine for rendering HTML views.
+ * - Serve static files from the "public" directory.
+ * - Conditionally trust the first proxy in production environments.
+ * - Import and use route handlers defined in the routes/index.js file.
+ * - Start the server and listen on the port specified in the environment variables.
+ *
+ * This file is essential for the overall operation of the application, 
+ * acting as the central hub where all initial configurations and setups are performed.
+ */
+
+
+// /////////////////////////////////////////////////////////////
+// Initializing neccesary constants for the application to run.
+// /////////////////////////////////////////////////////////////
+
+
+// .env file should only be used in development
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
+
 const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
-
-const app = express();
 const pagesRouter = require("./routes/index");
+const app = express();
+
+// /////////////////////////////
+// General server logic
+// /////////////////////////////
 
 app.set('view engine', 'ejs');
 
@@ -16,6 +49,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
+
+// "trust proxy" must be true, so that the website will be trusted in production and the cookies logic will work without errors
 if(process.env.NODE_ENV === 'production') app.set('trust proxy', true);
 
 app.use(session({

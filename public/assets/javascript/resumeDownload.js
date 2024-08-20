@@ -1,7 +1,25 @@
+/**
+ * resumeDownload.js
+ *
+ * This script handles the generation and download of a resume as a PDF document.
+ * It fetches the resume data from the server, updates the preview, and applies 
+ * a watermark to the document before converting it into a PDF for download.
+ *
+ * Key functionalities:
+ * - Fetch and display resume details, work experiences, education entries, and projects.
+ * - Generate a PDF of the resume with a custom watermark.
+ * - Handle user interactions like clicking the download button.
+ */
+
 document.addEventListener('DOMContentLoaded', function() {
     updatePreview();
 });
 
+/**
+ * Event listener for the download button. When clicked, it generates a PDF of the resume with a watermark.
+ * 
+ * @returns {void}
+ */
 document.getElementById('downloadButton').addEventListener('click', function () {
     const element = document.getElementById('cvPreview');
     const style = document.createElement('style');
@@ -27,7 +45,8 @@ document.getElementById('downloadButton').addEventListener('click', function () 
         }
     `;
 
-    document.head.appendChild(style);
+    document.head.appendChild(style); // Add watermark style to the document
+
     const opt = {
         margin: 5,
         filename: 'StanimirMonevResume.pdf',
@@ -35,11 +54,18 @@ document.getElementById('downloadButton').addEventListener('click', function () 
         html2canvas: { scale: 2 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
+
+    // Generate the PDF and then remove the watermark style after the download
     html2pdf().set(opt).from(element).save().then(() => {
         document.head.removeChild(style);
     });
 });
 
+/**
+ * Fetches the resume data from the server and updates the preview section with the latest information.
+ * 
+ * @returns {Promise<void>}
+ */
 async function updatePreview() {
     try {
         const data = await fetchData('/api/resume/admin');
@@ -69,11 +95,17 @@ async function updatePreview() {
         console.error('Error:', error);
     }
 
+    // Update other sections of the resume
     updateEducationPreview();
     updateProjectsPreview();
     updateWorkExperiencePreview();
 }
 
+/**
+ * Fetches and displays the education entries associated with the resume in the preview section.
+ * 
+ * @returns {Promise<void>}
+ */
 async function updateEducationPreview() {
     try {
         const data = await fetchData('/api/resume/educations-admin');
@@ -104,6 +136,11 @@ async function updateEducationPreview() {
     }
 }
 
+/**
+ * Fetches and displays the project entries associated with the resume in the preview section.
+ * 
+ * @returns {Promise<void>}
+ */
 async function updateProjectsPreview() {
     try {
         const data = await fetchData('/api/resume/projects-admin');
@@ -126,6 +163,11 @@ async function updateProjectsPreview() {
     }
 }
 
+/**
+ * Fetches and displays the work experience entries associated with the resume in the preview section.
+ * 
+ * @returns {Promise<void>}
+ */
 async function updateWorkExperiencePreview() {
     try {
         const data = await fetchData('/api/resume/work-experiences-admin');
@@ -143,7 +185,7 @@ async function updateWorkExperiencePreview() {
             item.innerHTML = `
                 <div>
                     <strong class="title-main">${mainTitle}</strong><span class="title-sub">${subTitle}</span>
-                    <span class="dates">${beginDate.toLocaleString('default', { month: 'long' })}, ${beginDate.getFullYear()}  - ${endDateString}</span>
+                    <span class="dates">${beginDate.toLocaleString('default', { month: 'long' })}, ${beginDate.getFullYear()} - ${endDateString}</span>
                 </div>
                 <ul>${formatList(exp.job_description)}</ul>
             `;

@@ -1,3 +1,21 @@
+/**
+ * index.js
+ *
+ * This file contains the main frontend logic for initializing and handling various interactions on the website.
+ * It includes functions for setting up navigation, handling form submissions, managing modals, controlling the matrix background animation,
+ * managing cookies and policies, and ensuring smooth scrolling behavior.
+ *
+ * Key functionalities:
+ * - Setup event listeners and initialize page components on DOMContentLoaded.
+ * - Handle email form submission with validation and error handling.
+ * - Manage navigation links for smooth scrolling to sections.
+ * - Implement modal display and hide functionality.
+ * - Manage user cookie preferences and load cookies accordingly.
+ * - Handle dynamic background effects like the matrix animation.
+ *
+ * This script is essential for ensuring that the website's interactive elements function correctly and that user actions are handled smoothly.
+ */
+
 document.addEventListener("DOMContentLoaded", () => {
   setupNavigationLinks();
   sendEmailHandler();
@@ -9,6 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeLinks();
 });
 
+/**
+ * Toggles the visibility of the download button.
+ * 
+ * @returns {void}
+ */
 const toggleDownloadButton = () => {
   const element = document.getElementById("downloadButton");
   if (!element) return;
@@ -16,6 +39,11 @@ const toggleDownloadButton = () => {
   element.classList.toggle("visible");
 };
 
+/**
+ * Sets up smooth scrolling for navigation links in the main navbar.
+ * 
+ * @returns {void}
+ */
 const setupNavigationLinks = () => {
   document.querySelectorAll('#mainNavbar .navbar-list .nav-item a').forEach(link => {
     link.addEventListener('click', e => {
@@ -26,6 +54,11 @@ const setupNavigationLinks = () => {
   });
 };
 
+/**
+ * Handles the email form submission, including validation for terms acceptance.
+ * 
+ * @returns {void}
+ */
 const sendEmailHandler = () => {
   const form = document.getElementById("sendEmailForm");
   const termsCheckbox = document.getElementById('terms');
@@ -52,6 +85,12 @@ const sendEmailHandler = () => {
   });
 };
 
+/**
+ * Sends the email form data to the server using an XMLHttpRequest.
+ * 
+ * @param {HTMLFormElement} form - The form element containing the email data.
+ * @returns {void}
+ */
 const sendEmail = form => {
   const xhr = new XMLHttpRequest();
   xhr.open("POST", "/contact");
@@ -71,6 +110,13 @@ const sendEmail = form => {
   xhr.send(JSON.stringify(jsonData));
 };
 
+/**
+ * Handles the response from the email form submission.
+ * 
+ * @param {XMLHttpRequest} xhr - The XMLHttpRequest object containing the response.
+ * @param {HTMLFormElement} form - The form element that was submitted.
+ * @returns {void}
+ */
 const handleXhrResponse = (xhr, form) => {
   const response = JSON.parse(xhr.responseText);
 
@@ -91,6 +137,13 @@ const handleXhrResponse = (xhr, form) => {
   }
 };
 
+/**
+ * Displays a message to the user in a styled alert box.
+ * 
+ * @param {string} alert - The type of alert ('success' or 'error').
+ * @param {string} message - The message to display in the alert box.
+ * @returns {void}
+ */
 const showMessage = (alert, message) => {
   const messageEl = $(`.alert-box.${alert}`);
   const container = messageEl.parent();
@@ -107,6 +160,12 @@ const showMessage = (alert, message) => {
   container.fadeIn(300).delay(1500).fadeOut(400);
 };
 
+/**
+ * Handles validation errors by displaying error messages next to the corresponding form fields.
+ * 
+ * @param {Object} errors - An object containing validation errors keyed by field name.
+ * @returns {void}
+ */
 const handleValidationErrors = errors => {
   clearErrors();
 
@@ -125,32 +184,61 @@ const handleValidationErrors = errors => {
   });
 };
 
+/**
+ * Clears the validation error from a specific form input field.
+ * 
+ * @param {HTMLElement} input - The input element to clear the error from.
+ * @returns {void}
+ */
 const clearError = input => {
   input.classList.remove("is-invalid");
   input.nextElementSibling.nextElementSibling.classList.add("hidden");
 };
 
+/**
+ * Clears all validation errors from the form.
+ * 
+ * @returns {void}
+ */
 const clearErrors = () => {
   document.querySelectorAll(".is-invalid").forEach(clearError);
 };
 
+/**
+ * Checks if any input fields or text areas in the contact form are filled, and applies appropriate styling.
+ * 
+ * @returns {void}
+ */
 const checkInputFilled = () => {
   const formContainer = document.querySelector('.contact-container');
   const inputFields = formContainer.querySelectorAll('input:not(#sendEmailBtn)');
   const textareaField = formContainer.querySelector('textarea');
 
   inputFields.forEach(input => {
-    input.addEventListener('input', e => checkFilled(e, formContainer, inputFields, textareaField));
+    input.addEventListener('input', e => checkFilled(e, inputFields, textareaField));
   });
 
-  textareaField.addEventListener('input', e => checkFilled(e, formContainer, inputFields, textareaField));
+  textareaField.addEventListener('input', e => checkFilled(e, inputFields, textareaField));
 };
 
-const checkFilled = (e, formContainer, inputFields, textareaField) => {
+/**
+ * Checks if any fields in the form are filled and toggles a class accordingly.
+ * 
+ * @param {Event} e - The event object from the input event.
+ * @param {NodeList} inputFields - A list of input elements in the form.
+ * @param {HTMLElement} textareaField - The textarea element in the form.
+ * @returns {void}
+ */
+const checkFilled = (e, inputFields, textareaField) => {
   const anyFieldFilled = [...inputFields].some(input => input.value.trim() !== '') || textareaField.value.trim() !== '';
   e.target.classList.toggle('filled', anyFieldFilled);
 };
 
+/**
+ * Sets up the matrix background animation and attaches resize observers to handle screen changes.
+ * 
+ * @returns {void}
+ */
 const setupMatrixBackground = async () => {
   let initID = runMatrixBackground();
   localStorage.setItem("matrixBackgroundID", initID);
@@ -160,6 +248,11 @@ const setupMatrixBackground = async () => {
   screen.orientation.addEventListener("change", resetMatrix);
 };
 
+/**
+ * Resets the matrix background animation by clearing and restarting the interval.
+ * 
+ * @returns {void}
+ */
 const resetMatrix = () => {
   let id = localStorage.getItem("matrixBackgroundID");
   if (id !== undefined) clearInterval(id);
@@ -167,6 +260,11 @@ const resetMatrix = () => {
   localStorage.setItem("matrixBackgroundID", id);
 };
 
+/**
+ * Runs the matrix background animation by drawing letters on the canvas.
+ * 
+ * @returns {number} - The interval ID for the animation loop.
+ */
 const runMatrixBackground = () => {
   const canvas = document.querySelector('.matrix');
   const ctx = canvas.getContext('2d');
@@ -185,6 +283,16 @@ const runMatrixBackground = () => {
   return loopMatrixBackground(ctx, canvas, drops, letters, fontSize);
 };
 
+/**
+ * Loops the matrix background animation, continuously drawing new letters on the canvas.
+ * 
+ * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+ * @param {HTMLCanvasElement} canvas - The canvas element on which to draw the animation.
+ * @param {Array<number>} drops - An array representing the positions of the drops.
+ * @param {Array<string>} letters - An array of letters to be drawn in the animation.
+ * @param {number} fontSize - The font size for the letters in the animation.
+ * @returns {number} - The interval ID for the animation loop.
+ */
 const loopMatrixBackground = (ctx, canvas, drops, letters, fontSize) => {
   return setInterval(() => {
     ctx.fillStyle = 'rgba(30, 30, 30, .1)';
@@ -203,11 +311,22 @@ const loopMatrixBackground = (ctx, canvas, drops, letters, fontSize) => {
   }, 25);
 };
 
+/**
+ * Sets the height of the canvas element to match the maximum scroll height of the document.
+ * 
+ * @param {HTMLCanvasElement} canvas - The canvas element whose height is to be set.
+ * @returns {void}
+ */
 const setCanvasHeight = canvas => {
   const height = Math.max(document.body.scrollHeight, document.documentElement.clientHeight);
   canvas.height = height;
 };
 
+/**
+ * Sets up the modal functionality, including opening and closing the modal on specific events.
+ * 
+ * @returns {void}
+ */
 const setupModal = () => {
   const modal = document.getElementById('modal');
   const modalCloseTop = document.getElementById('modalCloseTop');
@@ -224,6 +343,11 @@ const setupModal = () => {
   };
 };
 
+/**
+ * Sets up event listeners for links that open modals, loading the corresponding content.
+ * 
+ * @returns {void}
+ */
 const setupPolicies = () => {
   document.querySelectorAll('.modal-link').forEach(link => {
     link.addEventListener('click', event => {
@@ -233,6 +357,11 @@ const setupPolicies = () => {
   });
 };
 
+/**
+ * Sets up cookie management functionality, including handling user preferences for cookies.
+ * 
+ * @returns {void}
+ */
 const setupCookies = () => {
   const cookieNotice = document.getElementById('cookieNotice');
   const acceptCookies = document.getElementById('acceptCookies');
@@ -248,11 +377,11 @@ const setupCookies = () => {
   }
 
   acceptCookies.addEventListener('click', () => {
-    handleCookieConsent(true, true, true);
+    handleCookieConsent(true, true);
   });
 
   rejectCookies.addEventListener('click', () => {
-    handleCookieConsent(true, false, false);
+    handleCookieConsent(true, false);
   });
 
   customizeCookies.addEventListener('click', () => {
@@ -260,16 +389,22 @@ const setupCookies = () => {
   });
 
   savePreferences.addEventListener('click', () => {
-    const functionalAllowed = document.getElementById('functionalCookies').checked;
     const analyticsAllowed = document.getElementById('analyticsCookies').checked;
-    handleCookieConsent(true, functionalAllowed, analyticsAllowed);
+    handleCookieConsent(true, analyticsAllowed);
   });
 };
 
-const handleCookieConsent = (essential, functional, analytics) => {
+/**
+ * Handles the user's cookie consent preferences and saves them accordingly.
+ * 
+ * @param {boolean} essential - Whether essential and functional cookies are allowed.
+ * @param {boolean} analytics - Whether analytics cookies are allowed.
+ * @returns {void}
+ */
+const handleCookieConsent = (essential, analytics) => {
   localStorage.setItem('cookiesAccepted', 'true');
   setCookie('essentialCookies', essential, 365);
-  setCookie('functionalCookies', functional, 365);
+  setCookie('functionalCookies', essential, 365);
   setCookie('analyticsCookies', analytics, 365);
   saveCookiePreference('essentialCookies', essential);
   saveCookiePreference('functionalCookies', functional);
@@ -278,6 +413,11 @@ const handleCookieConsent = (essential, functional, analytics) => {
   loadCookies();
 };
 
+/**
+ * Sends analytics data to the server if analytics cookies are allowed.
+ * 
+ * @returns {Promise<void>} - A promise that resolves when the data is successfully sent.
+ */
 const sendAnalyticsData = async () => {
   try {
     await postData('/api/track', {
@@ -292,6 +432,13 @@ const sendAnalyticsData = async () => {
   }
 };
 
+/**
+ * Saves the user's cookie preference by sending it to the server.
+ * 
+ * @param {string} cookieName - The name of the cookie.
+ * @param {boolean} cookieValue - The value of the cookie (true or false).
+ * @returns {Promise<void>} - A promise that resolves when the preference is successfully saved.
+ */
 const saveCookiePreference = async (cookieName, cookieValue) => {
   try {
     await postData('/api/set-preference', {
@@ -304,6 +451,12 @@ const saveCookiePreference = async (cookieName, cookieValue) => {
   }
 };
 
+/**
+ * Loads and displays a policy in the modal based on the provided endpoint.
+ * 
+ * @param {string} endpoint - The URL endpoint for the policy content.
+ * @returns {Promise<void>} - A promise that resolves when the policy content is successfully loaded.
+ */
 const showPolicy = async endpoint => {
   try {
     const modalBody = document.getElementById('modalBody');
@@ -315,6 +468,11 @@ const showPolicy = async endpoint => {
   }
 };
 
+/**
+ * Initializes smooth scrolling behavior for links on the page.
+ * 
+ * @returns {void}
+ */
 const initializeLinks = () => {
   document.querySelectorAll('.links a').forEach(anchor => {
     anchor.addEventListener('click', e => {
@@ -326,6 +484,13 @@ const initializeLinks = () => {
   });
 };
 
+/**
+ * Scrolls the page to the target element with an offset for fixed headers.
+ * 
+ * @param {HTMLElement} targetElement - The element to scroll to.
+ * @param {number} offset - The offset to apply to the scroll position.
+ * @returns {void}
+ */
 const scrollIntoViewWithOffset = (targetElement, offset) => {
   const elementPosition = targetElement.getBoundingClientRect().top;
   const offsetPosition = elementPosition + window.pageYOffset - offset;

@@ -1,3 +1,18 @@
+/**
+ * resume.js
+ *
+ * This file contains the frontend logic for managing and editing resume data.
+ * It handles fetching, displaying, and updating resume details, work experiences, 
+ * education entries, and projects. The script also manages UI interactions such as
+ * dragging to resize panels, form submissions, and updating previews.
+ *
+ * Key functionalities:
+ * - Fetch and display resume data, work experiences, educations, and projects.
+ * - Manage form submissions for saving or updating resume data, work experiences, educations, and projects.
+ * - Handle UI interactions like panel resizing, input validation, and updating previews.
+ * - Generate PDF from the resume preview.
+ */
+
 const divider = document.querySelector('.divider');
 let isDragging = false;
 
@@ -10,6 +25,12 @@ document.addEventListener('DOMContentLoaded', function() {
     addEventListeners();
 });
 
+/**
+ * Converts a date string into a format suitable for input elements (YYYY-MM-DD).
+ * 
+ * @param {string} date - The date string to convert.
+ * @returns {string} - The formatted date string.
+ */
 function getInputDate(date) {
     const now = new Date(date);
     const day = ("0" + now.getDate()).slice(-2);
@@ -17,6 +38,12 @@ function getInputDate(date) {
     return now.getFullYear() + "-" + month + "-" + day;
 }
 
+/**
+ * Sets the initial widths of the left and right panels based on saved values in localStorage.
+ * If no saved values are found, the panels are set to equal widths.
+ * 
+ * @returns {void}
+ */
 function setInitialWidths() {
     const container = divider.parentNode;
     const leftPanel = container.querySelector('.left');
@@ -35,6 +62,12 @@ function setInitialWidths() {
     }
 }
 
+/**
+ * Adds event listeners for various user interactions, including panel resizing, form submissions, 
+ * button clicks, and input changes.
+ * 
+ * @returns {void}
+ */
 function addEventListeners() {
     divider.addEventListener('mousedown', (e) => {
         isDragging = true;
@@ -65,6 +98,7 @@ function addEventListeners() {
         document.body.style.userSelect = '';
     });
 
+    // Event listeners for resume, work experience, education, and project forms and buttons
     document.getElementById('saveResume').addEventListener('click', saveOrUpdateResume);
     document.getElementById('addWorkExperienceButton').addEventListener('click', saveOrUpdateWorkExperience);
     document.getElementById('resetWorkExperienceButton').addEventListener('click', () => {
@@ -100,6 +134,7 @@ function addEventListeners() {
     });
     document.getElementById('updateProjectButton').addEventListener('click', saveOrUpdateProject);
 
+    // Event listeners for dynamic date fields
     document.getElementById('stillWorking').addEventListener('change', toggleJobEndDate);
     document.getElementById('stillStudying').addEventListener('change', toggleEducationEndDate);
     document.getElementById('jobBeginDate').addEventListener('change', validateJobDates);
@@ -107,6 +142,7 @@ function addEventListeners() {
     document.getElementById('educationFrom').addEventListener('change', validateEducationDates);
     document.getElementById('educationUntil').addEventListener('change', validateEducationDates);
 
+    // Event listeners for resume preview updates
     document.getElementById('firstName').addEventListener('input', updatePreview);
     document.getElementById('lastName').addEventListener('input', updatePreview);
     document.getElementById('town').addEventListener('input', updatePreview);
@@ -119,6 +155,11 @@ function addEventListeners() {
     document.getElementById('interests').addEventListener('input', updatePreview);
 }
 
+/**
+ * Fetches and displays the main resume data (e.g., name, contact info).
+ * 
+ * @returns {Promise<void>}
+ */
 async function fetchResumeData() {
     try {
         const data = await fetchData('/api/resume');
@@ -135,20 +176,15 @@ async function fetchResumeData() {
         updatePreview();
     } catch (error) {
         console.warn(error.message);
-        document.getElementById('firstName').value = '';
-        document.getElementById('lastName').value = '';
-        document.getElementById('town').value = '';
-        document.getElementById('country').value = '';
-        document.getElementById('email').value = '';
-        document.getElementById('linkedin').value = '';
-        document.getElementById('github').value = '';
-        document.getElementById('website').value = '';
-        document.getElementById('skills').value = '';
-        document.getElementById('interests').value = '';
-        updatePreview();
+        clearResumeFields();
     }
 }
 
+/**
+ * Updates the resume preview section with the latest input values.
+ * 
+ * @returns {void}
+ */
 function updatePreview() {
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
@@ -161,12 +197,12 @@ function updatePreview() {
     const skills = document.getElementById('skills').value;
     const interests = document.getElementById('interests').value;
 
-    document.getElementById('previewName').textContent = `${firstName} ${lastName}`;    
+    document.getElementById('previewName').textContent = `${firstName} ${lastName}`;
 
     const contactInfo = [];
     if (town && country) contactInfo.push(`${town}, ${country}`);
     if (email) contactInfo.push(`<a href="mailto:${email}"><img src="/assets/images/gmail.png" class="icon" alt="Email Icon" /> E-Mail</a>`);
-    if (linkedin) contactInfo.push(`<a href="${linkedin}" target="_blank"> <img src="/assets/images/linkedin.png" class="icon" alt="LinkedIn Icon" /> LinkedIn</a>`);
+    if (linkedin) contactInfo.push(`<a href="${linkedin}" target="_blank"><img src="/assets/images/linkedin.png" class="icon" alt="LinkedIn Icon" /> LinkedIn</a>`);
     if (github) contactInfo.push(`<a href="${github}" target="_blank"><img src="/assets/images/github.png" class="icon" alt="GitHub Icon" /> GitHub</a>`);
     if (website) contactInfo.push(`<a href="${website}" target="_blank"><img src="/assets/images/smworks_logo_cropped.png" class="icon" alt="Website Icon" /> www.stanimirmonevworks.com</a>`);
 
@@ -174,13 +210,37 @@ function updatePreview() {
     document.getElementById('previewSkills').innerHTML = formatSkillsAndInterests(skills, interests);
 }
 
+/**
+ * Clears all input fields related to the resume data.
+ * 
+ * @returns {void}
+ */
+function clearResumeFields() {
+    document.getElementById('firstName').value = '';
+    document.getElementById('lastName').value = '';
+    document.getElementById('town').value = '';
+    document.getElementById('country').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('linkedin').value = '';
+    document.getElementById('github').value = '';
+    document.getElementById('website').value = '';
+    document.getElementById('skills').value = '';
+    document.getElementById('interests').value = '';
+    updatePreview();
+}
+
+/**
+ * Saves or updates the main resume data on the server.
+ * 
+ * @returns {Promise<void>}
+ */
 async function saveOrUpdateResume() {
     const requiredFields = ['firstName', 'lastName', 'town', 'country', 'email', 'skills'];
     const dbFields = ['first_name', 'last_name', 'town', 'country', 'email', 'skills'];
 
     const resumeData = {};
 
-    for (let i = 0; i<requiredFields.length; i++) {
+    for (let i = 0; i < requiredFields.length; i++) {
         const value = document.getElementById(requiredFields[i]).value.trim();
         if (!value) {
             alert(`${requiredFields[i].replace(/([A-Z])/g, ' $1')} is required.`);
@@ -202,6 +262,11 @@ async function saveOrUpdateResume() {
     }
 }
 
+/**
+ * Fetches and displays the work experiences associated with the resume.
+ * 
+ * @returns {Promise<void>}
+ */
 async function fetchWorkExperiences() {
     try {
         const data = await fetchData('/api/resume/work-experiences');
@@ -237,6 +302,11 @@ async function fetchWorkExperiences() {
     }
 }
 
+/**
+ * Saves or updates a work experience entry associated with the resume.
+ * 
+ * @returns {Promise<void>}
+ */
 async function saveOrUpdateWorkExperience() {
     const jobTitle = document.getElementById('jobTitle').value.trim();
     const jobDescription = document.getElementById('jobDescription').value.trim();
@@ -269,6 +339,11 @@ async function saveOrUpdateWorkExperience() {
     }
 }
 
+/**
+ * Resets the work experience form buttons to their default states.
+ * 
+ * @returns {void}
+ */
 function resetWorkExperienceButtons() {
     document.getElementById('addWorkExperienceButton').style.display = 'inline-block';
     document.getElementById('updateWorkExperienceButton').style.display = 'none';
@@ -276,6 +351,12 @@ function resetWorkExperienceButtons() {
     document.getElementById('cancelWorkExperienceButton').style.display = 'none';
 }
 
+/**
+ * Loads a specific work experience entry into the form for editing.
+ * 
+ * @param {number} id - The ID of the work experience entry to edit.
+ * @returns {Promise<void>}
+ */
 async function editWorkExperience(id) {
     try {
         const data = await fetchData(`/api/resume/work-experience/${id}`);
@@ -295,6 +376,12 @@ async function editWorkExperience(id) {
     }
 }
 
+/**
+ * Deletes a specific work experience entry associated with the resume.
+ * 
+ * @param {number} id - The ID of the work experience entry to delete.
+ * @returns {Promise<void>}
+ */
 async function deleteWorkExperience(id) {
     try {
         const data = await deleteData('/api/resume/work-experience', { id });
@@ -305,6 +392,11 @@ async function deleteWorkExperience(id) {
     }
 }
 
+/**
+ * Fetches and displays the education entries associated with the resume.
+ * 
+ * @returns {Promise<void>}
+ */
 async function fetchEducations() {
     try {
         const data = await fetchData('/api/resume/educations');
@@ -340,6 +432,11 @@ async function fetchEducations() {
     }
 }
 
+/**
+ * Saves or updates an education entry associated with the resume.
+ * 
+ * @returns {Promise<void>}
+ */
 async function saveOrUpdateEducation() {
     const name = document.getElementById('educationName').value.trim();
     const description = document.getElementById('educationDescription').value.trim();
@@ -372,6 +469,11 @@ async function saveOrUpdateEducation() {
     }
 }
 
+/**
+ * Resets the education form buttons to their default states.
+ * 
+ * @returns {void}
+ */
 function resetEducationButtons() {
     document.getElementById('addEducationButton').style.display = 'inline-block';
     document.getElementById('updateEducationButton').style.display = 'none';
@@ -379,6 +481,12 @@ function resetEducationButtons() {
     document.getElementById('cancelEducationButton').style.display = 'none';
 }
 
+/**
+ * Loads a specific education entry into the form for editing.
+ * 
+ * @param {number} id - The ID of the education entry to edit.
+ * @returns {Promise<void>}
+ */
 async function editEducation(id) {
     try {
         const data = await fetchData(`/api/resume/education/${id}`);
@@ -398,6 +506,12 @@ async function editEducation(id) {
     }
 }
 
+/**
+ * Deletes a specific education entry associated with the resume.
+ * 
+ * @param {number} id - The ID of the education entry to delete.
+ * @returns {Promise<void>}
+ */
 async function deleteEducation(id) {
     try {
         const data = await deleteData('/api/resume/education', { id });
@@ -408,6 +522,11 @@ async function deleteEducation(id) {
     }
 }
 
+/**
+ * Fetches and displays the projects associated with the resume.
+ * 
+ * @returns {Promise<void>}
+ */
 async function fetchProjects() {
     try {
         const data = await fetchData('/api/resume/projects');
@@ -440,6 +559,11 @@ async function fetchProjects() {
     }
 }
 
+/**
+ * Saves or updates a project entry associated with the resume.
+ * 
+ * @returns {Promise<void>}
+ */
 async function saveOrUpdateProject() {
     const name = document.getElementById('projectName').value.trim();
     const description = document.getElementById('projectDescription').value.trim();
@@ -466,6 +590,11 @@ async function saveOrUpdateProject() {
     }
 }
 
+/**
+ * Resets the project form buttons to their default states.
+ * 
+ * @returns {void}
+ */
 function resetProjectButtons() {
     document.getElementById('addProjectButton').style.display = 'inline-block';
     document.getElementById('updateProjectButton').style.display = 'none';
@@ -473,6 +602,12 @@ function resetProjectButtons() {
     document.getElementById('cancelProjectButton').style.display = 'none';
 }
 
+/**
+ * Loads a specific project entry into the form for editing.
+ * 
+ * @param {number} id - The ID of the project entry to edit.
+ * @returns {Promise<void>}
+ */
 async function editProject(id) {
     try {
         const data = await fetchData(`/api/resume/project/${id}`);
@@ -488,6 +623,12 @@ async function editProject(id) {
     }
 }
 
+/**
+ * Deletes a specific project entry associated with the resume.
+ * 
+ * @param {number} id - The ID of the project entry to delete.
+ * @returns {Promise<void>}
+ */
 async function deleteProject(id) {
     try {
         const data = await deleteData('/api/resume/project', { id });
@@ -498,6 +639,11 @@ async function deleteProject(id) {
     }
 }
 
+/**
+ * Toggles the enabled/disabled state of the job end date field based on the 'Still Working' checkbox.
+ * 
+ * @returns {void}
+ */
 function toggleJobEndDate() {
     const jobEndDate = document.getElementById('jobEndDate');
     jobEndDate.disabled = this.checked;
@@ -507,6 +653,11 @@ function toggleJobEndDate() {
     validateJobDates();
 }
 
+/**
+ * Toggles the enabled/disabled state of the education end date field based on the 'Still Studying' checkbox.
+ * 
+ * @returns {void}
+ */
 function toggleEducationEndDate() {
     const educationUntil = document.getElementById('educationUntil');
     educationUntil.disabled = this.checked;
@@ -516,6 +667,11 @@ function toggleEducationEndDate() {
     validateEducationDates();
 }
 
+/**
+ * Validates the job begin and end dates to ensure logical order and correct values.
+ * 
+ * @returns {void}
+ */
 function validateJobDates() {
     const jobBeginDate = document.getElementById('jobBeginDate').value;
     const jobEndDate = document.getElementById('jobEndDate').value;
@@ -533,6 +689,11 @@ function validateJobDates() {
     }
 }
 
+/**
+ * Validates the education start and end dates to ensure logical order and correct values.
+ * 
+ * @returns {void}
+ */
 function validateEducationDates() {
     const educationFrom = document.getElementById('educationFrom').value;
     const educationUntil = document.getElementById('educationUntil').value;
@@ -550,6 +711,12 @@ function validateEducationDates() {
     }
 }
 
+/**
+ * Clears input fields for a specific section (work, education, or project).
+ * 
+ * @param {string} section - The section to clear ('work', 'education', or 'project').
+ * @returns {void}
+ */
 function clearFields(section) {
     if (section === 'work') {
         document.getElementById('jobTitle').value = '';
@@ -571,6 +738,11 @@ function clearFields(section) {
     }
 }
 
+/**
+ * Updates the work experience preview section with the latest data.
+ * 
+ * @returns {Promise<void>}
+ */
 async function updateWorkExperiencePreview() {
     try {
         const data = await fetchData('/api/resume/work-experiences');
@@ -599,6 +771,11 @@ async function updateWorkExperiencePreview() {
     }
 }
 
+/**
+ * Updates the education preview section with the latest data.
+ * 
+ * @returns {Promise<void>}
+ */
 async function updateEducationPreview() {
     try {
         const data = await fetchData('/api/resume/educations');
@@ -629,6 +806,11 @@ async function updateEducationPreview() {
     }
 }
 
+/**
+ * Updates the projects preview section with the latest data.
+ * 
+ * @returns {Promise<void>}
+ */
 async function updateProjectsPreview() {
     try {
         const data = await fetchData('/api/resume/projects');
@@ -651,6 +833,11 @@ async function updateProjectsPreview() {
     }
 }
 
+/**
+ * Event listener for downloading the resume as a PDF.
+ * 
+ * @returns {void}
+ */
 document.getElementById('downloadPDF').addEventListener('click', function () {
     const element = document.getElementById('cvPreview');
     const opt = {
@@ -662,4 +849,3 @@ document.getElementById('downloadPDF').addEventListener('click', function () {
     };
     html2pdf().set(opt).from(element).save();
 });
-
