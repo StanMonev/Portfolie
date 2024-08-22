@@ -29,14 +29,14 @@ const ADMIN_ID = 1;
 const saveOrUpdateResume = async (req, res) => {
   const userId = req.session.userId;
   const {
-    firstName, lastName, town, country, email,
+    first_name, last_name, town, country, email,
     linkedin, github, website, skills, interests
   } = req.body;
 
   try {
     const fields = {
-      first_name: firstName,
-      last_name: lastName,
+      first_name: first_name,
+      last_name: last_name,
       town: town,
       country: country,
       email: email,
