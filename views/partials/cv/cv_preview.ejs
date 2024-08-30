@@ -157,49 +157,52 @@
     .cv-section h2 {
         cursor: move; /* Add this for drag handle indication */
     }
+
+    #others{
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    #others h2 {
+        text-align: center;
+    }
 </style>
 
 <div id="cvPreview" class="cv-preview watermark">
-    <div class="cv-header">
+    <div id="cv_header" class="cv-header">
         <h1 id="previewName">Your Name</h1>
         <p id="previewContact">Your Address | Your Phone Number | Your Email</p>
     </div>
-    <div class="cv-section">
+    <div id="work_experience" class="cv-section">
         <h2>Professional Experience</h2>
         <div id="previewExperience">
             <!-- Work experience entries will be dynamically updated here -->
         </div>
     </div>
-    <div class="cv-section">
+    <div id="projects" class="cv-section">
         <h2>Recent Projects</h2>
         <div id="previewProjects">
             <!-- Projects entries will be dynamically updated here -->
         </div>
     </div>
-    <div class="cv-section">
+    <div id="education" class="cv-section">
         <h2>Education</h2>
         <div id="previewEducation">
             <!-- Education entries will be dynamically updated here -->
         </div>
     </div>
-    <div class="cv-section">
-        <h2>Skills/Interests</h2>
-        <ul id="previewSkills">Your skills and interests will be shown here.</ul>
+    <div id="others" class="cv-section">
+        <div id="skillsContainer">
+            <h2>Skills</h2>
+            <ul id="previewSkills">Your skills and interests will be shown here.</ul>
+        </div>
+        <div id="languagesContainer">
+            <h2>Language proficiency</h2>
+            <ul id="previewLanguages">Your skills and interests will be shown here.</ul>
+        </div>
+        <div id="interestsContainer">
+            <h2>Interests</h2>
+            <ul id="previewInterests">Your skills and interests will be shown here.</ul>
+        </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var cvPreview = document.getElementById('cvPreview');
-
-        // Initialize Sortable on cvPreview
-        Sortable.create(cvPreview, {
-            animation: 150, // animation speed in ms
-            handle: '.cv-section h2', // set the handle for dragging (e.g., section headers)
-            onEnd: function (evt) {
-                console.log('Moved item from index', evt.oldIndex, 'to', evt.newIndex);
-                // You can add more logic here if needed
-            }
-        });
-    });
-</script>

@@ -78,7 +78,13 @@ async function updatePreview() {
         const github = data.github;
         const website = data.website;
         const skills = data.skills;
+        const languages = data.languages;
         const interests = data.interests;
+
+        if(data.settings && data.settings["sectionOrder"]){
+            const sectionOrder = data.settings["sectionOrder"].split(',');
+            orderElements('cvPreview', sectionOrder);
+        }
 
         document.getElementById('previewName').textContent = `${firstName} ${lastName}`;    
 
@@ -90,7 +96,9 @@ async function updatePreview() {
         if (website) contactInfo.push(`<a href="${website}" target="_blank"><img src="/assets/images/smworks_logo_cropped.png" class="icon" alt="Website Icon" /> www.stanimirmonevworks.com</a>`);
 
         document.getElementById('previewContact').innerHTML = contactInfo.join(' | ');
-        document.getElementById('previewSkills').innerHTML = formatSkillsAndInterests(skills, interests);
+        document.getElementById('previewSkills').innerHTML = formatList(skills);
+        document.getElementById('previewLanguages').innerHTML = formatList(languages);
+        document.getElementById('previewInterests').innerHTML = formatList(interests);
     } catch (error) {
         console.error('Error:', error);
     }

@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchEducations();
     fetchProjects();
     addEventListeners();
+    initializeSortable();
 });
 
 /**
@@ -152,6 +153,7 @@ function addEventListeners() {
     document.getElementById('github').addEventListener('input', updatePreview);
     document.getElementById('website').addEventListener('input', updatePreview);
     document.getElementById('skills').addEventListener('input', updatePreview);
+    document.getElementById('languages').addEventListener('input', updatePreview);
     document.getElementById('interests').addEventListener('input', updatePreview);
 }
 
@@ -172,8 +174,10 @@ async function fetchResumeData() {
         document.getElementById('github').value = data.github || '';
         document.getElementById('website').value = data.website || '';
         document.getElementById('skills').value = data.skills || '';
+        document.getElementById('languages').value = data.languages || '';
         document.getElementById('interests').value = data.interests || '';
-        updatePreview();
+        let sectionOrder = data.settings ? data.settings["sectionOrder"] : null
+        updatePreview(null, sectionOrder);
     } catch (error) {
         console.warn(error.message);
         clearResumeFields();
@@ -185,7 +189,7 @@ async function fetchResumeData() {
  * 
  * @returns {void}
  */
-function updatePreview() {
+function updatePreview(event=null, sectionOrder=null) {
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
     const town = document.getElementById('town').value;
@@ -195,7 +199,35 @@ function updatePreview() {
     const github = document.getElementById('github').value;
     const website = document.getElementById('website').value;
     const skills = document.getElementById('skills').value;
+    const languages = document.getElementById('languages').value;
     const interests = document.getElementById('interests').value;
+
+    if(sectionOrder){
+        orderElements('cvPreview', sectionOrder.split(','));
+    }
+
+    if (!interests && !interests.replace(/ /g,'')){
+        let toRemove = document.getElementById("interestsContainer");
+        if(toRemove) document.getElementById("interestsContainer").remove();
+    }else{
+        let container = document.getElementById("interestsContainer");
+        if(!container){
+            //Create the container
+            const interestsContainer = document.createElement('div');
+            interestsContainer.id = 'interestsContainer';
+            const heading = document.createElement('h2');
+            heading.textContent = 'Interests';
+            const ul = document.createElement('ul');
+            ul.id = 'previewInterests';
+            ul.textContent = 'Your skills and interests will be shown here.';
+            interestsContainer.appendChild(heading);
+            interestsContainer.appendChild(ul);
+
+            //Add it to the 'others' div
+            let others = document.getElementById("others");
+            others.appendChild(interestsContainer);
+        }
+    }
 
     document.getElementById('previewName').textContent = `${firstName} ${lastName}`;
 
@@ -207,7 +239,9 @@ function updatePreview() {
     if (website) contactInfo.push(`<a href="${website}" target="_blank"><img src="/assets/images/smworks_logo_cropped.png" class="icon" alt="Website Icon" /> www.stanimirmonevworks.com</a>`);
 
     document.getElementById('previewContact').innerHTML = contactInfo.join(' | ');
-    document.getElementById('previewSkills').innerHTML = formatSkillsAndInterests(skills, interests);
+    document.getElementById('previewSkills').innerHTML = formatList(skills);
+    document.getElementById('previewLanguages').innerHTML = formatList(languages);
+    if(interests) document.getElementById('previewInterests').innerHTML = formatList(interests);
 }
 
 /**
@@ -225,6 +259,7 @@ function clearResumeFields() {
     document.getElementById('github').value = '';
     document.getElementById('website').value = '';
     document.getElementById('skills').value = '';
+    document.getElementById('languages').value = '';
     document.getElementById('interests').value = '';
     updatePreview();
 }
@@ -235,8 +270,8 @@ function clearResumeFields() {
  * @returns {Promise<void>}
  */
 async function saveOrUpdateResume() {
-    const requiredFields = ['firstName', 'lastName', 'town', 'country', 'email', 'skills'];
-    const dbFields = ['first_name', 'last_name', 'town', 'country', 'email', 'skills'];
+    const requiredFields = ['firstName', 'lastName', 'town', 'country', 'email', 'languages', 'skills'];
+    const dbFields = ['first_name', 'last_name', 'town', 'country', 'email', 'languages', 'skills'];
 
     const resumeData = {};
 
@@ -253,6 +288,10 @@ async function saveOrUpdateResume() {
     resumeData.github = document.getElementById('github').value;
     resumeData.website = document.getElementById('website').value;
     resumeData.interests = document.getElementById('interests').value;
+
+    let jsonData = {};
+    jsonData["sectionOrder"] = sessionStorage.getItem("sectionOrder");
+    resumeData.settings = jsonData;
 
     try {
         const data = await postData('/api/resume/save', resumeData);
@@ -849,3 +888,15 @@ document.getElementById('downloadPDF').addEventListener('click', function () {
     };
     html2pdf().set(opt).from(element).save();
 });
+
+function initializeSortable(){
+    var cvPreview = document.getElementById('cvPreview');
+    Sortable.create(cvPreview, {
+        animation: 150,
+        handle: '.cv-section h2',
+        onEnd: function (evt) {
+            var sectionOrder = Array.from(cvPreview.children).map(section => section.id);
+            sessionStorage.setItem("sectionOrder", sectionOrder);
+        }
+    });
+}
