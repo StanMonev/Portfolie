@@ -17,6 +17,37 @@
 const { validationResult } = require('express-validator');
 const emailService = require('../services/emailService');
 const path = require('path');
+const skills = [
+  { name: 'JavaScript', icon: '/assets/images/icons/javascript.png' },
+  { name: 'CSS', icon: '/assets/images/icons/css3.png' },
+  { name: 'HTML5', icon: '/assets/images/icons/html5.png' },
+  { name: 'Java', icon: '/assets/images/icons/java.png' },
+  { name: 'Python', icon: '/assets/images/icons/python.png' },
+  { name: 'Ruby', icon: '/assets/images/icons/ruby.png' },
+  { name: 'PHP', icon: '/assets/images/icons/php.png' },
+  { name: 'C#', icon: '/assets/images/icons/csharp.png' },
+  { name: 'SQL', icon: '/assets/images/icons/sql.png' },
+  { name: 'R', icon: '/assets/images/icons/r.png' },
+  { name: 'TypeScript', icon: '/assets/images/icons/typescript.png' },
+  { name: 'C++', icon: '/assets/images/icons/cplusplus.png' },
+  { name: 'Haskell', icon: '/assets/images/icons/haskell.png' },
+  { name: 'Ruby on Rails', icon: '/assets/images/icons/rubyonrails.png' },
+  { name: 'ExpressJS', icon: '/assets/images/icons/expressjs.png' },
+  { name: 'NodeJS', icon: '/assets/images/icons/nodejs.png' },
+  { name: 'JQuery', icon: '/assets/images/icons/jquery.png' },
+  { name: 'jQWidgets', icon: '/assets/images/icons/jqwidgets.png' },
+  { name: 'Django', icon: '/assets/images/icons/django.png' },
+  { name: 'Laravel', icon: '/assets/images/icons/laravel.png' },
+  { name: 'Angular', icon: '/assets/images/icons/angular.png' },
+  { name: 'Apache Wicket', icon: '/assets/images/icons/apachewicket.png' },
+  { name: 'PyTorch', icon: '/assets/images/icons/pytorch.png' },
+  { name: 'TensorFlow', icon: '/assets/images/icons/tensorflow.png' },
+  { name: 'BrainJS', icon: '/assets/images/icons/brainjs.png' },
+  { name: 'Postman', icon: '/assets/images/icons/postman.png' },
+  { name: 'Unity', icon: '/assets/images/icons/unity.png' },
+  { name: 'Shopify', icon: '/assets/images/icons/shopify.png' }
+];
+
 
 
 /**
@@ -61,7 +92,7 @@ const sendEmailFunction = async (req, res) => {
 // //////////////////////
 
 const getHomePage = (req, res) => {
-  res.render('index');
+  res.render('index', {skills});
 };
 
 const getAdminPage = (req, res) => {

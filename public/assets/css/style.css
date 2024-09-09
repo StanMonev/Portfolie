@@ -32,6 +32,18 @@ body {
   background-color: var(--background) !important;
 }
 
+body a {
+  color: currentColor;
+  text-decoration: none;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+body a:hover {
+  transform: scale(1.05); 
+  opacity: 0.8; 
+  color: lightgreen;
+}
+
 .main-container {
   height: inherit;
   margin: 0 auto;
@@ -315,6 +327,15 @@ footer {
   main #about.section .content p {
     margin: 30px 0;
   }
+
+  #about.section div.content div.download-button-container {
+    width: 100%;
+    text-align: center;
+  }
+
+  #skills.section div.section-container {
+    transform: translate(-50%, -0.5%);
+  }
 }
 
 /*
@@ -490,7 +511,6 @@ footer {
 
 .navbar a:hover {
   background: transparent;
-  color: lightgreen;
 }
 
 .navbar .logo {
@@ -735,22 +755,8 @@ footer {
   padding-bottom: 250px;
 }
 
-#privacy-policy a {
-  text-decoration: none;
-}
-
 #privacy-policy.section .section-container {
   transform: translate(0, 1.5%);
-}
-
-a#copyright {
-  color: currentColor;
-  text-decoration: none;
-}
-
-a#copyright:hover {
-  color: #0b7a0b;
-  text-decoration: none;
 }
 
 #cookieNotice {
@@ -806,7 +812,7 @@ a#copyright:hover {
   background: transparent;
 }
 
-#termsContainer label a {
+#termsContainer {
   color: var(--site-green);
 }
 
@@ -864,7 +870,7 @@ a#copyright:hover {
 }
 
 #modalCloseTop {
-  text-align: right;
+  margin-left: 99%;
 }
 
 .modal-close {
@@ -902,3 +908,87 @@ a#copyright:hover {
 }
 
 /* Modal CSS end */
+
+#skills.section {
+  position: relative;
+  z-index: 1;
+  background: var(--background);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+}
+
+#skills.section .section-container{
+  transform: translate(-50%, -15%);
+}
+
+.section .section-container div.skills-grid {
+  width: 50%;
+}
+
+.section .section-container div.skill-item {
+  width: 100%;
+  padding: 25px 10px;
+}
+
+.section .section-container div.skills-section {
+  padding: 20px;
+  background-color: var(--background);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.skills-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: var(--site-green);
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: transparent;
+  border: 1px solid var(--site-green);
+  border-radius: 5px;
+  transition: transform 0.2s;
+}
+
+.skill-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.skill-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.skill-name {
+  font-size: 1rem;
+  color: var(--site-green);
+}
+
+.section .section-container .icon-credits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  width: 100%;
+  justify-content: center;
+  padding: 10px 0;
+  font-size: larger;
+}
+
+.section .section-container .icon-credits h5 {
+  margin: 0;
+  align-self: center;
+}
