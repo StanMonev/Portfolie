@@ -53,6 +53,11 @@ router.get('/admin/resume_editor', authController.ensureAuthenticated, pagesCont
  */
 router.post('/contact', sendEmailErrors, pagesController.sendEmailFunction);
 
+/**
+ * Route for handling the image loading.
+ */
+router.get('/api/images', pagesController.getImages);
+
 ///////////////////// RESUME ROUTES //////////////////////////
 
 /**

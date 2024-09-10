@@ -45,7 +45,14 @@ const skills = [
   { name: 'BrainJS', icon: '/assets/images/icons/brainjs.png' },
   { name: 'Postman', icon: '/assets/images/icons/postman.png' },
   { name: 'Unity', icon: '/assets/images/icons/unity.png' },
-  { name: 'Shopify', icon: '/assets/images/icons/shopify.png' }
+  { name: 'Shopify', icon: '/assets/images/icons/shopify.png' },
+  { name: 'Git', icon: '/assets/images/icons/git.png' },
+  { name: 'Github', icon: '/assets/images/icons/github.png' },
+  { name: 'Gitlab', icon: '/assets/images/icons/gitlab.png' },
+  { name: 'MySQL', icon: '/assets/images/icons/mysql.png' },
+  { name: 'PostgreSQL', icon: '/assets/images/icons/postgresql.png' },
+  { name: 'MongoDB', icon: '/assets/images/icons/mongodb.png' },
+  { name: 'MariaDB', icon: '/assets/images/icons/mariadb.png' }
 ];
 
 
@@ -86,6 +93,24 @@ const sendEmailFunction = async (req, res) => {
     }
   }
 };
+
+/**
+ * Handles the GET method for all the images in the public directory.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object used to send the images.
+ * @returns {Promise<void>} - Sends a JSON response that includes the images.
+ */
+
+const getImages = async (req, res) => {
+  const mainImages = _getImagePaths('public/assets/images');
+  const iconImages = _getImagePaths('public/assets/images/icons');
+  
+  const allImages = [...mainImages, ...iconImages];
+  res.json(allImages);
+}
+
+
 
 // //////////////////////
 // Page Rendering Logic
@@ -139,6 +164,14 @@ function _getJSON(message = '', data = null) {
   });
 }
 
+function _getImagePaths(dir) {
+  const fs = require('fs');
+  const path = require('path');
+  return fs.readdirSync(dir)
+    .filter(file => /\.(jpg|jpeg|png|gif|svg)$/.test(file)) // Filters for image files only
+    .map(file => path.join(dir.replace('public/', ''), file)); // Adjust path for public access
+}
+
 // ///////
 // Export
 // ///////
@@ -153,5 +186,6 @@ module.exports = {
   getTACPolicyContent,
   getPrivacyPolicyContent,
   getCookiePolicyContent,
-  getCopyrightContent
+  getCopyrightContent,
+  getImages
 };

@@ -17,6 +17,7 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  preloadImages();
   setupNavigationLinks();
   sendEmailHandler();
   checkInputFilled();
@@ -500,3 +501,11 @@ const scrollIntoViewWithOffset = (targetElement, offset) => {
     behavior: 'smooth'
   });
 };
+
+const preloadImages = async () => {
+  const paths = await fetchData('/api/images');
+  paths.forEach(path => {
+    const img = new Image();
+    img.src = path;
+  });
+}

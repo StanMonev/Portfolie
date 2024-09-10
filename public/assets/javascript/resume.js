@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchProjects();
     addEventListeners();
     initializeSortable();
+    setStartingDates();
 });
 
 /**
@@ -707,47 +708,33 @@ function toggleEducationEndDate() {
 }
 
 /**
- * Validates the job begin and end dates to ensure logical order and correct values.
+ * Initializes all the date inputs to have the maximum date until today.
+ * 
+ * @returns {void}
+ */
+function setStartingDates(){
+    document.getElementById('jobBeginDate').max = new Date().toISOString().split('T')[0];
+    document.getElementById('jobEndDate').max = new Date().toISOString().split('T')[0];
+    document.getElementById('educationFrom').max = new Date().toISOString().split('T')[0];
+    document.getElementById('educationUntil').max = new Date().toISOString().split('T')[0];
+}
+
+/**
+ * Sets the minimum date of the job end date input to the selected job begin date input. 
  * 
  * @returns {void}
  */
 function validateJobDates() {
-    const jobBeginDate = document.getElementById('jobBeginDate').value;
-    const jobEndDate = document.getElementById('jobEndDate').value;
-    const stillWorking = document.getElementById('stillWorking').checked;
-    const today = new Date().toISOString().split('T')[0];
-
-    if (jobBeginDate && stillWorking && jobBeginDate > today) {
-        alert('Job begin date cannot be in the future.');
-        document.getElementById('jobBeginDate').value = today;
-    }
-
-    if (jobBeginDate && jobEndDate && jobEndDate < jobBeginDate) {
-        alert('Job end date cannot be earlier than job begin date.');
-        document.getElementById('jobEndDate').value = jobBeginDate;
-    }
+    document.getElementById('jobEndDate').min = document.getElementById('jobBeginDate').value;
 }
 
 /**
- * Validates the education start and end dates to ensure logical order and correct values.
+ * Sets the minimum date of the education until date input to the selected education from date input. 
  * 
  * @returns {void}
  */
-function validateEducationDates() {
-    const educationFrom = document.getElementById('educationFrom').value;
-    const educationUntil = document.getElementById('educationUntil').value;
-    const stillStudying = document.getElementById('stillStudying').checked;
-    const today = new Date().toISOString().split('T')[0];
-
-    if (educationFrom && stillStudying && educationFrom > today) {
-        alert('Education start date cannot be in the future.');
-        document.getElementById('educationFrom').value = today;
-    }
-
-    if (educationFrom && educationUntil && educationUntil < educationFrom) {
-        alert('Education end date cannot be earlier than education start date.');
-        document.getElementById('educationUntil').value = educationFrom;
-    }
+function validateEducationDates() {    
+    document.getElementById('educationUntil').min = document.getElementById('educationFrom').value;
 }
 
 /**
@@ -794,12 +781,12 @@ async function updateWorkExperiencePreview() {
             item.classList.add('experience-item');
             const beginDate = new Date(exp.job_begin_date);
             const endDate = new Date(exp.job_end_date);
-            const endDateString = exp.still_working ? 'Present' : `${endDate.toLocaleString('default', { month: 'long' })}, ${endDate.getFullYear()}`;
+            const endDateString = exp.still_working ? 'Present' : `${endDate.toLocaleString('en-US', { month: 'long' })}, ${endDate.getFullYear()}`;
             const [mainTitle, subTitle] = splitTitle(exp.job_title);
             item.innerHTML = `
                 <div>
                     <strong class="title-main">${mainTitle}</strong><span class="title-sub">${subTitle}</span>
-                    <span class="dates">${beginDate.toLocaleString('default', { month: 'long' }) }, ${beginDate.getFullYear()}  - ${endDateString}</span>
+                    <span class="dates">${beginDate.toLocaleString('en-US', { month: 'long' }) }, ${beginDate.getFullYear()}  - ${endDateString}</span>
                 </div>
                 <ul>${formatList(exp.job_description)}</ul>
             `;
@@ -829,12 +816,12 @@ async function updateEducationPreview() {
             const [mainTitle, subTitle] = splitTitle(edu.name);
             const fromDate = new Date(edu.from_date);
             const endDate = new Date(edu.until_date);
-            const untilDate = edu.still_studying ? 'Present' : `${endDate.toLocaleString('default', { month: 'long' })}, ${endDate.getFullYear()}`;
+            const untilDate = edu.still_studying ? 'Present' : `${endDate.toLocaleString('en-US', { month: 'long' })}, ${endDate.getFullYear()}`;
 
             item.innerHTML = `
                 <div>
                     <strong class="title-main">${mainTitle}</strong><span class="title-sub">${subTitle}</span>
-                    <span class="dates">${fromDate.toLocaleString('default', { month: 'long' })}, ${fromDate.getFullYear()} - ${untilDate}</span>
+                    <span class="dates">${fromDate.toLocaleString('en-US', { month: 'long' })}, ${fromDate.getFullYear()} - ${untilDate}</span>
                 </div>
                 <ul>${formatList(edu.description)}</ul>
             `;

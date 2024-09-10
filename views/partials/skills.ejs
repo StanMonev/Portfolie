@@ -3,7 +3,7 @@
   <div class="skills-grid">
     <% skills.forEach(skill => { %>
       <div class="skill-item">
-        <img src="<%= skill.icon %>" alt="<%= skill.name %> icon" class="skill-icon">
+        <img loading="lazy" src="<%= skill.icon %>" alt="<%= skill.name %> icon" class="skill-icon">
         <span class="skill-name"><%= skill.name %></span>
       </div>
     <% }) %>
