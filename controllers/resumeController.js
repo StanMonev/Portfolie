@@ -329,7 +329,11 @@ const getProject = async (req, res) => {
  */
 const getAdminWorkExperiences = async (req, res) => {
   try {
-    const experiences = await resumeService.getWorkExperiences(ADMIN_ID);
+    const resume = await resumeService.getResumeInfo(ADMIN_ID);
+    if (!resume) {
+      return res.status(404).send({ message: 'Resume not found' });
+    }
+    const experiences = await resumeService.getWorkExperiences(resume.id);
     res.status(200).json(experiences);
   } catch (error) {
     console.error('Error fetching admin work experiences:', error);
@@ -347,7 +351,11 @@ const getAdminWorkExperiences = async (req, res) => {
  */
 const getAdminEducations = async (req, res) => {
   try {
-    const educations = await resumeService.getEducations(ADMIN_ID);
+    const resume = await resumeService.getResumeInfo(ADMIN_ID);
+    if (!resume) {
+      return res.status(404).send({ message: 'Resume not found' });
+    }
+    const educations = await resumeService.getEducations(resume.id);
     res.status(200).json(educations);
   } catch (error) {
     console.error('Error fetching admin educations:', error);
@@ -365,7 +373,11 @@ const getAdminEducations = async (req, res) => {
  */
 const getAdminProjects = async (req, res) => {
   try {
-    const projects = await resumeService.getProjects(ADMIN_ID);
+    const resume = await resumeService.getResumeInfo(ADMIN_ID);
+    if (!resume) {
+      return res.status(404).send({ message: 'Resume not found' });
+    }
+    const projects = await resumeService.getProjects(resume.id);
     res.status(200).json(projects);
   } catch (error) {
     console.error('Error fetching admin projects:', error);

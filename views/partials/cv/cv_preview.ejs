@@ -34,6 +34,7 @@
 
     .cv-section h2 {
         font-size: 18px;
+        font-weight: bold;
         margin-bottom: 10px;
         border-bottom: 1px solid #ddd;
         padding-bottom: 5px;
@@ -147,10 +148,12 @@
     }
 
     #cvPreview {
+        font-family: "Helvetica";
         line-height: normal;
     }
 
     #cvPreview ul {
+        margin-top: 11px;
         margin-bottom: 0;
     }
 
@@ -169,6 +172,12 @@
 
     #others h2 {
         text-align: center;
+    }
+
+    @media screen and (max-width: 966px) {  
+        div#cvPreview {
+            line-height: 12px;
+        }
     }
 </style>
 

@@ -51,6 +51,8 @@ body a:hover {
 
 .section {
   width: auto;
+  padding-top: 500px;
+  padding-bottom: 500px;
 }
 
 .section.index .title span {
@@ -62,10 +64,6 @@ body a:hover {
   height: fit-content;
   margin: 0;
   position: relative;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
 }
 
 .section .section-container div {
@@ -84,10 +82,6 @@ body a:hover {
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
-}
-
-#home, #about, #contact {
-  height: 1000px;
 }
 
 footer {
@@ -240,6 +234,8 @@ footer {
   z-index: 1;
   background: var(--background);
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  padding-top: 250px;
+  padding-bottom: 250px;
 }
 
 #about.section .content p {
@@ -301,7 +297,20 @@ footer {
   }
 }
 
+@media screen and (max-height: 966px) {  
+  div.section {
+    padding-top: 250px;
+    padding-bottom: 250px;
+  }
+}
+
 @media screen and (max-width: 966px) {  
+
+  div.section {
+    padding-top: 250px;
+    padding-bottom: 250px;
+  }
+
   main #about.section .header {
     margin-bottom: 25px;
     margin-top: 25px;
@@ -331,10 +340,6 @@ footer {
   #about.section div.content div.download-button-container {
     width: 100%;
     text-align: center;
-  }
-
-  #skills.section div.section-container {
-    transform: translate(-50%, -0.5%);
   }
 }
 
@@ -747,6 +752,7 @@ footer {
 
 #resumeContainer {
   visibility: hidden;
+  display: none;
 }
 
 #privacy-policy {
@@ -917,10 +923,6 @@ footer {
 
 }
 
-#skills.section .section-container{
-  transform: translate(-50%, -15%);
-}
-
 .section .section-container div.skills-grid {
   width: 50%;
 }
@@ -931,7 +933,7 @@ footer {
 }
 
 .section .section-container div.skills-section {
-  padding: 20px;
+  padding-top: 250px;
   background-color: var(--background);
   width: 100%;
   display: flex;

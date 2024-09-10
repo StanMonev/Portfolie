@@ -480,7 +480,7 @@ const initializeLinks = () => {
       e.preventDefault();
       const targetId = anchor.getAttribute('href').substring(2);
       const targetElement = document.getElementById(targetId);
-      if (targetElement) scrollIntoViewWithOffset(targetElement, 50);
+      if (targetElement) scrollIntoViewWithOffset(targetElement, -125);
     });
   });
 };
@@ -494,7 +494,7 @@ const initializeLinks = () => {
  */
 const scrollIntoViewWithOffset = (targetElement, offset) => {
   const elementPosition = targetElement.getBoundingClientRect().top;
-  const offsetPosition = elementPosition + window.pageYOffset - offset;
+  const offsetPosition = elementPosition + window.scrollY  - offset;
 
   window.scrollTo({
     top: offsetPosition,

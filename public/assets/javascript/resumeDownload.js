@@ -25,6 +25,10 @@ document.getElementById('downloadButton').addEventListener('click', function () 
     const style = document.createElement('style');
 
     style.textContent = `
+        #about #resumeContainer {
+            display: block !important;
+        }
+
         .watermark {
             position: relative;
         }
