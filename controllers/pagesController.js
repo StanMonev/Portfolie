@@ -33,16 +33,23 @@ const skills = [
   { name: 'Haskell', icon: '/assets/images/icons/haskell.png' },
   { name: 'Ruby on Rails', icon: '/assets/images/icons/rubyonrails.png' },
   { name: 'ExpressJS', icon: '/assets/images/icons/expressjs.png' },
+  { name: 'Laravel', icon: '/assets/images/icons/laravel.png' },
+  { name: 'FastAPI', icon: '/assets/images/icons/fastapi.png' },
+  { name: 'Angular', icon: '/assets/images/icons/angular.png' },
+  { name: 'Django', icon: '/assets/images/icons/django.png' },
   { name: 'NodeJS', icon: '/assets/images/icons/nodejs.png' },
+  { name: 'JSON', icon: '/assets/images/icons/json.png' },
+  { name: 'XML', icon: '/assets/images/icons/xml.png' },
   { name: 'JQuery', icon: '/assets/images/icons/jquery.png' },
   { name: 'jQWidgets', icon: '/assets/images/icons/jqwidgets.png' },
-  { name: 'Django', icon: '/assets/images/icons/django.png' },
-  { name: 'Laravel', icon: '/assets/images/icons/laravel.png' },
-  { name: 'Angular', icon: '/assets/images/icons/angular.png' },
-  { name: 'Apache Wicket', icon: '/assets/images/icons/apachewicket.png' },
+  { name: 'BrainJS', icon: '/assets/images/icons/brainjs.png' },
   { name: 'PyTorch', icon: '/assets/images/icons/pytorch.png' },
   { name: 'TensorFlow', icon: '/assets/images/icons/tensorflow.png' },
-  { name: 'BrainJS', icon: '/assets/images/icons/brainjs.png' },
+  { name: 'Numpy', icon: '/assets/images/icons/numpy.png' },
+  { name: 'Pandas', icon: '/assets/images/icons/pandas.png' },
+  { name: 'Matplotlib', icon: '/assets/images/icons/matplotlib.png' },
+  { name: 'RSpec', icon: '/assets/images/icons/rspec.png' },
+  { name: 'JUnit 5', icon: '/assets/images/icons/junit.png' },
   { name: 'Postman', icon: '/assets/images/icons/postman.png' },
   { name: 'Unity', icon: '/assets/images/icons/unity.png' },
   { name: 'Shopify', icon: '/assets/images/icons/shopify.png' },
@@ -110,6 +117,14 @@ const getImages = async (req, res) => {
   res.json(allImages);
 }
 
+// //////////////////////
+// GET Components
+// //////////////////////
+
+
+const getDownloadButton = async (req, res) => {
+  res.render('partials/downloadButton', {id:'downloadButton', css:'download-button', text:'DOWNLOAD RESUME'});
+}
 
 
 // //////////////////////
@@ -187,5 +202,6 @@ module.exports = {
   getPrivacyPolicyContent,
   getCookiePolicyContent,
   getCopyrightContent,
-  getImages
+  getImages,
+  getDownloadButton
 };

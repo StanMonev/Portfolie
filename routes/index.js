@@ -57,6 +57,7 @@ router.post('/contact', sendEmailErrors, pagesController.sendEmailFunction);
  * Route for handling the image loading.
  */
 router.get('/api/images', pagesController.getImages);
+router.get('/api/download-button', pagesController.getDownloadButton);
 
 ///////////////////// RESUME ROUTES //////////////////////////
 

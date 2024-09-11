@@ -1,69 +1,74 @@
-/**
- * resumeDownload.js
- *
- * This script handles the generation and download of a resume as a PDF document.
- * It fetches the resume data from the server, updates the preview, and applies 
- * a watermark to the document before converting it into a PDF for download.
- *
- * Key functionalities:
- * - Fetch and display resume details, work experiences, education entries, and projects.
- * - Generate a PDF of the resume with a custom watermark.
- * - Handle user interactions like clicking the download button.
- */
-
-document.addEventListener('DOMContentLoaded', function() {
-    updatePreview();
-});
+// Call the function as soon as the file is loaded.
+addClickToDownloadButton();
 
 /**
- * Event listener for the download button. When clicked, it generates a PDF of the resume with a watermark.
+ * Add event listener for the download button. When clicked, it generates a PDF of the resume with a watermark.
  * 
  * @returns {void}
  */
-document.getElementById('downloadButton').addEventListener('click', function () {
-    const element = document.getElementById('cvPreview');
-    const style = document.createElement('style');
 
-    style.textContent = `
-        #about #resumeContainer {
-            display: block !important;
-        }
-
-        .watermark {
-            position: relative;
-        }
-
-        .watermark::before {
-            content: 'Copyright of Stanimir Monev';
-            font-size: 50px;
-            color: rgba(0, 0, 0, 0.1);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transform: rotate(-45deg);
-            display: grid;
-            place-items: center;
-            pointer-events: none;
-        }
-    `;
-
-    document.head.appendChild(style); // Add watermark style to the document
-
-    const opt = {
-        margin: 5,
-        filename: 'StanimirMonevResume.pdf',
-        image: { type: 'jpeg', quality: 1 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
-    // Generate the PDF and then remove the watermark style after the download
-    html2pdf().set(opt).from(element).save().then(() => {
-        document.head.removeChild(style);
+function addClickToDownloadButton(){
+    document.getElementById('downloadButton').addEventListener('click', async function () {
+    
+        // Add Loader
+        const downloadButtonContainer = document.getElementById('downloadButtonContainer');
+        downloadButtonContainer.innerHTML = '<div class="loader"></div>'
+        downloadButtonContainer.classList.remove("download-button-container");
+        downloadButtonContainer.classList.add("loader-container");
+        
+        await updatePreview();
+    
+        //Remove Loader
+        const data = await fetchData('/api/download-button', 'HTML')
+        downloadButtonContainer.innerHTML = data
+        downloadButtonContainer.classList.remove("loader-container");
+        downloadButtonContainer.classList.add("download-button-container");
+        addClickToDownloadButton();
+    
+        const element = document.getElementById('cvPreview');
+        const style = document.createElement('style');
+    
+        style.textContent = `
+            #about #resumeContainer {
+                display: block !important;
+            }
+    
+            .watermark {
+                position: relative;
+            }
+    
+            .watermark::before {
+                content: 'Copyright of Stanimir Monev';
+                font-size: 50px;
+                color: rgba(0, 0, 0, 0.1);
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                transform: rotate(-45deg);
+                display: grid;
+                place-items: center;
+                pointer-events: none;
+            }
+        `;
+    
+        document.head.appendChild(style); // Add watermark style to the document
+    
+        const opt = {
+            margin: 5,
+            filename: 'StanimirMonevResume.pdf',
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+    
+        // Generate the PDF and then remove the watermark style after the download
+        html2pdf().set(opt).from(element).save().then(() => {
+            document.head.removeChild(style);
+        });
     });
-});
+}
 
 /**
  * Fetches the resume data from the server and updates the preview section with the latest information.
@@ -108,9 +113,9 @@ async function updatePreview() {
     }
 
     // Update other sections of the resume
-    updateEducationPreview();
-    updateProjectsPreview();
-    updateWorkExperiencePreview();
+    await updateEducationPreview();
+    await updateProjectsPreview();
+    await updateWorkExperiencePreview();
 }
 
 /**
