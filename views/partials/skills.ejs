@@ -1,0 +1,15 @@
+<div class="skills-section">
+  <h2>Stuff that I know and I've worked with:</h2>
+  <div class="skills-grid">
+    <% skills.forEach(skill => { %>
+      <div class="skill-item">
+        <img loading="lazy" src="<%= skill.icon %>" alt="<%= skill.name %> icon" class="skill-icon">
+        <span class="skill-name"><%= skill.name %></span>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
+<div class="icon-credits">
+  <h5>Icons thanks to:</h5> <a href="https://www.freepik.com/" target="_blank" rel="noopener noreferrer">Freepik</a>, <a href="https://www.flaticon.com/" target="_blank" rel="noopener noreferrer">Flaticon</a>, <a href="https://www.pngwing.com/" target="_blank" rel="noopener noreferrer">PNGWing</a> and <a href="https://watermarkly.com/"  target="_blank" rel="noopener noreferrer">Watermarkly</a>
+</div>

@@ -9,6 +9,7 @@
     <script src="/assets/javascript/api.js"></script>
     <script src="/assets/javascript/utils.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -35,11 +36,6 @@
                 <h3>Projects</h3>
                 <input type="hidden" id="projectId">
                 <%- include('partials/cv/cv_projects') %>
-            </div>
-
-            <div class="section">
-                <label for="interests">Interests:</label>
-                <textarea id="interests" name="interests" rows="4" placeholder="List your interests" required></textarea>
             </div>
             
             <button type="button" id="saveResume">Save Resume</button>

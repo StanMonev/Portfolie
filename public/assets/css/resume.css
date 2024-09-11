@@ -156,7 +156,7 @@ body {
 }
 
 textarea {
-    resize: none;
+    resize: vertical;
 }
 
 /* Responsive Styles */

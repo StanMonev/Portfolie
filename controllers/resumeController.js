@@ -29,14 +29,15 @@ const ADMIN_ID = 1;
 const saveOrUpdateResume = async (req, res) => {
   const userId = req.session.userId;
   const {
-    firstName, lastName, town, country, email,
-    linkedin, github, website, skills, interests
+    first_name, last_name, town, country, email,
+    linkedin, github, website, skills, languages, 
+    interests, settings
   } = req.body;
 
   try {
     const fields = {
-      first_name: firstName,
-      last_name: lastName,
+      first_name: first_name,
+      last_name: last_name,
       town: town,
       country: country,
       email: email,
@@ -45,6 +46,8 @@ const saveOrUpdateResume = async (req, res) => {
       website: website,
       skills: skills,
       interests: interests,
+      languages: languages,
+      settings: settings,
       user_id: userId
     };
 
@@ -259,7 +262,7 @@ const getWorkExperience = async (req, res) => {
     if (!resume || !workExperience || workExperience.resume_id !== resume.id) {
       return res.status(404).send({ message: 'Work experience not found' });
     }
-    res.json(workExperience);
+    res.status(200).json(workExperience);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: 'Failed to fetch work experience' });
@@ -284,7 +287,7 @@ const getEducation = async (req, res) => {
     if (!resume || !education || education.resume_id !== resume.id) {
       return res.status(404).send({ message: 'Education not found' });
     }
-    res.json(education);
+    res.status(200).json(education);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: 'Failed to fetch education' });
@@ -309,7 +312,7 @@ const getProject = async (req, res) => {
     if (!resume || !project || project.resume_id !== resume.id) {
       return res.status(404).send({ message: 'Project not found' });
     }
-    res.json(project);
+    res.status(200).json(project);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: 'Failed to fetch project' });
@@ -326,8 +329,12 @@ const getProject = async (req, res) => {
  */
 const getAdminWorkExperiences = async (req, res) => {
   try {
-    const experiences = await resumeService.getWorkExperiences(ADMIN_ID);
-    res.json(experiences);
+    const resume = await resumeService.getResumeInfo(ADMIN_ID);
+    if (!resume) {
+      return res.status(404).send({ message: 'Resume not found' });
+    }
+    const experiences = await resumeService.getWorkExperiences(resume.id);
+    res.status(200).json(experiences);
   } catch (error) {
     console.error('Error fetching admin work experiences:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -344,8 +351,12 @@ const getAdminWorkExperiences = async (req, res) => {
  */
 const getAdminEducations = async (req, res) => {
   try {
-    const educations = await resumeService.getEducations(ADMIN_ID);
-    res.json(educations);
+    const resume = await resumeService.getResumeInfo(ADMIN_ID);
+    if (!resume) {
+      return res.status(404).send({ message: 'Resume not found' });
+    }
+    const educations = await resumeService.getEducations(resume.id);
+    res.status(200).json(educations);
   } catch (error) {
     console.error('Error fetching admin educations:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -362,8 +373,12 @@ const getAdminEducations = async (req, res) => {
  */
 const getAdminProjects = async (req, res) => {
   try {
-    const projects = await resumeService.getProjects(ADMIN_ID);
-    res.json(projects);
+    const resume = await resumeService.getResumeInfo(ADMIN_ID);
+    if (!resume) {
+      return res.status(404).send({ message: 'Resume not found' });
+    }
+    const projects = await resumeService.getProjects(resume.id);
+    res.status(200).json(projects);
   } catch (error) {
     console.error('Error fetching admin projects:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -384,7 +399,7 @@ const getAdminResume = async (req, res) => {
     if (!resume) {
       return res.status(404).json({ error: 'No resume found' });
     }
-    res.json(resume);
+    res.status(200).json(resume);
   } catch (error) {
     console.error('Error fetching admin resume:', error);
     res.status(500).json({ error: 'Internal Server Error' });

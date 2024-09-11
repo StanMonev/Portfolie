@@ -35,14 +35,23 @@ function formatList(text) {
 }
 
 /**
- * Formats skills and interests into an HTML unordered list. Both skills and interests are expected 
- * to be multiline strings, with each line representing a separate item.
+ * Reorders a list of elements inside a container in their new order that is given with the list of IDs.
  * 
- * @param {string} skills - The multiline string representing skills.
- * @param {string} interests - The multiline string representing interests.
- * @returns {string} - An HTML string containing the combined skills and interests wrapped in <li> tags.
+ * @param {string} containerID - The container that contains the elements that need to be reordered.
+ * @param {Array} list - List of IDs of the elements in their new order
+ * @returns {void}
+ * @throws {Error}
  */
-function formatSkillsAndInterests(skills, interests) {
-    return skills.split('\n').map(skill => `<li>${skill.trim()}</li>`).join('') + 
-           interests.split('\n').map(interest => `<li>${interest.trim()}</li>`).join('');
+
+function orderElements(containerID, list){
+    const container = document.getElementById(containerID);
+
+    if(!container) throw new Error('The container is not found!');
+
+    list.forEach(id => {
+        const section = document.getElementById(id);
+        if (section) {
+            container.appendChild(section);
+        }
+    });
 }
