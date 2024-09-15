@@ -28,6 +28,7 @@ function addClickToFilterButton(){
     document.getElementById('applyFilter').addEventListener('click', () => {
         const filterIPs = document.getElementById('filterIP').value;
         fetchAndRenderTable(filterIPs);
+        renderCharts(filterIPs);
     });
 }
 
@@ -48,11 +49,22 @@ async function fetchAnalyticsData(url = '/api/analytics') {
  * 
  * @returns {Promise<void>} - A promise that resolves once all charts are rendered.
  */
-async function renderCharts() {
-    const data = await fetchAnalyticsData();
+async function renderCharts(filterIPs='') {
+    let url = '/api/analytics';
+    if (filterIPs) {
+        url += `?filterIPs=${filterIPs}`;
+    }
+    
+    const data = await fetchAnalyticsData(url);
 
     // Render daily visitors line chart
     const dailyCtx = document.getElementById('dailyChart').getContext('2d');
+
+    let dailyChart = Chart.getChart("dailyChart");
+    if (dailyChart != undefined) {
+        dailyChart.destroy();
+    }
+    
     new Chart(dailyCtx, {
         type: 'line',
         data: {
@@ -74,6 +86,12 @@ async function renderCharts() {
 
     // Render weekly visitors bar chart
     const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
+
+    let weeklyChart = Chart.getChart("weeklyChart");
+    if (weeklyChart != undefined) {
+        weeklyChart.destroy();
+    }
+
     new Chart(weeklyCtx, {
         type: 'bar',
         data: {
@@ -96,6 +114,12 @@ async function renderCharts() {
 
     // Render monthly visitors bar chart
     const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+
+    let monthlyChart = Chart.getChart("monthlyChart");
+    if (monthlyChart != undefined) {
+        monthlyChart.destroy();
+    }
+
     new Chart(monthlyCtx, {
         type: 'bar',
         data: {
@@ -117,14 +141,21 @@ async function renderCharts() {
     });
 
     // Render visitors by country pie chart
+    const newCountriesArray = _mergeCountryHashes(data.countryVisitors);
     const countryCtx = document.getElementById('countryChart').getContext('2d');
+
+    let countryChart = Chart.getChart("countryChart");
+    if (countryChart != undefined) {
+        countryChart.destroy();
+    }
+
     new Chart(countryCtx, {
         type: 'pie',
         data: {
-            labels: data.countryVisitors.map(item => item.country),
+            labels: newCountriesArray.map(item => item.country),
             datasets: [{
                 label: 'Visitors by Country',
-                data: data.countryVisitors.map(item => item.count),
+                data: newCountriesArray.map(item => item.count),
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -171,7 +202,6 @@ function logout() {
  * @param {string} countryCode - The code country string
  * @returns {string} The emoji code as a string
  */
-
 function countryCodeToFlagEmoji(countryCode) {
     // Convert the country code (e.g., "US", "GB", etc.) to the corresponding flag emoji
     return countryCode
@@ -179,8 +209,9 @@ function countryCodeToFlagEmoji(countryCode) {
         .replace(/./g, char => String.fromCodePoint(127397 + char.charCodeAt()));
 }
 
-
-
+/**
+ * Formats the date so that it looks like this: 1 September 2024
+ */
 function formatDate(dateString) {
     const dateObj = new Date(dateString);
     return dateObj.toLocaleDateString('en-GB', {
@@ -190,6 +221,12 @@ function formatDate(dateString) {
     });
 }
 
+/**
+ * Fills in the contents of the admin table.
+ * 
+ * @param {string} filterIPs - The filtered IPs if there are any
+ * @returns {void}
+ */
 async function fetchAndRenderTable(filterIPs = '') {
     let url = '/api/analytics';
     if (filterIPs) {
@@ -210,8 +247,11 @@ async function fetchAndRenderTable(filterIPs = '') {
 
         const countryCell = document.createElement('td');
         const flagImg = document.createElement('img');
-        flagImg.src = countryCodeToFlagEmoji(visitor.country);
+        flagImg.src = `https://flagsapi.com/${visitor.country}/flat/32.png`;
         countryCell.appendChild(flagImg);
+        const span = document.createElement('span');
+        span.innerHTML = countryCodeToFlagEmoji(visitor.country);
+        countryCell.appendChild(span);
         row.appendChild(countryCell);
         
         const countCell = document.createElement('td');
@@ -220,4 +260,27 @@ async function fetchAndRenderTable(filterIPs = '') {
 
         tableBody.appendChild(row);
     });
+}
+
+/**
+ * Merges the countries and adds their count, by removing the IP, so that it can be used in the pie chart statistic
+ * @param {Array} hashes - An array of hashes that needs to be merged 
+ * @returns An array with hashes, that only contain the Country and Count
+ */
+function _mergeCountryHashes(hashes) {
+    const merged = [];
+  
+    hashes.forEach(hash => {
+      const { country, count } = hash;
+  
+      const existingCountry = merged.find(mergedHash => mergedHash.country === country);
+  
+      if (existingCountry) {
+        existingCountry.count += parseInt(count);
+      } else {
+        merged.push({ country, count: parseInt(count) });
+      }
+    });
+  
+    return merged;
 }
