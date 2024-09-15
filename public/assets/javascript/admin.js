@@ -13,12 +13,32 @@
  */
 
 /**
+ * Initializes the admin dashboard by rendering the charts when the DOM is fully loaded.
+ * 
+ * @returns {void}
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    renderCharts();
+    fetchAndRenderTable();
+    addClickToFilterButton();
+});
+
+
+function addClickToFilterButton(){
+    document.getElementById('applyFilter').addEventListener('click', () => {
+        const filterIPs = document.getElementById('filterIP').value;
+        fetchAndRenderTable(filterIPs);
+    });
+}
+
+
+/**
  * Fetches the analytics data from the server.
  * 
  * @returns {Promise<Object>} - A promise that resolves to the analytics data in JSON format.
  */
-async function fetchAnalyticsData() {
-    const response = await fetch('/api/analytics');
+async function fetchAnalyticsData(url = '/api/analytics') {
+    const response = await fetch(url);
     return response.json();
 }
 
@@ -36,7 +56,7 @@ async function renderCharts() {
     new Chart(dailyCtx, {
         type: 'line',
         data: {
-            labels: data.dailyVisitors.map(item => item.date),
+            labels: data.dailyVisitors.toReversed().map(item => formatDate(item.date)),
             datasets: [{
                 label: 'Daily Visitors',
                 data: data.dailyVisitors.map(item => item.count),
@@ -57,7 +77,7 @@ async function renderCharts() {
     new Chart(weeklyCtx, {
         type: 'bar',
         data: {
-            labels: data.weeklyVisitors.map(item => item.week),
+            labels: data.weeklyVisitors.map(item => formatDate(item.week)),
             datasets: [{
                 label: 'Weekly Visitors',
                 data: data.weeklyVisitors.map(item => item.count),
@@ -79,7 +99,7 @@ async function renderCharts() {
     new Chart(monthlyCtx, {
         type: 'bar',
         data: {
-            labels: data.monthlyVisitors.map(item => item.month),
+            labels: data.monthlyVisitors.map(item => formatDate(item.month)),
             datasets: [{
                 label: 'Monthly Visitors',
                 data: data.monthlyVisitors.map(item => item.count),
@@ -146,10 +166,58 @@ function logout() {
 }
 
 /**
- * Initializes the admin dashboard by rendering the charts when the DOM is fully loaded.
+ * Creates an emoji out of a country code.
  * 
- * @returns {void}
+ * @param {string} countryCode - The code country string
+ * @returns {string} The emoji code as a string
  */
-document.addEventListener('DOMContentLoaded', () => {
-    renderCharts();
-});
+
+function countryCodeToFlagEmoji(countryCode) {
+    // Convert the country code (e.g., "US", "GB", etc.) to the corresponding flag emoji
+    return countryCode
+        .toUpperCase()
+        .replace(/./g, char => String.fromCodePoint(127397 + char.charCodeAt()));
+}
+
+
+
+function formatDate(dateString) {
+    const dateObj = new Date(dateString);
+    return dateObj.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+}
+
+async function fetchAndRenderTable(filterIPs = '') {
+    let url = '/api/analytics';
+    if (filterIPs) {
+        url += `?filterIPs=${filterIPs}`;
+    }
+    
+    const data = await fetchAnalyticsData(url);
+
+    const tableBody = document.getElementById('visitorsTable').querySelector('tbody');
+    tableBody.innerHTML = '';
+
+    data.countryVisitors.forEach(visitor => {
+        const row = document.createElement('tr');
+
+        const ipCell = document.createElement('td');
+        ipCell.textContent = visitor.ip;
+        row.appendChild(ipCell);
+
+        const countryCell = document.createElement('td');
+        const flagImg = document.createElement('img');
+        flagImg.src = countryCodeToFlagEmoji(visitor.country);
+        countryCell.appendChild(flagImg);
+        row.appendChild(countryCell);
+        
+        const countCell = document.createElement('td');
+        countCell.textContent = visitor.count;
+        row.appendChild(countCell);
+
+        tableBody.appendChild(row);
+    });
+}

@@ -79,8 +79,8 @@ const getAnalyticsData = async () => {
       .orderBy('month', 'desc');
 
     const countryVisitors = await knex('analytics')
-      .select('country', knex.raw('count(*) as count'))
-      .groupBy('country')
+      .select('country', 'ip', knex.raw('count(*) as count'))
+      .groupBy('country', 'ip')
       .orderBy('count', 'desc');
 
     return { dailyVisitors, weeklyVisitors, monthlyVisitors, countryVisitors };
