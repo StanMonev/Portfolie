@@ -87,13 +87,8 @@ const setCookiePreference = async (req, res) => {
 
 const getAnalyticsData = async (req, res) => {
   try {
-    const analyticsData = await cookieService.getAnalyticsData();
     const { filterIPs } = req.query;
-
-    if (filterIPs) {
-        const ipArray = filterIPs.split(',');
-        analyticsData.countryVisitors = analyticsData.countryVisitors.filter(visitor => !ipArray.includes(visitor.ip));
-    }
+    const analyticsData = await cookieService.getAnalyticsData(filterIPs);
     res.json(analyticsData);
   } catch (error) {
     console.error('Error fetching analytics data:', error);

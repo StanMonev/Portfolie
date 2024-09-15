@@ -61,27 +61,37 @@ const setCookiePreference = async (cookieData) => {
  * @throws {Error} - Throws an error if there is a problem retrieving the data.
  */
 
-const getAnalyticsData = async () => {
+const getAnalyticsData = async (excludedIpsString="") => {
   try {
+
+    let excludedIps =[]
+    if(excludedIpsString){
+      excludedIps = excludedIpsString.split(',');
+    }
+
     const dailyVisitors = await knex('analytics')
       .select(knex.raw('DATE(timestamp) as date'), knex.raw('count(*) as count'))
       .groupByRaw('DATE(timestamp)')
-      .orderBy('date', 'desc');
+      .orderBy('date', 'desc')
+      .whereNotIn('ip', excludedIps);
 
     const weeklyVisitors = await knex('analytics')
       .select(knex.raw('DATE_TRUNC(\'week\', timestamp) as week'), knex.raw('count(*) as count'))
       .groupByRaw('DATE_TRUNC(\'week\', timestamp)')
-      .orderBy('week', 'desc');
+      .orderBy('week', 'desc')
+      .whereNotIn('ip', excludedIps);
 
     const monthlyVisitors = await knex('analytics')
       .select(knex.raw('DATE_TRUNC(\'month\', timestamp) as month'), knex.raw('count(*) as count'))
       .groupByRaw('DATE_TRUNC(\'month\', timestamp)')
-      .orderBy('month', 'desc');
+      .orderBy('month', 'desc')
+      .whereNotIn('ip', excludedIps);
 
     const countryVisitors = await knex('analytics')
       .select('country', 'ip', knex.raw('count(*) as count'))
       .groupBy('country', 'ip')
-      .orderBy('count', 'desc');
+      .orderBy('count', 'desc')
+      .whereNotIn('ip', excludedIps);
 
     return { dailyVisitors, weeklyVisitors, monthlyVisitors, countryVisitors };
   } catch (error) {
