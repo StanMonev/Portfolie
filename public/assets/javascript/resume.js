@@ -781,12 +781,12 @@ async function updateWorkExperiencePreview() {
             item.classList.add('experience-item');
             const beginDate = new Date(exp.job_begin_date);
             const endDate = new Date(exp.job_end_date);
-            const endDateString = exp.still_working ? 'Present' : `${endDate.toLocaleString('en-US', { month: 'long' })}, ${endDate.getFullYear()}`;
+            const endDateString = exp.still_working ? 'Present' : `${endDate.toLocaleString('en-GB', { month: 'long' })}, ${endDate.getFullYear()}`;
             const [mainTitle, subTitle] = splitTitle(exp.job_title);
             item.innerHTML = `
                 <div>
                     <strong class="title-main">${mainTitle}</strong><span class="title-sub">${subTitle}</span>
-                    <span class="dates">${beginDate.toLocaleString('en-US', { month: 'long' }) }, ${beginDate.getFullYear()}  - ${endDateString}</span>
+                    <span class="dates">${beginDate.toLocaleString('en-GB', { month: 'long' }) }, ${beginDate.getFullYear()}  - ${endDateString}</span>
                 </div>
                 <ul>${formatList(exp.job_description)}</ul>
             `;
@@ -816,12 +816,12 @@ async function updateEducationPreview() {
             const [mainTitle, subTitle] = splitTitle(edu.name);
             const fromDate = new Date(edu.from_date);
             const endDate = new Date(edu.until_date);
-            const untilDate = edu.still_studying ? 'Present' : `${endDate.toLocaleString('en-US', { month: 'long' })}, ${endDate.getFullYear()}`;
+            const untilDate = edu.still_studying ? 'Present' : `${endDate.toLocaleString('en-GB', { month: 'long' })}, ${endDate.getFullYear()}`;
 
             item.innerHTML = `
                 <div>
                     <strong class="title-main">${mainTitle}</strong><span class="title-sub">${subTitle}</span>
-                    <span class="dates">${fromDate.toLocaleString('en-US', { month: 'long' })}, ${fromDate.getFullYear()} - ${untilDate}</span>
+                    <span class="dates">${fromDate.toLocaleString('en-GB', { month: 'long' })}, ${fromDate.getFullYear()} - ${untilDate}</span>
                 </div>
                 <ul>${formatList(edu.description)}</ul>
             `;

@@ -13,14 +13,37 @@
     <div class="admin-container">
         <h1>Welcome to the Admin Page</h1>
         <p>Click the button below to access the resume editor:</p>
+        <button onclick="document.location = '/'">Return to Website</button>
         <button onclick="redirectToResumeEditor()">Resume Editor</button>
         <button onclick="logout()">Logout</button>
         
         <h2>Visitor Statistics</h2>
-        <canvas id="dailyChart"></canvas>
-        <canvas id="weeklyChart"></canvas>
-        <canvas id="monthlyChart"></canvas>
-        <canvas id="countryChart"></canvas>
+
+        <div>
+            <label for="filterIP">Filter by IP:</label>
+            <input type="text" id="filterIP" placeholder="Enter IP to hide">
+            <button id="applyFilter">Apply Filter</button>
+        </div>
+        
+        <table id="visitorsTable">
+            <thead>
+                <tr>
+                    <th>IP Address</th>
+                    <th>Country</th>
+                    <th>Visit Times</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be dynamically inserted here -->
+            </tbody>
+        </table>
+
+        <div class="statisticsContainer">
+            <canvas id="dailyChart"></canvas>
+            <canvas id="weeklyChart"></canvas>
+            <canvas id="monthlyChart"></canvas>
+            <canvas id="countryChart"></canvas>
+        </div>
     </div>
 </body>
 </html>
