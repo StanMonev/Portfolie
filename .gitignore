@@ -1,4 +1,7 @@
-.env
+/resume-website/.env
+/blogs/.env
 /node_modules
+/resume-website/node_modules
+/blogs/node_modules
 .vs
 /other_projects
