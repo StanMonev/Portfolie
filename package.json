@@ -4,6 +4,7 @@
   "private": true,
   "description": "Monorepo for Express and React services",
   "scripts": {
+    "start:express:production": "cd resume-website && npm run productionStart",
     "start:express": "cd resume-website && npm run devStart",
     "start:react": "cd blogs && npm start",
     "start": "npm-run-all --parallel start:express start:react",
