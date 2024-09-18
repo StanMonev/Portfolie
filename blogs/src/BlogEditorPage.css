@@ -1,0 +1,104 @@
+/* src/components/BlogEditorPage.css */
+
+/* General Editor Styles */
+.blog-editor {
+  display: flex;
+}
+
+/* Toolbar Styling */
+.toolbar {
+  width: 200px;
+  height: calc(100vh - 56px); /* Adjust height considering navbar */
+  position: fixed;
+  top: 63px; /* Adjust to the height of the navbar */
+  left: 0;
+  z-index: 1000;
+  overflow-y: auto; /* Add scroll if needed */
+  background-color: var(--background-light); /* Use CSS variables for light mode */
+  border-right: 1px solid var(--text-light); /* Light mode border */
+}
+
+/* Editor Area Styling */
+.editor-area {
+  margin-left: 200px;
+  padding: 80px 20px 20px; /* Adjust top padding for the navbar */
+  overflow-y: auto;
+  height: calc(100vh - 80px); /* Adjust height considering the navbar and padding */
+  background-color: var(--background-light); /* Use CSS variables */
+  color: var(--text-light);
+}
+
+/* Styling for Components */
+.blog-component {
+  position: relative;
+  background-color: var(--background-light); /* Use CSS variables */
+}
+
+/* Component Toolbar */
+.component-toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border: 1px solid var(--text-light);
+  padding: 5px;
+  background-color: var(--background-light);
+}
+
+/* Add Component Button */
+.add-component-inline {
+  display: flex;
+  justify-content: center;
+}
+
+/* Paragraph Component Styling */
+.paragraph-component {
+  width: 100%;
+}
+
+.editable-paragraph {
+  color: var(--text-light);
+}
+
+.editable-paragraph:focus {
+  outline: none;
+  border-bottom: 1px dashed var(--text-light); /* Adjust underline color */
+}
+
+.editable-paragraph .placeholder {
+  color: #aaa; /* Light gray to mimic placeholder style */
+}
+
+/* Dark Mode Overrides */
+body.dark-theme .toolbar,
+body.dark-theme .editor-area,
+body.dark-theme .blog-component,
+body.dark-theme .component-toolbar {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+  border-color: var(--text-dark); /* Dark mode borders */
+}
+
+body.dark-theme .editable-paragraph {
+  color: var(--text-dark);
+}
+
+body.dark-theme .editable-paragraph:focus {
+  border-bottom: 1px dashed var(--text-dark); /* Dark mode underline */
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+  .toolbar {
+    width: 100%; /* Make toolbar full width on mobile */
+    top: 56px; /* Adjust for the navbar height */
+    left: 0;
+    height: calc(100vh - 56px); /* Full height minus the navbar */
+    position: fixed; /* Ensure toolbar stays in place */
+  }
+
+  .editor-area {
+    margin-left: 0; /* Reset margin for mobile view */
+    padding: 80px 10px 20px; /* Adjust padding */
+    height: calc(100vh - 80px); /* Adjust height */
+  }
+}
