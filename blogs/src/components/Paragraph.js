@@ -1,6 +1,7 @@
+// src/components/Paragraph.js
 import React, { useState, useRef, useEffect } from 'react';
 
-const Paragraph = ({ id, content = '', onUpdateContent, placeholder = 'Write something...' }) => {
+const Paragraph = ({ id, content = '', alignment = 'left', onUpdateContent, onUpdateAlignment, placeholder = 'Write something...' }) => {
   const [text, setText] = useState(content);
   const [isFocused, setIsFocused] = useState(false);
   const paragraphRef = useRef(null);
@@ -27,7 +28,7 @@ const Paragraph = ({ id, content = '', onUpdateContent, placeholder = 'Write som
       const range = document.createRange();
       const selection = window.getSelection();
       range.selectNodeContents(paragraphRef.current);
-      range.collapse(false); 
+      range.collapse(false);
       selection.removeAllRanges();
       selection.addRange(range);
     }
@@ -44,12 +45,27 @@ const Paragraph = ({ id, content = '', onUpdateContent, placeholder = 'Write som
     }
   }, [text, isFocused]);
 
+  Paragraph.getMenuOptionsArgs = () => [id, onUpdateAlignment];
+
   return (
     <div className="paragraph-component" style={{ position: 'relative' }}>
+
       {text === '' && !isFocused && (
-        <span className="placeholder" style={{ position: 'absolute', pointerEvents: 'none', color: '#aaa', background: 'transparent' }}>
-          {placeholder}
-        </span>
+        React.createElement(
+          'p',
+          {
+            className: 'placeholder',
+            style: {
+              width: '100%',
+              position: 'absolute', 
+              pointerEvents: 'none', 
+              color: '#aaa', 
+              background: 'transparent',
+              textAlign: alignment
+            },
+          },
+          placeholder
+        )
       )}
       <p
         ref={paragraphRef}
@@ -60,10 +76,20 @@ const Paragraph = ({ id, content = '', onUpdateContent, placeholder = 'Write som
         onFocus={handleFocus}
         onBlur={() => setIsFocused(false)}
         className="editable-paragraph"
-        style={{ whiteSpace: 'pre-wrap' }}
+        style={{ whiteSpace: 'pre-wrap', textAlign: alignment }} // Apply text alignment
       >
       </p>
     </div>
+  );
+};
+
+Paragraph.getMenuOptions = (id, onUpdateAlignment) => {
+  return (
+    <select onChange={(e) => onUpdateAlignment(id, e.target.value)}>
+      <option value="left">Left</option>
+      <option value="center">Center</option>
+      <option value="right">Right</option>
+    </select>
   );
 };
 

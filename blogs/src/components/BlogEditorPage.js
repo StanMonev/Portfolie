@@ -1,145 +1,135 @@
 // src/components/BlogEditorPage.js
-import React, { useState } from 'react';
-import { Container, Button, Modal, Form } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Button } from 'react-bootstrap';
 import BlogComponent from './BlogComponent';
-import Paragraph from './Paragraph';
+import Toolbar from './Toolbar';
+import AddComponentBox from './AddComponentBox';
+import ComponentRegistry from './ComponentRegistry';
 import '../BlogEditorPage.css';
 
 const BlogEditor = () => {
   const [components, setComponents] = useState([]);
-  const [toolbarVisible, setToolbarVisible] = useState(true);
-  const [showAddModal, setShowAddModal] = useState(false);
+  const [toolbarVisible, setToolbarVisible] = useState(false);
+  const [showAddComponentBox, setShowAddComponentBox] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleAddComponent = (type) => {
-    setComponents([...components, { type, id: new Date().getTime() }]);
-    setShowAddModal(false); // Close modal after adding a component
-  };
-
-  const handleUpdateContent = (id, content) => {
-    setComponents((prevComponents) =>
-      prevComponents.map((component) =>
-        component.id === id ? { ...component, content } : component
-      )
-    );
-  };
-
-  const handleRemoveComponent = (id) => {
-    setComponents((prevComponents) =>
-      prevComponents.filter((component) => component.id !== id)
-    );
+    setComponents([...components, { type, id: new Date().getTime(), alignment: 'left' }]);
+    if (!isMobileView) setShowAddComponentBox(false);
   };
 
   const handleMoveComponent = (index, direction) => {
     setComponents((prevComponents) => {
       const newComponents = [...prevComponents];
       const [movedComponent] = newComponents.splice(index, 1);
-      if (direction === 'up') {
-        newComponents.splice(index - 1, 0, movedComponent);
-      } else if (direction === 'down') {
-        newComponents.splice(index + 1, 0, movedComponent);
-      }
+      newComponents.splice(direction === 'up' ? index - 1 : index + 1, 0, movedComponent);
       return newComponents;
     });
   };
 
+  const handleRemoveComponent = (id) => {
+    setComponents((prevComponents) => prevComponents.filter((c) => c.id !== id));
+  };
+
+  const handleUpdateContent = (id, content) => {
+    setComponents((prevComponents) =>
+      prevComponents.map((c) => (c.id === id ? { ...c, content } : c))
+    );
+  };
+
+  const handleUpdateAlignment = (id, newAlignment) => {
+    setComponents((prevComponents) =>
+      prevComponents.map((c) => (c.id === id ? { ...c, alignment: newAlignment } : c))
+    );
+  };
+
+  const handleUpdateHeaderLevel = (id, level) => {
+    setComponents((prevComponents) =>
+      prevComponents.map((c) => (c.id === id ? { ...c, level } : c))
+    );
+  };
+
   const renderComponent = (component, index) => {
-    switch (component.type) {
-      case 'paragraph':
-        return (
-          <BlogComponent
-            key={component.id}
-            id={component.id}
-            index={index}
-            moveComponent={handleMoveComponent}
-            removeComponent={handleRemoveComponent}
-          >
-            <Paragraph
-              id={component.id}
-              content={component.content}
-              onUpdateContent={handleUpdateContent}
-            />
-          </BlogComponent>
-        );
-      default:
-        return null;
-    }
+    const { component: Component} = ComponentRegistry[component.type];
+    return (
+      <BlogComponent
+        key={component.id}
+        id={component.id}
+        index={index}
+        moveComponent={handleMoveComponent}
+        removeComponent={handleRemoveComponent}
+      >
+        <Component
+          id={component.id}
+          content={component.content}
+          alignment={component.alignment}
+          level={component.level}
+          onUpdateContent={handleUpdateContent}
+          onUpdateAlignment={handleUpdateAlignment}
+          onUpdateLevel={handleUpdateHeaderLevel}
+        />
+      </BlogComponent>
+    );
   };
 
   return (
     <Container fluid className="blog-editor d-flex p-0">
-      {/* Fixed Toolbar */}
       {toolbarVisible && (
-        <div className="toolbar p-3">
-          <h5>Components</h5>
-          <Button
-            variant="outline-primary"
-            className="mb-2 w-100"
-            onClick={() => handleAddComponent('paragraph')}
-          >
-            Add Paragraph
-          </Button>
-          <Button
-            variant="outline-secondary"
-            className="mt-3 w-100"
-            onClick={() => setToolbarVisible(false)}
-          >
-            Hide Toolbar
-          </Button>
-        </div>
+        <Toolbar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          handleAddComponent={handleAddComponent}
+          setToolbarVisible={setToolbarVisible}
+        />
       )}
 
-      {/* Main Editor Area */}
       <div className={`editor-area flex-grow-1 ${toolbarVisible ? 'editor-area-with-toolbar' : ''}`}>
-        {components.length === 0 && (
-          <p className="text-muted text-center mt-5">Start adding components to your blog...</p>
-        )}
         {components.map((component, index) => renderComponent(component, index))}
-        
-        {/* Add Component Button */}
-        <div className="add-component-inline mt-3 d-flex justify-content-center">
+
+        <div className="add-component-inline mt-3 d-flex justify-content-center" style={{ position: 'relative' }}>
           <Button
             variant="outline-secondary"
-            onClick={() => setShowAddModal(true)}
+            onClick={() => {
+              if (isMobileView) setToolbarVisible(true);
+              else setShowAddComponentBox(true);
+            }}
           >
             + Add Component
           </Button>
+
+          <AddComponentBox
+            show={showAddComponentBox && !isMobileView}
+            setShow={setShowAddComponentBox}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            handleAddComponent={handleAddComponent}
+            setToolbarVisible={setToolbarVisible}
+          />
         </div>
       </div>
 
-      {/* Show Toolbar Button */}
-      {!toolbarVisible && (
+      {!toolbarVisible && !isMobileView && (
         <Button
           variant="outline-secondary"
           className="show-toolbar-btn"
           onClick={() => setToolbarVisible(true)}
-          style={{ position: 'fixed', top: '70px', left: '10px', zIndex: 1000 }} /* Adjusted top positioning */
+          style={{ position: 'fixed', top: '70px', left: '10px', zIndex: 1000 }}
         >
           Show Toolbar
         </Button>
       )}
-
-      {/* Add Component Modal */}
-      <Modal show={showAddModal} onHide={() => setShowAddModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Component</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group>
-            <Form.Label>Choose a component:</Form.Label>
-            <div className="component-list d-flex justify-content-around">
-              <Button variant="outline-primary" onClick={() => handleAddComponent('paragraph')}>
-                Paragraph
-              </Button>
-              {/* Add more component buttons here */}
-            </div>
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowAddModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </Container>
   );
 };

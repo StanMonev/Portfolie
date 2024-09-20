@@ -18,6 +18,20 @@ body.light-theme {
   color: var(--text-light);
 }
 
+body select {
+  border-radius: 5px;
+}
+
+body.dark-theme select {
+  background: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.main-page.mt-5,
+.user-panel.mt-5 {
+  margin-top: 5em!important;
+}
+
 .theme-toggle {
   display: flex;
   align-items: center;
@@ -108,7 +122,7 @@ body.dark-theme .navbar {
   }
 
   .navbar-nav {
-    text-align: center;
+    text-align: left;
     width: 100%;
   }
 
@@ -116,8 +130,14 @@ body.dark-theme .navbar {
     padding: 0.25rem 0.75rem;
   }
 
+  body.dark-theme .navbar-collapse {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+  }
+
   .navbar-collapse {
-    background-color: var(--background-light); /* Make sure the dropdown looks good */
+    background-color: var(--background-light);
+    margin-top: 10px;
   }
 
   .theme-toggle {

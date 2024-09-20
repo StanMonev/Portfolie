@@ -102,3 +102,65 @@ body.dark-theme .editable-paragraph:focus {
     height: calc(100vh - 80px); /* Adjust height */
   }
 }
+
+/* Add Component Box Styling */
+.add-component-popup {
+  position: absolute;
+  top: 100%; /* Position below the button */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 350px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 10px;
+  z-index: 1000;
+}
+
+/* Component List Grid */
+.component-list-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* Individual Component Button */
+.component-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #333;
+  background-color: #f8f9fa;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.component-button:hover {
+  background-color: #e2e6ea;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Browse all button styling */
+.add-component-popup .text-center button {
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .add-component-popup {
+    width: 300px;
+  }
+}
+
+.dynamic-menu-options div {
+  display: flex;
+  gap: 5px;
+}
+
