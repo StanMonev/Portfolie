@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
 
-const BlogComponent = ({ id, index, moveComponent, removeComponent, children}) => {
+const BlogComponentMenu = ({ id, index, moveComponent, removeComponent, children}) => {
   const [isSelected, setIsSelected] = useState(false);
   const componentRef = useRef(null);
 
@@ -81,4 +81,4 @@ const BlogComponent = ({ id, index, moveComponent, removeComponent, children}) =
   );
 };
 
-export default BlogComponent;
+export default BlogComponentMenu;

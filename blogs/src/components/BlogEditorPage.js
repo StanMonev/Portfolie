@@ -1,70 +1,66 @@
 // src/components/BlogEditorPage.js
 import React, { useState, useEffect } from 'react';
 import { Container, Button } from 'react-bootstrap';
-import BlogComponent from './BlogComponent';
+import BlogComponentMenu from './BlogComponentMenu';
 import Toolbar from './Toolbar';
 import AddComponentBox from './AddComponentBox';
 import ComponentRegistry from './ComponentRegistry';
 import '../BlogEditorPage.css';
+import { createComponent, convertComponentsToHTML, parseHTMLToComponents } from '../utils/ComponentFactory';
+import useBlogEditorHandlers from '../hooks/useBlogEditorHandlers'; // Import the handlers
 
-const BlogEditor = () => {
+const BlogEditor = ({ initialHtml }) => {
   const [components, setComponents] = useState([]);
   const [toolbarVisible, setToolbarVisible] = useState(false);
   const [showAddComponentBox, setShowAddComponentBox] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [isMobileView, setIsMobileView] = useState(false);
 
+  // Get all handlers from useBlogEditorHandlers
+  const {
+    handleAddComponent,
+    handleMoveComponent,
+    handleRemoveComponent,
+    handleUpdateContent,
+    handleUpdateAlignment,
+    handleUpdateHeaderLevel,
+  } = useBlogEditorHandlers(components, setComponents); // Pass components and setComponents
+
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobileView(window.innerWidth <= 768);
-    };
+    const handleResize = () => setIsMobileView(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
     handleResize();
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleAddComponent = (type) => {
-    setComponents([...components, { type, id: new Date().getTime(), alignment: 'left' }]);
-    if (!isMobileView) setShowAddComponentBox(false);
+  useEffect(() => {
+    if (initialHtml) {
+      const loadedComponents = parseHTMLToComponents(initialHtml); // Moved to utility
+      setComponents(loadedComponents);
+    }
+  }, [initialHtml]);
+
+  const convertToHTML = () => {
+    return convertComponentsToHTML(components); // Moved to utility
   };
 
-  const handleMoveComponent = (index, direction) => {
-    setComponents((prevComponents) => {
-      const newComponents = [...prevComponents];
-      const [movedComponent] = newComponents.splice(index, 1);
-      newComponents.splice(direction === 'up' ? index - 1 : index + 1, 0, movedComponent);
-      return newComponents;
-    });
+  const saveBlog = () => {
+    const htmlContent = convertToHTML();
+    console.log('Saving HTML:', htmlContent);
+    // Send the `htmlContent` to your backend to save in the database
   };
 
-  const handleRemoveComponent = (id) => {
-    setComponents((prevComponents) => prevComponents.filter((c) => c.id !== id));
-  };
-
-  const handleUpdateContent = (id, content) => {
-    setComponents((prevComponents) =>
-      prevComponents.map((c) => (c.id === id ? { ...c, content } : c))
-    );
-  };
-
-  const handleUpdateAlignment = (id, newAlignment) => {
-    setComponents((prevComponents) =>
-      prevComponents.map((c) => (c.id === id ? { ...c, alignment: newAlignment } : c))
-    );
-  };
-
-  const handleUpdateHeaderLevel = (id, level) => {
-    setComponents((prevComponents) =>
-      prevComponents.map((c) => (c.id === id ? { ...c, level } : c))
-    );
+  const previewBlog = () => {
+    const htmlContent = convertToHTML();
+    const newWindow = window.open();
+    newWindow.document.write(htmlContent);
+    newWindow.document.close();
   };
 
   const renderComponent = (component, index) => {
-    const { component: Component} = ComponentRegistry[component.type];
+    const { component: Component } = ComponentRegistry[component.type];
     return (
-      <BlogComponent
+      <BlogComponentMenu
         key={component.id}
         id={component.id}
         index={index}
@@ -80,7 +76,7 @@ const BlogEditor = () => {
           onUpdateAlignment={handleUpdateAlignment}
           onUpdateLevel={handleUpdateHeaderLevel}
         />
-      </BlogComponent>
+      </BlogComponentMenu>
     );
   };
 
@@ -117,6 +113,15 @@ const BlogEditor = () => {
             handleAddComponent={handleAddComponent}
             setToolbarVisible={setToolbarVisible}
           />
+        </div>
+
+        <div className="mt-3 d-flex justify-content-center">
+          <Button variant="primary" onClick={saveBlog}>
+            Save Blog
+          </Button>
+          <Button variant="success" className="ml-2" onClick={previewBlog}>
+            Preview Blog
+          </Button>
         </div>
       </div>
 
