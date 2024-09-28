@@ -1,13 +1,13 @@
 // src/App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomePage from './components/HomePage';
-import Navbar from './components/Navbar';
-import BlogPost from './components/BlogPost';
-import LoginPage from './components/LoginPage';
-import UserPanelPage from './components/UserPanelPage';
-import BlogEditor from './components/BlogEditorPage';
-import './App.css';
+import HomePage from './pages/HomePage';
+import Navbar from './components/common/Navbar';
+import BlogPost from './pages/BlogPost';
+import LoginPage from './pages/LoginPage';
+import UserPanelPage from './pages/UserPanelPage';
+import BlogEditor from './pages/BlogEditorPage';
+import './styles/App.css';
 
 function App() {
   const [theme, setTheme] = useState('light'); // Default to 'light'

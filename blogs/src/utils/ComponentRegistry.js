@@ -1,8 +1,8 @@
 // src/components/ComponentRegistry.js
-import Paragraph from './Paragraph';
-import Header from './Header';
+import Paragraph from '../components/blogEditor/elements/Paragraph';
+import Header from '../components/blogEditor/elements/Header';
 // Import new components
-import List from './List';
+import List from '../components/blogEditor/elements/List';
 /* import Quote from './Quote';
 import Code from './Code'; */
 

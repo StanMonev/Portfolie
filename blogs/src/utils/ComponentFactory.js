@@ -1,5 +1,5 @@
 // src/utils/ComponentFactory.js
-import ComponentRegistry from '../components/ComponentRegistry';
+import ComponentRegistry from './ComponentRegistry';
 import parse from 'html-react-parser';
 
 

@@ -1,7 +1,7 @@
 // src/components/AddComponentBox.js
 import React, { useRef, useEffect } from 'react';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
-import ComponentRegistry from './ComponentRegistry';
+import ComponentRegistry from '../../utils/ComponentRegistry';
 
 const AddComponentBox = ({ show, setShow, searchTerm = '', setSearchTerm, handleAddComponent, setToolbarVisible }) => {
   const addComponentRef = useRef(null);

@@ -1,7 +1,7 @@
 // src/components/Toolbar.js
 import React from 'react';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
-import ComponentRegistry from './ComponentRegistry';
+import ComponentRegistry from '../../utils/ComponentRegistry';
 
 const Toolbar = ({ searchTerm = '', setSearchTerm, handleAddComponent, setToolbarVisible }) => {
   const filteredComponents = Object.keys(ComponentRegistry).filter((key) =>

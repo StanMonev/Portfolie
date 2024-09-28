@@ -1,11 +1,11 @@
 // src/components/BlogEditorPage.js
 import React, { useState, useEffect } from 'react';
 import { Container, Button } from 'react-bootstrap';
-import BlogComponentMenu from './BlogComponentMenu';
-import Toolbar from './Toolbar';
-import AddComponentBox from './AddComponentBox';
-import ComponentRegistry from './ComponentRegistry';
-import '../BlogEditorPage.css';
+import BlogComponentMenu from '../components/blogEditor/BlogComponentMenu';
+import Toolbar from '../components/blogEditor/Toolbar';
+import AddComponentBox from '../components/blogEditor/AddComponentBox';
+import ComponentRegistry from '../utils/ComponentRegistry';
+import '../styles/BlogEditorPage.css';
 import { createComponent, convertComponentsToHTML, parseHTMLToComponents } from '../utils/ComponentFactory';
 import useBlogEditorHandlers from '../hooks/useBlogEditorHandlers'; // Import the handlers
 
