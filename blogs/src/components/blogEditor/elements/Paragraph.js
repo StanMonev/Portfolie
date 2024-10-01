@@ -1,25 +1,41 @@
-// src/components/Paragraph.js
-import React from 'react';
-import BaseEditableComponent from './BaseEditableComponent';
+// src/components/elements/Paragraph.js
+import React, { useState } from 'react';
 
-const Paragraph = ({ id, content = '', alignment = 'left', onUpdateContent, onUpdateAlignment, placeholder = 'Write something...' }) => {
-  
+const Paragraph = ({ id, content = '', alignment = 'left', onUpdateContent, onUpdateAlignment }) => {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleBlur = (e) => {
+    setIsFocused(false);
+    onUpdateContent(id, e.target.innerText);
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
 
   Paragraph.getMenuOptionsArgs = () => [id, onUpdateAlignment];
-  
+
   return (
-    <BaseEditableComponent
-      id={id}
-      content={content}
-      alignment={alignment}
-      onUpdateContent={(newText) => onUpdateContent(id, newText)}
-      placeholder={placeholder}
-      tagName="p" // Paragraph component renders a <p> tag
-    />
+    <div>
+      {content.trim() === '' && !isFocused && (
+        <p className="placeholder" 
+           style={{ display: 'block', width: '100%', position: 'absolute', pointerEvents: 'none', color: '#aaa', background: 'transparent', textAlign: alignment }}>
+          Enter the paragraph text here...
+        </p>
+      )}
+      <p
+        contentEditable
+        suppressContentEditableWarning
+        onBlur={handleBlur}
+        onFocus={handleFocus}
+        style={{ width: '100%', border: 'none', outline: 'none', textAlign: alignment }}
+      >
+        {content}
+      </p>
+    </div>
   );
 };
 
-// Define the menu options for the Paragraph component (alignment)
 Paragraph.getMenuOptions = (id, onUpdateAlignment) => {
   return (
     <select onChange={(e) => onUpdateAlignment(id, e.target.value)}>

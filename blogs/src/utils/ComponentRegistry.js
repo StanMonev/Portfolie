@@ -1,6 +1,6 @@
 // src/components/ComponentRegistry.js
 import Paragraph from '../components/blogEditor/elements/Paragraph';
-import Header from '../components/blogEditor/elements/Header';
+import Heading from '../components/blogEditor/elements/Heading';
 // Import new components
 import List from '../components/blogEditor/elements/List';
 /* import Quote from './Quote';
@@ -15,9 +15,9 @@ const ComponentRegistry = {
   },
   header: {
     name: 'Header',
-    component: Header,
+    component: Heading,
     defaultProps: { content: '', level: 'h1', alignment: 'left' },
-    menuOptions: Header.getMenuOptions,
+    menuOptions: Heading.getMenuOptions,
   },
   // New components
  list: {

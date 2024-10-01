@@ -1,61 +1,96 @@
-// src/components/List.js
-import React, { useState, useRef, useEffect } from 'react';
-import BaseEditableComponent from './BaseEditableComponent';
+import React, { useState, useEffect } from 'react';
 
-const List = ({ id, content = '', alignment = 'left', onUpdateContent, onUpdateAlignment, placeholder = 'Add list items...' }) => {
-  const [listItems, setListItems] = useState(content ? content.split('\n') : ['']); // Default with one empty item
-  const additionalContentRefs = useRef([]);
+const List = ({ id, content = '<li></li>', alignment = 'left', onUpdateContent, onUpdateAlignment }) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [listContent, setListContent] = useState(content); // Initialize with content
 
-  // Update list items when content changes
+  // Effect to render content on first load
   useEffect(() => {
     if (content) {
-      console.log("setListItems");
-      setListItems(content.split('\n'));
+      setListContent(content); // Set the saved content when the page is first loaded
     }
   }, [content]);
 
-  // Handle list item content update
-  const handleUpdateListItemContent = (index, newText) => {
-    const newListItems = [...listItems];
-    newListItems[index] = newText;
-    setListItems(newListItems);
-    onUpdateContent(id, newListItems.join('\n'));
+  const handleBlur = (e) => {
+    const innerHTML = e.target.innerHTML; // Get the innerHTML of the ul
+    onUpdateContent(id, innerHTML); // Save innerHTML to the parent via callback
+    setListContent(innerHTML); // Save locally
+    setIsFocused(false);
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  function hasWhiteSpace(s) {
+    return /\s/g.test(s);
+  }
+
+  const isListItemEmpty = (liElement) => {
+    const text = liElement.innerText;
+    return hasWhiteSpace(text) && text.length < 2;
   };
 
   const onKeyDown = (e) => {
-    console.log(e.key);
-  }
+    if (e.key === 'Backspace' || e.key === 'Delete') {
+      const listItems = e.target.querySelectorAll('li');
+  
+      // Check if there is only one list item left
+      if (listItems.length === 1) {
+        const lastItem = listItems[0];
 
-  // Render the <li> elements inside the <ul>
-  const renderListItems = (text) => {
-    console.log(text);
-    return (
-      <li style={{ whiteSpace: 'pre-wrap' }}>
-        {text}
-      </li>
-    );
+        
+        console.log(isListItemEmpty(lastItem));
+  
+        // Prevent the deletion if the last <li> is empty (ignoring <br> but keeping &nbsp;)
+        if (isListItemEmpty(lastItem)) {
+          e.preventDefault(); // Prevent default backspace/delete action
+          console.log("Preventing deletion of the last empty <li>.");
+  
+          // Ensure there's always one empty <li> if the list becomes empty
+          if (!e.target.querySelector('li')) {
+            console.log("Element added: <li>.");
+            const newItem = document.createElement('li');
+            e.target.appendChild(newItem); // Append the new <li> element to the <ul>
+          }
+        }
+      }
+    }
   };
 
-  
   List.getMenuOptionsArgs = () => [id, onUpdateAlignment];
 
   return (
-    <BaseEditableComponent
-      id={id}
-      content={content}
-      alignment={alignment}
-      onUpdateContent={onUpdateContent}
-      placeholder={React.createElement('li', {style: {textAlign: alignment}}, placeholder)}
-      tagName="ul"
-      renderContent={renderListItems}
-      additionalContentRef={additionalContentRefs}
-      onInput={function(){}}
-      handleOnKeyDown={onKeyDown}
-    />
+    <div style={{ textAlign: alignment }}>
+      {!isFocused && listContent === '<li></li>' && (
+        <ul
+          className="placeholder"
+          style={{
+            display: 'block',
+            width: '100%',
+            position: 'absolute',
+            pointerEvents: 'none',
+            color: '#aaa',
+            background: 'transparent',
+            textAlign: alignment,
+          }}
+        >
+          <li>Enter the list items here...</li>
+        </ul>
+      )}
+      <ul
+        contentEditable
+        suppressContentEditableWarning
+        onBlur={handleBlur}
+        onFocus={handleFocus}
+        onKeyDown={onKeyDown}
+        style={{ textAlign: alignment, border: 'none', outline: 'none' }}
+        dangerouslySetInnerHTML={{ __html: listContent }}
+      />
+    </div>
   );
 };
 
-// Define the menu options for List component (alignment)
 List.getMenuOptions = (id, onUpdateAlignment) => {
   return (
     <select onChange={(e) => onUpdateAlignment(id, e.target.value)}>
@@ -65,7 +100,5 @@ List.getMenuOptions = (id, onUpdateAlignment) => {
     </select>
   );
 };
-
-// Helper for dynamic menu option arguments
 
 export default List;
