@@ -1,3 +1,6 @@
+# Outdated README 
+Needs correction, as this is now a monorepo, which includes the Resume Website.
+
 # Resume Website
 
 This project contains my CV Website and it's made with the following tools:
