@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 const List = ({ id, content = '<li></li>', alignment = 'left', onUpdateContent, onUpdateAlignment }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [listContent, setListContent] = useState(content); // Initialize with content
+  const [currentAlignment, setCurrentAlignment] = useState(alignment);
 
   // Effect to render content on first load
   useEffect(() => {
@@ -11,6 +12,10 @@ const List = ({ id, content = '<li></li>', alignment = 'left', onUpdateContent, 
     }
   }, [content]);
 
+  useEffect(() => {
+    setCurrentAlignment(alignment);
+  }, [alignment]);
+
   const handleBlur = (e) => {
     const innerHTML = e.target.innerHTML; // Get the innerHTML of the ul
     onUpdateContent(id, innerHTML); // Save innerHTML to the parent via callback
@@ -18,51 +23,42 @@ const List = ({ id, content = '<li></li>', alignment = 'left', onUpdateContent, 
     setIsFocused(false);
   };
 
+  const handleAlignmentChange = (newAlignment) => {
+    setCurrentAlignment(newAlignment); // Update local state
+    onUpdateAlignment(id, newAlignment); // Call parent function to persist alignment
+  };
+
   const handleFocus = () => {
     setIsFocused(true);
   };
 
-  function hasWhiteSpace(s) {
-    return /\s/g.test(s);
-  }
-
   const isListItemEmpty = (liElement) => {
-    const text = liElement.innerText;
-    return hasWhiteSpace(text) && text.length < 2;
+    const text = liElement.innerHTML.replace(/<br\s*\/?>/gi, '').trim(); // Remove <br> and trim whitespace
+    return text === '';
   };
 
   const onKeyDown = (e) => {
     if (e.key === 'Backspace' || e.key === 'Delete') {
       const listItems = e.target.querySelectorAll('li');
   
-      // Check if there is only one list item left
       if (listItems.length === 1) {
         const lastItem = listItems[0];
-
-        
-        console.log(isListItemEmpty(lastItem));
-  
-        // Prevent the deletion if the last <li> is empty (ignoring <br> but keeping &nbsp;)
         if (isListItemEmpty(lastItem)) {
-          e.preventDefault(); // Prevent default backspace/delete action
-          console.log("Preventing deletion of the last empty <li>.");
-  
-          // Ensure there's always one empty <li> if the list becomes empty
+          e.preventDefault();
           if (!e.target.querySelector('li')) {
-            console.log("Element added: <li>.");
             const newItem = document.createElement('li');
-            e.target.appendChild(newItem); // Append the new <li> element to the <ul>
+            e.target.appendChild(newItem); 
           }
         }
       }
     }
   };
 
-  List.getMenuOptionsArgs = () => [id, onUpdateAlignment];
+  List.getMenuOptionsArgs = () => [id, currentAlignment, onUpdateAlignment];
 
   return (
-    <div style={{ textAlign: alignment }}>
-      {!isFocused && listContent === '<li></li>' && (
+    <div style={{ textAlign: currentAlignment }}>
+      {!isFocused && (listContent === '<li></li>' || listContent === '<li><br></li>') && (
         <ul
           className="placeholder"
           style={{
@@ -72,7 +68,7 @@ const List = ({ id, content = '<li></li>', alignment = 'left', onUpdateContent, 
             pointerEvents: 'none',
             color: '#aaa',
             background: 'transparent',
-            textAlign: alignment,
+            textAlign: currentAlignment,
           }}
         >
           <li>Enter the list items here...</li>
@@ -84,16 +80,17 @@ const List = ({ id, content = '<li></li>', alignment = 'left', onUpdateContent, 
         onBlur={handleBlur}
         onFocus={handleFocus}
         onKeyDown={onKeyDown}
-        style={{ textAlign: alignment, border: 'none', outline: 'none' }}
+        style={{ textAlign: currentAlignment, border: 'none', outline: 'none' }}
         dangerouslySetInnerHTML={{ __html: listContent }}
       />
     </div>
   );
 };
 
-List.getMenuOptions = (id, onUpdateAlignment) => {
+List.getMenuOptions = (id, currentAlignment, onUpdateAlignment) => {
+  console.log(currentAlignment);
   return (
-    <select onChange={(e) => onUpdateAlignment(id, e.target.value)}>
+    <select value={currentAlignment} onChange={(e) => onUpdateAlignment(id, e.target.value)}>
       <option value="left">Left</option>
       <option value="center">Center</option>
       <option value="right">Right</option>
