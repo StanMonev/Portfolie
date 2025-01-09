@@ -234,16 +234,22 @@ function updatePreview(event=null, sectionOrder=null) {
 
     const contactInfo = [];
     if (town && country) contactInfo.push(`${town}, ${country}`);
-    if (email) contactInfo.push(`<a href="mailto:${email}"><img src="/assets/images/gmail.png" class="icon" alt="Email Icon" /> E-Mail</a>`);
-    if (linkedin) contactInfo.push(`<a href="${linkedin}" target="_blank"><img src="/assets/images/linkedin.png" class="icon" alt="LinkedIn Icon" /> LinkedIn</a>`);
-    if (github) contactInfo.push(`<a href="${github}" target="_blank"><img src="/assets/images/github.png" class="icon" alt="GitHub Icon" /> GitHub</a>`);
-    if (website) contactInfo.push(`<a href="${website}" target="_blank"><img src="/assets/images/smworks_logo_cropped.png" class="icon" alt="Website Icon" /> www.stanimirmonevworks.com</a>`);
+    if (email) contactInfo.push(`<a href="mailto:${email}"><div><img src="/assets/images/gmail.png" class="icon" alt="Email Icon" />${email} </div></a>`);
+    if (linkedin) contactInfo.push(`<a href="${linkedin}" target="_blank"><div><img src="/assets/images/linkedin.png" class="icon" alt="LinkedIn Icon" />${createDisplayName(linkedin)} </div></a>`);
+    if (github) contactInfo.push(`<a href="${github}" target="_blank"><div><img src="/assets/images/github.png" class="icon" alt="GitHub Icon" />${createDisplayName(github)} </div></a>`);
+    if (website) contactInfo.push(`<a href="${website}" target="_blank"><div><img src="/assets/images/smworks_logo_cropped.png" class="icon" alt="Website Icon" />${createDisplayName(website)} </div></a>`);
 
     document.getElementById('previewContact').innerHTML = contactInfo.join(' | ');
     document.getElementById('previewSkills').innerHTML = formatList(skills);
     document.getElementById('previewLanguages').innerHTML = formatList(languages);
     if(interests) document.getElementById('previewInterests').innerHTML = formatList(interests);
 }
+
+function createDisplayName(url) {
+    if (!url) return '';
+    const displayText = url.split('/').pop();
+    return displayText;
+  }
 
 /**
  * Clears all input fields related to the resume data.
